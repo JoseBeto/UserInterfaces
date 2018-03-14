@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="nameLabel" alignment="CENTER" layoutX="228.0" layoutY="24.0" prefHeight="33.0" prefWidth="358.0">
+      <Label fx:id="nameLabel" alignment="CENTER" layoutX="228.0" layoutY="10.0" prefHeight="33.0" prefWidth="358.0">
          <font>
             <Font name="Consolas Bold" size="18.0" />
          </font>
@@ -22,7 +22,7 @@
       </Label>
       <ImageView fx:id="itemImage" fitHeight="150.0" fitWidth="200.0" layoutX="14.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true" />
       <Label fx:id="descLabel" alignment="TOP_LEFT" layoutX="228.0" layoutY="57.0" prefHeight="334.0" prefWidth="358.0" wrapText="true" />
-      <Button layoutX="14.0" layoutY="24.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="13.0" prefWidth="100.0">
+      <Button layoutY="10.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="3.0" prefWidth="130.0" style="-fx-background-radius: 0px;">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                <image>
