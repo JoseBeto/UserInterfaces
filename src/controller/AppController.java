@@ -11,7 +11,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import model.Item;
 
@@ -23,8 +25,9 @@ public class AppController implements Initializable {
 	private BorderPane rootPane = null;
 	private Connection conn;
 	
-	@FXML private ChoiceBox<?> categoryBox;
-    @FXML private ChoiceBox<?> optionsBox;
+	@FXML private ComboBox<?> categoryBox;
+    @FXML private ComboBox<?> accountBox;
+    @FXML private TextField searchBox;
 
 	public AppController() {
 
@@ -57,7 +60,12 @@ public class AppController implements Initializable {
 
     @FXML
     void searchEntered(ActionEvent event) {
-
+    	System.out.println("Search entered: " + searchBox.getText());
+    }
+    
+    @FXML
+    void searchButtonClicked(MouseEvent event) {
+    	System.out.println("Button clicked: " + searchBox.getText());
     }
 	
 	@Override
