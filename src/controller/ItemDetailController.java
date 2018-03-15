@@ -63,7 +63,7 @@ public class ItemDetailController implements Initializable, MyController {
 		
 		ObservableList<String> data = FXCollections.observableArrayList("1", "2", "3", "4", "5");
 		qtyBox.setItems(data);
-		qtyBox.setStyle("-fx-padding:0.25 0 0.25 110");
+		qtyBox.setStyle("-fx-padding:0 0 0 110");
 		qtyBox.setValue("1");
 	}
 }
