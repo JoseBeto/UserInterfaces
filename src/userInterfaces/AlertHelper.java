@@ -5,11 +5,11 @@ import javafx.scene.control.Alert.AlertType;
 
 public class AlertHelper {
 	
-	public static void showWarningMessage(String title, String header, String content) {
-		Alert alert = new Alert(AlertType.WARNING);
+	public static void showWarningMessage(String title, String header, AlertType type) {
+		Alert alert = new Alert(type);
 		alert.setTitle(title);
 		alert.setHeaderText(header);
-		alert.setContentText(content);
+		alert.getButtonTypes().remove(1);
 		alert.showAndWait();
 	}
 }

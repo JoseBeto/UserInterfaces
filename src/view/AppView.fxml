@@ -24,7 +24,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <ComboBox fx:id="accountBox" prefHeight="31.0" prefWidth="120.0" promptText="Account" style="-fx-background-radius: 0px;" />
+            <ComboBox fx:id="accountBox" onAction="#accountBoxChanged" prefHeight="31.0" prefWidth="120.0" promptText="Account" style="-fx-background-radius: 0px;" />
          </children>
          <BorderPane.margin>
             <Insets bottom="30.0" />

@@ -1,9 +1,12 @@
 package controller;
 
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import model.Item;
+import model.User;
+import userInterfaces.AlertHelper;
 import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -35,25 +38,23 @@ public class ItemDetailController implements Initializable, MyController {
 	
 	@FXML
     void addToCartButtonClicked(ActionEvent event) {
-
+		User user = User.getInstance();
+		System.out.println("Add item to user " + user.getFirstName() + "'s cart");
+		
+		AlertHelper.showWarningMessage("Success!", "Item added to cart", AlertType.CONFIRMATION);
     }
 
 	@FXML
-    void addToListBoxClicked(ActionEvent event) {
-
+    void addToListBoxChanged(ActionEvent event) {
+		User user = User.getInstance();
+		System.out.println("Retreive user " + user.getFirstName() + "'s list options");
     }
 
     @FXML
-    void buyNowButtonClicked(ActionEvent event) {
-
-    }
-
-    @FXML
-    void qtyBoxClicked(ActionEvent event) {
+    void qtyBoxChanged(ActionEvent event) {
     	System.out.println("Qty changed to: " + qtyBox.getValue());
     }
 
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		nameLabel.setText(item.getName());
