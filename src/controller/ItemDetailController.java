@@ -41,7 +41,7 @@ public class ItemDetailController implements Initializable, MyController {
 		User user = User.getInstance();
 		System.out.println("Add item to user " + user.getFirstName() + "'s cart");
 		
-		AlertHelper.showWarningMessage("Success!", "Item added to cart", AlertType.CONFIRMATION);
+		AlertHelper.showWarningMessage("Success!", "Item added to cart", AlertType.INFORMATION);
     }
 
 	@FXML

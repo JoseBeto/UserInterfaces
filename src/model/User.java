@@ -10,15 +10,18 @@ public class User {
 	private int id;
 	private SimpleStringProperty firstName;
 	private SimpleStringProperty lastName;
+	private SimpleStringProperty email;
 	private SimpleDoubleProperty money;
 
 	public User() {
 		this.firstName = new SimpleStringProperty();
 		this.lastName = new SimpleStringProperty();
+		this.email = new SimpleStringProperty();
 		this.money = new SimpleDoubleProperty();
 		
 		setFirstName("guest");
 		setLastName("");
+		setEmail("");
 		setMoney(0.0);
 		setId(1);
 	}
@@ -39,6 +42,14 @@ public class User {
 		this.lastName.set(lName);
 	}
 
+	public String getEmail() {
+		return email.get();
+	}
+
+	public void setEmail(String email) {
+		this.email.set(email);
+	}
+	
 	public Double getMoney() {
 		return money.get();
 	}

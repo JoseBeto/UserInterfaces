@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.util.ResourceBundle;
 import database.AppException;
 import database.ItemTableGateway;
+import database.UserTableGateway;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,7 +26,8 @@ public class AppController implements Initializable {
 	public final static int LIST = 1;
 	public final static int ITEM_DETAIL = 2;
 	public final static int LOGIN = 3;
-
+	public final static int REGISTER = 4;
+	
 	private static AppController myInstance = null;
 	private BorderPane rootPane = null;
 	private Connection conn;
@@ -55,6 +57,10 @@ public class AppController implements Initializable {
 					fxmlFile = this.getClass().getResource("/view/LoginView.fxml");
 					controller = new LoginController();
 					break;
+				case REGISTER:
+					fxmlFile = this.getClass().getResource("/view/RegisterView.fxml");
+					controller = new RegisterController(new UserTableGateway(conn));
+					break;
 			}
 		
 			FXMLLoader loader = new FXMLLoader(fxmlFile);
@@ -83,12 +89,15 @@ public class AppController implements Initializable {
 	    	case "Login":
 	    		changeView(LOGIN, null);
 	    		break;
+	    	case "Register":
+	    		changeView(REGISTER, null);
+	    		break;
 	    }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-		ObservableList<String> data = FXCollections.observableArrayList("Login");
+		ObservableList<String> data = FXCollections.observableArrayList("Login", "Register");
 		accountBox.setItems(data);
 	}
 	

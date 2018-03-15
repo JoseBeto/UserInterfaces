@@ -9,7 +9,6 @@ public class AlertHelper {
 		Alert alert = new Alert(type);
 		alert.setTitle(title);
 		alert.setHeaderText(header);
-		alert.getButtonTypes().remove(1);
 		alert.showAndWait();
 	}
 }
