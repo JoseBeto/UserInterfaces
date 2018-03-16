@@ -40,12 +40,13 @@ public class RegisterController implements MyController{
     	user.setFirstName(firstNameText.getText());
     	user.setLastName(lastNameText.getText());
     	user.setEmail(emailText.getText());
+    	user.setPassword(passwordText.getText());
     	user.setMoney(0);
     	
     	gateway.registerUser(user);
     	
     	AlertHelper.showWarningMessage("Success!", "Account created!", AlertType.INFORMATION);
     	
-    	
+    	AppController.getInstance().changeView(AppController.LIST, null);
     }
 }

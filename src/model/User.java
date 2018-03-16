@@ -11,17 +11,20 @@ public class User {
 	private SimpleStringProperty firstName;
 	private SimpleStringProperty lastName;
 	private SimpleStringProperty email;
+	private SimpleStringProperty password;
 	private SimpleDoubleProperty money;
 
 	public User() {
 		this.firstName = new SimpleStringProperty();
 		this.lastName = new SimpleStringProperty();
 		this.email = new SimpleStringProperty();
+		this.password = new SimpleStringProperty();
 		this.money = new SimpleDoubleProperty();
 		
 		setFirstName("guest");
 		setLastName("");
 		setEmail("");
+		setPassword("");
 		setMoney(0.0);
 		setId(1);
 	}
@@ -48,6 +51,14 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email.set(email);
+	}
+	
+	public String getPassword() {
+		return password.get();
+	}
+
+	public void setPassword(String password) {
+		this.password.set(password);
 	}
 	
 	public Double getMoney() {

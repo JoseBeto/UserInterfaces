@@ -14,7 +14,7 @@
       <HBox prefHeight="30.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
             <ComboBox fx:id="categoryBox" prefHeight="31.0" prefWidth="130.0" promptText="Categories" style="-fx-background-radius: 0px;" />
-            <TextField fx:id="searchBox" onAction="#searchEntered" prefHeight="31.0" prefWidth="370.0" promptText="Search item.." style="-fx-background-color: transparent; -fx-background-radius: 0px;" />
+            <TextField fx:id="searchBox" onAction="#searchEntered" prefHeight="31.0" prefWidth="360.0" promptText="Search item.." style="-fx-background-color: transparent; -fx-background-radius: 0px;" />
             <Button maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onMouseClicked="#searchButtonClicked" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 0px;">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
@@ -24,7 +24,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <ComboBox fx:id="accountBox" onAction="#accountBoxChanged" prefHeight="31.0" prefWidth="120.0" promptText="Account" style="-fx-background-radius: 0px;" />
+            <ComboBox fx:id="accountBox" onAction="#accountBoxChanged" prefHeight="31.0" prefWidth="130.0" promptText="Account" style="-fx-background-radius: 0px;" />
          </children>
          <BorderPane.margin>
             <Insets bottom="30.0" />

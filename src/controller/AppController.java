@@ -21,6 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import model.Item;
+import model.User;
 
 public class AppController implements Initializable {
 	public final static int LIST = 1;
@@ -48,6 +49,14 @@ public class AppController implements Initializable {
 				case LIST:
 					fxmlFile = this.getClass().getResource("/view/ItemListView.fxml");
 					controller = new ItemListController(new ItemTableGateway(conn));
+					
+					User user = User.getInstance();
+					if(user.getId() > 1) {
+						ObservableList<String> data = FXCollections.observableArrayList("My Account", "My Cart", "My Lists", "Log Out");
+						accountBox.getItems().addAll(data);
+						accountBox.getItems().remove(0, 2);
+						accountBox.setValue("Account");
+					}
 					break;
 				case ITEM_DETAIL:
 					fxmlFile = this.getClass().getResource("/view/ItemDetailView.fxml");
@@ -55,7 +64,7 @@ public class AppController implements Initializable {
 					break;
 				case LOGIN:
 					fxmlFile = this.getClass().getResource("/view/LoginView.fxml");
-					controller = new LoginController();
+					controller = new LoginController(new UserTableGateway(conn));
 					break;
 				case REGISTER:
 					fxmlFile = this.getClass().getResource("/view/RegisterView.fxml");
@@ -84,7 +93,7 @@ public class AppController implements Initializable {
     }
 
     @FXML
-    void accountBoxChanged(ActionEvent event) throws IOException {
+    void accountBoxChanged(ActionEvent event) {
     	switch(accountBox.getValue()) {
 	    	case "Login":
 	    		changeView(LOGIN, null);
