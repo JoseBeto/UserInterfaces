@@ -29,6 +29,7 @@ public class AppController implements Initializable {
 	public final static int LOGIN = 3;
 	public final static int REGISTER = 4;
 	public final static int MY_ACCOUNT = 5;
+	public final static int MY_CART = 6;
 	
 	private static AppController myInstance = null;
 	private BorderPane rootPane = null;
@@ -68,6 +69,10 @@ public class AppController implements Initializable {
 					fxmlFile = this.getClass().getResource("/view/AccountView.fxml");
 					controller = new AccountController(new UserTableGateway(conn));
 					break;
+				case MY_CART:
+					fxmlFile = this.getClass().getResource("/view/CartView.fxml");
+					controller = new CartController(new UserTableGateway(conn), new ItemTableGateway(conn));
+					break;
 					
 			}
 		
@@ -102,6 +107,9 @@ public class AppController implements Initializable {
 	    		break;
 	    	case "My Account":
 	    		changeView(MY_ACCOUNT, null);
+	    		break;
+	    	case "My Cart":
+	    		changeView(MY_CART, null);
 	    		break;
 	    	case "Log Out":
 	    		UserTableGateway gateway = new UserTableGateway(conn);

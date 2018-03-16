@@ -42,4 +42,32 @@ public class ItemTableGateway {
 		}
 		return items;
 	}
+	
+	public Item getItemById(int id) throws AppException {
+		PreparedStatement st = null;
+		Item item = null;
+		try {
+			st = conn.prepareStatement("select * from item where id = ?");
+			st.setInt(1, id);
+			
+			ResultSet rs = st.executeQuery();
+			while(rs.next()) {
+				item = new Item(rs.getString("name"), rs.getDouble("price"), rs.getString("description"), rs.getString("image"));
+				item.setGateway(this);
+				item.setId(rs.getInt("id"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException(e);
+		} finally {
+			try {
+				if(st != null)
+					st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new AppException(e);
+			}
+		}
+		return item;
+	}
 }
