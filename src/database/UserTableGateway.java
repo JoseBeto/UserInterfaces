@@ -57,10 +57,16 @@ public class UserTableGateway {
 			ResultSet rs = st.executeQuery();
 			
 			if(rs.next() == true) {
+				if(!rs.getString("password").equals(password)) {
+					AlertHelper.showWarningMessage("Error!", "Incorrect password!", AlertType.ERROR);
+					return false;
+				}
+				
 				user.setId(rs.getInt("id"));
 				user.setFirstName(rs.getString("first_name"));
 				user.setLastName(rs.getString("last_name"));
 				user.setEmail(rs.getString("email"));
+				user.setPassword(rs.getString("password"));
 				user.setMoney(rs.getDouble("money"));
 			} else {
 				AlertHelper.showWarningMessage("Error!", "No account exists with that email!", AlertType.ERROR);
@@ -79,5 +85,36 @@ public class UserTableGateway {
 			}
 		}
 		return true;
+	}
+	
+	public void getUserById(int id) throws AppException {
+		PreparedStatement st = null;
+		User user = User.getInstance();
+
+		try {
+			st = conn.prepareStatement("select * from user where id = ?");
+			st.setInt(1, id);
+			ResultSet rs = st.executeQuery();
+			
+			if(rs.next() == true) {
+				user.setId(rs.getInt("id"));
+				user.setFirstName(rs.getString("first_name"));
+				user.setLastName(rs.getString("last_name"));
+				user.setEmail(rs.getString("email"));
+				user.setPassword(rs.getString("password"));
+				user.setMoney(rs.getDouble("money"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException(e);
+		} finally {
+			try {
+				if(st != null)
+					st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new AppException(e);
+			}
+		}
 	}
 }

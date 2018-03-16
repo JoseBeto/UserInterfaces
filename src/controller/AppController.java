@@ -14,12 +14,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import model.Item;
 import model.User;
 
@@ -101,6 +99,14 @@ public class AppController implements Initializable {
 	    	case "Register":
 	    		changeView(REGISTER, null);
 	    		break;
+	    	case "Log Out":
+	    		//UserTableGateway gateway = new UserTableGateway(conn);
+				//gateway.getUserById(1);
+	    		accountBox.setValue("Account");
+				ObservableList<String> data = FXCollections.observableArrayList("Login", "Register");
+				accountBox.getItems().addAll(data);
+				accountBox.getItems().remove(0, 4);
+				break;
 	    }
     }
 
