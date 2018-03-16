@@ -39,20 +39,14 @@ public class ItemDetailController implements Initializable, MyController {
 	@FXML
     void addToCartButtonClicked(ActionEvent event) {
 		User user = User.getInstance();
-		System.out.println("Add item to user " + user.getFirstName() + "'s cart");
-		
-		AlertHelper.showWarningMessage("Success!", "Item added to cart", AlertType.INFORMATION);
+		//user.addToCart();
+		AlertHelper.showWarningMessage("Success!", qtyBox.getValue() + " Items added to cart", AlertType.INFORMATION);
     }
 
 	@FXML
     void addToListBoxChanged(ActionEvent event) {
 		User user = User.getInstance();
 		System.out.println("Retreive user " + user.getFirstName() + "'s list options");
-    }
-
-    @FXML
-    void qtyBoxChanged(ActionEvent event) {
-    	System.out.println("Qty changed to: " + qtyBox.getValue());
     }
 
 	@Override

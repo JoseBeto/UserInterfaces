@@ -38,7 +38,7 @@
       <Button layoutX="14.0" layoutY="272.0" mnemonicParsing="false" onAction="#addToCartButtonClicked" prefHeight="27.0" prefWidth="200.0" style="-fx-background-radius: 0px;" text="Add To Cart" />
       <Label contentDisplay="CENTER" layoutX="14.0" layoutY="240.0" prefHeight="27.0" prefWidth="50.0" text="Qty: ">
          <graphic>
-            <ComboBox fx:id="qtyBox" onAction="#qtyBoxChanged" prefHeight="27.0" prefWidth="200.0" style="-fx-background-radius: 0px;" />
+            <ComboBox fx:id="qtyBox" prefHeight="27.0" prefWidth="200.0" style="-fx-background-radius: 0px;" />
          </graphic>
       </Label>
       <Label contentDisplay="CENTER" layoutX="14.0" layoutY="304.0" prefHeight="27.0" prefWidth="130.0" text="Add To List">
