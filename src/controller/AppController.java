@@ -16,16 +16,19 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import model.Item;
 import model.User;
+import userInterfaces.AlertHelper;
 
 public class AppController implements Initializable {
 	public final static int LIST = 1;
 	public final static int ITEM_DETAIL = 2;
 	public final static int LOGIN = 3;
 	public final static int REGISTER = 4;
+	public final static int MY_ACCOUNT = 5;
 	
 	private static AppController myInstance = null;
 	private BorderPane rootPane = null;
@@ -47,14 +50,7 @@ public class AppController implements Initializable {
 				case LIST:
 					fxmlFile = this.getClass().getResource("/view/ItemListView.fxml");
 					controller = new ItemListController(new ItemTableGateway(conn));
-					
-					User user = User.getInstance();
-					if(user.getId() > 1) {
-						ObservableList<String> data = FXCollections.observableArrayList("My Account", "My Cart", "My Lists", "Log Out");
-						accountBox.getItems().addAll(data);
-						accountBox.getItems().remove(0, 2);
-						accountBox.setValue("Account");
-					}
+					accountBox.setValue("Account");
 					break;
 				case ITEM_DETAIL:
 					fxmlFile = this.getClass().getResource("/view/ItemDetailView.fxml");
@@ -68,6 +64,11 @@ public class AppController implements Initializable {
 					fxmlFile = this.getClass().getResource("/view/RegisterView.fxml");
 					controller = new RegisterController(new UserTableGateway(conn));
 					break;
+				case MY_ACCOUNT:
+					fxmlFile = this.getClass().getResource("/view/AccountView.fxml");
+					controller = new AccountController(new UserTableGateway(conn));
+					break;
+					
 			}
 		
 			FXMLLoader loader = new FXMLLoader(fxmlFile);
@@ -99,22 +100,42 @@ public class AppController implements Initializable {
 	    	case "Register":
 	    		changeView(REGISTER, null);
 	    		break;
+	    	case "My Account":
+	    		changeView(MY_ACCOUNT, null);
+	    		break;
 	    	case "Log Out":
-	    		//UserTableGateway gateway = new UserTableGateway(conn);
-				//gateway.getUserById(1);
-	    		accountBox.setValue("Account");
-				ObservableList<String> data = FXCollections.observableArrayList("Login", "Register");
-				accountBox.getItems().addAll(data);
-				accountBox.getItems().remove(0, 4);
+	    		UserTableGateway gateway = new UserTableGateway(conn);
+				gateway.setUserById(1);
+				updateAccountBox();
+				AlertHelper.showWarningMessage("Success!", "Logged out!", AlertType.INFORMATION);
 				break;
-	    }
+    	}
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 		ObservableList<String> data = FXCollections.observableArrayList("Login", "Register");
-		accountBox.setItems(data);
+		accountBox.getItems().addAll(0, data);
 	}
+    
+    public void updateAccountBox() {
+    	User user = User.getInstance();
+		if(user.getId() > 1) {
+			ObservableList<String> oldData = FXCollections.observableArrayList("Login", "Register");
+			ObservableList<String> data = FXCollections.observableArrayList("My Account", "My Cart", "My Lists", "Log Out");
+			
+			accountBox.getItems().addAll(data);
+			accountBox.getItems().removeAll(oldData);
+			accountBox.setValue("Account");
+		} else {
+			ObservableList<String> oldData = FXCollections.observableArrayList("My Account", "My Cart", "My Lists", "Log Out");
+			ObservableList<String> data = FXCollections.observableArrayList("Login", "Register");
+
+			accountBox.getItems().addAll(data);
+			accountBox.getItems().removeAll(oldData);
+			accountBox.setValue("Account");
+		}
+    }
 	
 	public static AppController getInstance() {
 		if(myInstance == null)
@@ -137,5 +158,4 @@ public class AppController implements Initializable {
 	public void setConnection(Connection conn) {
 		this.conn = conn;
 	}
-	
 }

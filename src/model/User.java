@@ -29,6 +29,20 @@ public class User {
 		setId(1);
 	}
 	
+	public User(String fName, String lName, String email, String password, Double money) {
+		this.firstName = new SimpleStringProperty();
+		this.lastName = new SimpleStringProperty();
+		this.email = new SimpleStringProperty();
+		this.password = new SimpleStringProperty();
+		this.money = new SimpleDoubleProperty();
+		
+		setFirstName(fName);
+		setLastName(lName);
+		setEmail(email);
+		setPassword(password);
+		setMoney(money);
+	}
+	
 	public String getFirstName() {
 		return firstName.get();
 	}
@@ -86,5 +100,9 @@ public class User {
 		if(myInstance == null)
 			myInstance = new User();
 		return myInstance;
+	}
+	
+	public static void changeInstance(User user) {
+		myInstance = user;
 	}
 }

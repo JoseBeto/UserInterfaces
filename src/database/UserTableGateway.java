@@ -49,7 +49,7 @@ public class UserTableGateway {
 
 	public Boolean loginUser(String email, String password) throws AppException {
 		PreparedStatement st = null;
-		User user = User.getInstance();
+		User user;
 
 		try {
 			st = conn.prepareStatement("select * from user where email = ?");
@@ -61,13 +61,10 @@ public class UserTableGateway {
 					AlertHelper.showWarningMessage("Error!", "Incorrect password!", AlertType.ERROR);
 					return false;
 				}
-				
+				user = new User(rs.getString("first_name"), rs.getString("last_name"), rs.getString("email"), 
+						rs.getString("password"), rs.getDouble("money"));
 				user.setId(rs.getInt("id"));
-				user.setFirstName(rs.getString("first_name"));
-				user.setLastName(rs.getString("last_name"));
-				user.setEmail(rs.getString("email"));
-				user.setPassword(rs.getString("password"));
-				user.setMoney(rs.getDouble("money"));
+				User.changeInstance(user);
 			} else {
 				AlertHelper.showWarningMessage("Error!", "No account exists with that email!", AlertType.ERROR);
 				return false;
@@ -87,9 +84,9 @@ public class UserTableGateway {
 		return true;
 	}
 	
-	public void getUserById(int id) throws AppException {
+	public void setUserById(int id) throws AppException {
 		PreparedStatement st = null;
-		User user = User.getInstance();
+		User user;
 
 		try {
 			st = conn.prepareStatement("select * from user where id = ?");
@@ -97,12 +94,10 @@ public class UserTableGateway {
 			ResultSet rs = st.executeQuery();
 			
 			if(rs.next() == true) {
+				user = new User(rs.getString("first_name"), rs.getString("last_name"), rs.getString("email"), 
+						rs.getString("password"), rs.getDouble("money"));
 				user.setId(rs.getInt("id"));
-				user.setFirstName(rs.getString("first_name"));
-				user.setLastName(rs.getString("last_name"));
-				user.setEmail(rs.getString("email"));
-				user.setPassword(rs.getString("password"));
-				user.setMoney(rs.getDouble("money"));
+				User.changeInstance(user);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
