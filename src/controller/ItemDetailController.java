@@ -10,7 +10,6 @@ import userInterfaces.AlertHelper;
 import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import database.UserTableGateway;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

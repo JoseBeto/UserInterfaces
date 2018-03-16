@@ -100,6 +100,8 @@ public class User {
 	}
 
 	public void setCart(String cart) {
+		if(cart.equals(""))
+			return;
 		Properties props = new Properties();
 		try {
 			props.load(new StringReader(cart.substring(1, cart.length() - 1).replace(",", "\n")));
