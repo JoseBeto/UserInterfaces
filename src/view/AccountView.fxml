@@ -16,15 +16,15 @@
             <Font name="Consolas" size="36.0" />
          </font>
       </Label>
-      <Label layoutX="35.0" layoutY="91.0" prefHeight="20.0" prefWidth="60.0" text="Email" />
-      <Label layoutX="35.0" layoutY="124.0" prefHeight="20.0" prefWidth="100.0" text="First Name" />
-      <TextField fx:id="emailText" layoutX="108.0" layoutY="89.0" prefWidth="200.0" promptText="email" />
-      <TextField fx:id="firstNameText" layoutX="108.0" layoutY="122.0" prefWidth="200.0" promptText="first name" />
+      <Label alignment="CENTER_RIGHT" layoutX="192.0" layoutY="90.0" prefHeight="25.0" prefWidth="60.0" text="Email" />
+      <Label alignment="CENTER_RIGHT" layoutX="152.0" layoutY="125.0" prefHeight="25.0" prefWidth="100.0" text="First Name" />
+      <TextField fx:id="emailText" layoutX="257.0" layoutY="90.0" prefWidth="200.0" promptText="email" />
+      <TextField fx:id="firstNameText" layoutX="257.0" layoutY="125.0" prefWidth="200.0" promptText="first name" />
       <Button layoutX="306.0" layoutY="348.0" mnemonicParsing="false" onAction="#saveButtonClicked" text="Save" />
-      <Label layoutX="35.0" layoutY="158.0" prefHeight="20.0" prefWidth="100.0" text="Last Name" />
-      <TextField fx:id="lastNameText" layoutX="108.0" layoutY="155.0" prefWidth="200.0" promptText="last name" />
-      <Label layoutX="35.0" layoutY="198.0" prefHeight="20.0" prefWidth="60.0" text="Password" />
-      <TextField fx:id="passwordText" layoutX="108.0" layoutY="195.0" prefWidth="200.0" promptText="password" />
+      <Label alignment="CENTER_RIGHT" layoutX="152.0" layoutY="160.0" prefHeight="25.0" prefWidth="100.0" text="Last Name" />
+      <TextField fx:id="lastNameText" layoutX="257.0" layoutY="160.0" prefWidth="200.0" promptText="last name" />
+      <Label alignment="CENTER_RIGHT" layoutX="192.0" layoutY="195.0" prefHeight="25.0" prefWidth="60.0" text="Password" />
+      <TextField fx:id="passwordText" layoutX="257.0" layoutY="195.0" prefWidth="200.0" promptText="password" />
       <Button layoutY="10.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="3.0" prefWidth="130.0" style="-fx-background-radius: 0px;">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
@@ -37,5 +37,7 @@
             <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
          </padding>
       </Button>
+      <Label alignment="CENTER_RIGHT" layoutX="192.0" layoutY="230.0" prefHeight="25.0" prefWidth="60.0" text="Money" />
+      <Label fx:id="moneyLabel" layoutX="257.0" layoutY="230.0" prefHeight="25.0" prefWidth="200.0" />
    </children>
 </Pane>

@@ -107,6 +107,7 @@ public class AppController implements Initializable {
 	    		UserTableGateway gateway = new UserTableGateway(conn);
 				gateway.setUserById(1);
 				updateAccountBox();
+				changeView(LIST, null);
 				AlertHelper.showWarningMessage("Success!", "Logged out!", AlertType.INFORMATION);
 				break;
     	}
