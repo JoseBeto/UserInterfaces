@@ -39,6 +39,11 @@ public class ItemDetailController implements Initializable, MyController {
 	@FXML
     void addToCartButtonClicked(ActionEvent event) {
 		User user = User.getInstance();
+		if(user.getId() == 1) {
+			AlertHelper.showWarningMessage("Error!", "Not logged in!", AlertType.ERROR);
+			return;
+		}
+		
 		//user.addToCart();
 		AlertHelper.showWarningMessage("Success!", qtyBox.getValue() + " Items added to cart", AlertType.INFORMATION);
     }
@@ -52,7 +57,7 @@ public class ItemDetailController implements Initializable, MyController {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		nameLabel.setText(item.getName());
-		priceLabel.setText("$" + item.getPrice());
+		priceLabel.setText(String.format("Price: $%.2f", item.getPrice()));
 		itemImage.setImage(item.getImage());
 		descLabel.setText(item.getDesc());
 		

@@ -66,6 +66,6 @@ public class AccountController implements MyController, Initializable{
     	firstNameText.setText(user.getFirstName());
     	lastNameText.setText(user.getLastName());
     	passwordText.setText(user.getPassword());
-    	moneyLabel.setText("$"+user.getMoney());
+    	moneyLabel.setText(String.format("$%.2f", user.getMoney()));
 	}
 }
