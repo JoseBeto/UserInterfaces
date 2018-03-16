@@ -21,13 +21,14 @@ public class UserTableGateway {
 		PreparedStatement st = null;
 		try {
 			String statement = "insert into user (first_name, last_name, email, "
-					+ "password, money) values (?, ?, ?, ?, ?)";
+					+ "password, money, cart) values (?, ?, ?, ?, ?, ?)";
 			st = conn.prepareStatement(statement, Statement.RETURN_GENERATED_KEYS);
 			st.setString(1, user.getFirstName());
 			st.setString(2, user.getLastName());
 			st.setString(3, user.getEmail());
 			st.setString(4, user.getPassword());
 			st.setDouble(5, user.getMoney());
+			st.setString(6, user.getCart().toString());
 			st.executeUpdate();
 
 			ResultSet rs = st.getGeneratedKeys();
@@ -62,7 +63,7 @@ public class UserTableGateway {
 					return false;
 				}
 				user = new User(rs.getString("first_name"), rs.getString("last_name"), rs.getString("email"), 
-						rs.getString("password"), rs.getDouble("money"));
+						rs.getString("password"), rs.getDouble("money"), rs.getString("cart"));
 				user.setId(rs.getInt("id"));
 				User.changeInstance(user);
 			} else {
@@ -95,7 +96,7 @@ public class UserTableGateway {
 			
 			if(rs.next() == true) {
 				user = new User(rs.getString("first_name"), rs.getString("last_name"), rs.getString("email"), 
-						rs.getString("password"), rs.getDouble("money"));
+						rs.getString("password"), rs.getDouble("money"), rs.getString("cart"));
 				user.setId(rs.getInt("id"));
 				User.changeInstance(user);
 			}
@@ -123,6 +124,27 @@ public class UserTableGateway {
 			st.setString(3, user.getEmail());
 			st.setString(4, user.getPassword());
 			st.setInt(5, user.getId());
+			st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException(e);
+		} finally {
+			try {
+				if(st != null)
+					st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new AppException(e);
+			}
+		}
+	}
+	
+	public void updateCart(User user) throws AppException {
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("update user set cart = ? where id = ?");
+			st.setString(1, user.getCart().toString());
+			st.setInt(2, user.getId());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

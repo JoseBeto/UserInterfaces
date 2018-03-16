@@ -1,7 +1,15 @@
 package model;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Properties;
+
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.Alert.AlertType;
+import userInterfaces.AlertHelper;
 
 public class User {
 
@@ -13,6 +21,7 @@ public class User {
 	private SimpleStringProperty email;
 	private SimpleStringProperty password;
 	private SimpleDoubleProperty money;
+	private HashMap<Integer, Integer> cart;
 
 	public User() {
 		this.firstName = new SimpleStringProperty();
@@ -20,6 +29,7 @@ public class User {
 		this.email = new SimpleStringProperty();
 		this.password = new SimpleStringProperty();
 		this.money = new SimpleDoubleProperty();
+		this.cart = new HashMap<Integer, Integer>();
 		
 		setFirstName("guest");
 		setLastName("");
@@ -29,18 +39,20 @@ public class User {
 		setId(1);
 	}
 	
-	public User(String fName, String lName, String email, String password, Double money) {
+	public User(String fName, String lName, String email, String password, Double money, String cart) {
 		this.firstName = new SimpleStringProperty();
 		this.lastName = new SimpleStringProperty();
 		this.email = new SimpleStringProperty();
 		this.password = new SimpleStringProperty();
 		this.money = new SimpleDoubleProperty();
+		this.cart = new HashMap<Integer, Integer>();
 		
 		setFirstName(fName);
 		setLastName(lName);
 		setEmail(email);
 		setPassword(password);
 		setMoney(money);
+		setCart(cart);
 	}
 	
 	public String getFirstName() {
@@ -83,12 +95,45 @@ public class User {
 		this.money.set(money);
 	}
 	
+	public HashMap<Integer, Integer> getCart() {
+		return cart;
+	}
+
+	public void setCart(String cart) {
+		Properties props = new Properties();
+		try {
+			props.load(new StringReader(cart.substring(1, cart.length() - 1).replace(",", "\n")));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		for(Entry<Object, Object> e : props.entrySet()) {
+		    this.cart.put(Integer.valueOf((String) e.getKey()), Integer.valueOf((String) e.getValue()));
+		}
+	}
+	
 	public int getId() {
 		return id;
 	}
 	
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public Boolean addToCart(Item item, int qty) {
+		HashMap<Integer, Integer> cart = getCart();
+		if(cart.containsKey(item.getId())) {
+			if(cart.get(item.getId()) + qty > 5) {
+				AlertHelper.showWarningMessage("Error!", "Cannot have more than 5 of this "
+						+ "item!", AlertType.ERROR);
+				return false;
+			} else {
+				qty += cart.get(item.getId());
+				cart.remove(item.getId());
+			}
+		}
+		cart.put(item.getId(), qty);
+		return true;
 	}
 
 	@Override

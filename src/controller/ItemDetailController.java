@@ -10,6 +10,8 @@ import userInterfaces.AlertHelper;
 import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import database.UserTableGateway;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,10 +27,12 @@ public class ItemDetailController implements Initializable, MyController {
     @FXML private ComboBox<String> qtyBox;
     @FXML private ComboBox<?> addToListBox;
     
+    private UserTableGateway gateway;
 	private Item item;
 
-	public ItemDetailController(Item item) {
+	public ItemDetailController(Item item, UserTableGateway gateway) {
 		this.item = item;
+		this.gateway = gateway;
     }
 	
 	@FXML
@@ -44,8 +48,10 @@ public class ItemDetailController implements Initializable, MyController {
 			return;
 		}
 		
-		//user.addToCart();
-		AlertHelper.showWarningMessage("Success!", qtyBox.getValue() + " Items added to cart", AlertType.INFORMATION);
+		if(user.addToCart(item, Integer.parseInt(qtyBox.getValue()))) {
+			gateway.updateCart(user);
+			AlertHelper.showWarningMessage("Success!", qtyBox.getValue() + " items added to cart", AlertType.INFORMATION);
+		}
     }
 
 	@FXML

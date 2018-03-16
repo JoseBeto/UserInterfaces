@@ -39,7 +39,7 @@ public class RegisterController implements MyController{
     	}
     	User user;
     	user = new User(firstNameText.getText(), lastNameText.getText(), 
-    			emailText.getText(), passwordText.getText(), 0.0);
+    			emailText.getText(), passwordText.getText(), 0.0, null);
     	User.changeInstance(user);
     	
     	gateway.registerUser(user);
