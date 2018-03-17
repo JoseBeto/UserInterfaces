@@ -114,14 +114,6 @@ public class User {
 		}
 	}
 	
-	public int getId() {
-		return id;
-	}
-	
-	public void setId(int id) {
-		this.id = id;
-	}
-	
 	public Boolean addToCart(Item item, int qty) {
 		HashMap<Integer, Integer> cart = getCart();
 		if(cart.containsKey(item.getId())) {
@@ -136,6 +128,33 @@ public class User {
 		}
 		cart.put(item.getId(), qty);
 		return true;
+	}
+	
+	public void updateCart(int id, int qty) {
+		cart.put(id, qty);
+	}
+	
+	public Boolean removeItemFromCart(int id, int qty) {
+		System.out.println(cart.toString());
+		if(cart.get(id) < qty) {
+			AlertHelper.showWarningMessage("Error!", "Select a valid qty to be removed!", AlertType.ERROR);
+			return false;
+		} else if(cart.get(id) == qty) {
+			System.out.println("qty " + cart.get(id) + " removed " + qty);
+			cart.remove(id);
+			return true;
+		}
+		
+		cart.put(id, cart.get(id) - qty);
+		return true;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@Override

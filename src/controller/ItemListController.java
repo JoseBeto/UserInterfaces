@@ -6,7 +6,9 @@ import database.ItemTableGateway;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import model.Item;
 
@@ -36,6 +38,27 @@ public class ItemListController implements Initializable, MyController {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.itemList.setItems(items);
-	}
 
+    	itemList.setCellFactory(param -> new ListCell<Item>() {
+    		ImageView image = new ImageView();
+    		@Override
+    		public void updateItem(Item item, boolean empty) {
+    			super.updateItem(item, empty);
+
+    			if (empty) {
+    				setText(null);
+    				setGraphic(null);
+    				return;
+    			} else {
+    				image.setImage(item.getImage());
+    				image.setFitHeight(75);
+    				image.setFitWidth(75);
+    			}
+    			setText(item.getName() + "\t\t" + item.getPrice());
+    			setGraphic(image);
+    		}
+    	});
+		
+		
+	}
 }
