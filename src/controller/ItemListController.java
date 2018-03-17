@@ -10,6 +10,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Font;
 import model.Item;
 
 public class ItemListController implements Initializable, MyController {
@@ -54,7 +55,12 @@ public class ItemListController implements Initializable, MyController {
     				image.setFitHeight(75);
     				image.setFitWidth(75);
     			}
-    			setText(item.getName() + "\t\t" + item.getPrice());
+    			String s = "";
+    			for(int i = 0; i < (25 - item.getName().length()); i++) {
+    				s += " ";
+    			}
+    			setFont(Font.font("consolas"));
+    			setText(item.getName() + s + item.getPrice());
     			setGraphic(image);
     		}
     	});

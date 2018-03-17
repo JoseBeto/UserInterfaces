@@ -6,6 +6,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Font;
+
 import java.util.Properties;
 import java.util.Map.Entry;
 import database.ItemTableGateway;
@@ -136,7 +138,12 @@ public class CartController implements MyController, Initializable{
     				image.setFitHeight(100);
     				image.setFitWidth(100);
     			}
-    			setText("Name: " + name + "\tQty: " + qty);
+    			String s = "";
+    			for(int i = 0; i < (25 - item.getName().length()); i++) {
+    				s += " ";
+    			}
+    			setFont(Font.font("consolas"));
+    			setText("Name: " + name + s + "Qty: " + qty);
     			setGraphic(image);
     		}
     	});
