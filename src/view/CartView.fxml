@@ -21,7 +21,7 @@
    <bottom>
       <HBox prefHeight="50.0" prefWidth="650.0" BorderPane.alignment="CENTER">
          <children>
-            <Label contentDisplay="CENTER" prefHeight="27.0" prefWidth="24.0" text="Qty: ">
+            <Label contentDisplay="CENTER" prefHeight="27.0" prefWidth="24.0" style="-fx-background-radius: 0px;" text="Qty: ">
                <graphic>
                   <ComboBox fx:id="qtyBox" onAction="#qtyBoxChanged" prefHeight="27.0" prefWidth="125.0" style="-fx-background-radius: 0px;" />
                </graphic>
@@ -29,17 +29,17 @@
                   <Insets left="65.0" />
                </HBox.margin>
             </Label>
-            <ComboBox fx:id="removeQty" prefHeight="27.0" prefWidth="65.0">
+            <ComboBox fx:id="removeQty" prefHeight="27.0" prefWidth="65.0" style="-fx-background-radius: 0px;">
                <HBox.margin>
                   <Insets left="150.0" />
                </HBox.margin>
             </ComboBox>
-            <Button mnemonicParsing="false" onAction="#removeButtonClicked" text="Remove Item">
+            <Button mnemonicParsing="false" onAction="#removeButtonClicked" prefHeight="27.0" style="-fx-background-radius: 0px;" text="Remove Item">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#checkOutButtonClicked" text="Check Out">
+            <Button mnemonicParsing="false" onAction="#checkOutButtonClicked" prefHeight="27.0" style="-fx-background-radius: 0px;" text="Check Out">
                <HBox.margin>
                   <Insets left="90.0" />
                </HBox.margin>
