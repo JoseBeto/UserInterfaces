@@ -54,8 +54,12 @@ public class CartController implements MyController, Initializable{
 	
 	@FXML
     void listClicked(MouseEvent event) {
-		qtyBox.setValue(itemQty.get(itemNames.indexOf(cartList.getSelectionModel().getSelectedItem())).toString());
-		removeQty.setValue(itemQty.get(itemNames.indexOf(cartList.getSelectionModel().getSelectedItem())).toString());
+		String selected = cartList.getSelectionModel().getSelectedItem();
+		if(selected == null)
+			return;
+		
+		qtyBox.setValue(itemQty.get(itemNames.indexOf(selected)).toString());
+		removeQty.setValue(itemQty.get(itemNames.indexOf(selected)).toString());
     }
 
     @FXML

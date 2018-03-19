@@ -36,8 +36,8 @@ public class AppController implements Initializable {
 	private BorderPane rootPane = null;
 	private Connection conn;
 	
-	@FXML private ComboBox<String> categoryBox = new ComboBox<String>();
-    @FXML private ComboBox<String> accountBox = new ComboBox<String>();
+	@FXML private ComboBox<String> categoryBox;
+    @FXML private ComboBox<String> accountBox;
     @FXML private TextField searchBox;
 
 	public AppController() {
