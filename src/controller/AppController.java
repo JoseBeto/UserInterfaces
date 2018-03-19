@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import database.AppException;
 import database.ItemTableGateway;
 import database.UserTableGateway;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -35,8 +36,8 @@ public class AppController implements Initializable {
 	private BorderPane rootPane = null;
 	private Connection conn;
 	
-	@FXML private ComboBox<String> categoryBox;
-    @FXML private ComboBox<String> accountBox;
+	@FXML private ComboBox<String> categoryBox = new ComboBox<String>();
+    @FXML private ComboBox<String> accountBox = new ComboBox<String>();
     @FXML private TextField searchBox;
 
 	public AppController() {
@@ -73,7 +74,6 @@ public class AppController implements Initializable {
 					fxmlFile = this.getClass().getResource("/view/CartView.fxml");
 					controller = new CartController(new UserTableGateway(conn), new ItemTableGateway(conn));
 					break;
-					
 			}
 		
 			FXMLLoader loader = new FXMLLoader(fxmlFile);
@@ -114,35 +114,35 @@ public class AppController implements Initializable {
 	    	case "Log Out":
 	    		UserTableGateway gateway = new UserTableGateway(conn);
 				gateway.setUserById(1);
-				updateAccountBox();
-				changeView(LIST, null);
 				AlertHelper.showWarningMessage("Success!", "Logged out!", AlertType.INFORMATION);
+				updateAccountBox();
 				break;
     	}
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-		ObservableList<String> data = FXCollections.observableArrayList("Login", "Register");
-		accountBox.getItems().addAll(0, data);
-	}
-    
+    	ObservableList<String> data = FXCollections.observableArrayList("Login", "Register");
+    	accountBox.setItems(data);
+    }
+
     public void updateAccountBox() {
     	User user = User.getInstance();
-		if(user.getId() > 1) {
-			ObservableList<String> oldData = FXCollections.observableArrayList("Login", "Register");
+    	if(user.getId() > 1) {
+    		ObservableList<String> oldData = FXCollections.observableArrayList("Login", "Register");
 			ObservableList<String> data = FXCollections.observableArrayList("My Account", "My Cart", "My Lists", "Log Out");
 			
 			accountBox.getItems().addAll(data);
 			accountBox.getItems().removeAll(oldData);
-			accountBox.setValue("Account");
 		} else {
-			ObservableList<String> oldData = FXCollections.observableArrayList("My Account", "My Cart", "My Lists", "Log Out");
-			ObservableList<String> data = FXCollections.observableArrayList("Login", "Register");
-
-			accountBox.getItems().addAll(data);
-			accountBox.getItems().removeAll(oldData);
-			accountBox.setValue("Account");
+			Platform.runLater(() -> {
+				ObservableList<String> comboList = accountBox.getItems();
+				ObservableList<String> data = FXCollections.observableArrayList("Login", "Register");
+				
+				comboList.setAll(data);
+				
+				changeView(LIST, null);
+	    	});
 		}
     }
 	

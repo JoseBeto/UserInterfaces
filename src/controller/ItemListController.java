@@ -64,7 +64,5 @@ public class ItemListController implements Initializable, MyController {
     			setGraphic(image);
     		}
     	});
-		
-		
 	}
 }
