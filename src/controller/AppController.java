@@ -123,7 +123,7 @@ public class AppController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	ObservableList<String> data = FXCollections.observableArrayList("Login", "Register");
-    	accountBox.setItems(data);
+    	accountBox.getItems().setAll(data);
     }
 
     public void updateAccountBox() {
@@ -136,10 +136,8 @@ public class AppController implements Initializable {
 			accountBox.getItems().removeAll(oldData);
 		} else {
 			Platform.runLater(() -> {
-				ObservableList<String> comboList = accountBox.getItems();
 				ObservableList<String> data = FXCollections.observableArrayList("Login", "Register");
-				
-				comboList.setAll(data);
+				accountBox.getItems().setAll(data);
 				
 				changeView(LIST, null);
 	    	});
