@@ -104,9 +104,6 @@ public class CartController implements MyController, Initializable{
     	items.clear();
     	itemNames.clear();
     	itemQty.clear();
-    	flag = true;
-    	subtotal = 0.0;
-    	totalItems = 0;
     	
     	String cart = user.getCart().toString();
 
@@ -124,6 +121,14 @@ public class CartController implements MyController, Initializable{
 
     		cartList.getItems().add(updatedItem.getName());
     	}
+    	
+    	updateCart();
+    }
+    
+    public void updateCart() {
+    	flag = true;
+    	subtotal = 0.0;
+    	totalItems = 0;
     	
     	cartList.setCellFactory(param -> new ListCell<String>() {
     		ImageView image = new ImageView();
