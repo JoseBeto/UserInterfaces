@@ -62,7 +62,7 @@ public class ItemDetailController implements Initializable, MyController {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		nameLabel.setText(item.getName());
-		priceLabel.setText("Price: " + item.getPrice());
+		priceLabel.setText("Price: " + String.format("$%.2f", item.getPrice()));
 		itemImage.setImage(item.getImage());
 		descLabel.setText(item.getDesc());
 		

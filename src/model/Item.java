@@ -35,8 +35,8 @@ public class Item {
 		this.name.set(name);
 	}
 
-	public String getPrice() {
-		return String.format("$%.2f", price.get());
+	public double getPrice() {
+		return price.get();
 	}
 
 	public void setPrice(double price) {

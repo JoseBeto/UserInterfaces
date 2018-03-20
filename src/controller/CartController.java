@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import model.Item;
@@ -28,6 +29,7 @@ public class CartController implements MyController, Initializable{
 	@FXML private ListView<String> cartList;
 	@FXML private ComboBox<String> qtyBox;
 	@FXML private ComboBox<String> removeQty;
+	@FXML private Label totalLabel;
 	
 	private UserTableGateway gateway;
 	private ItemTableGateway itemGateway;
@@ -36,6 +38,9 @@ public class CartController implements MyController, Initializable{
 	private ObservableList<Item> items;
 	private ObservableList<String> itemNames;
 	private ObservableList<Integer> itemQty;
+	private double subtotal;
+	private int totalItems;
+	private boolean flag;
 	
 	public CartController(UserTableGateway gateway, ItemTableGateway itemGateway) {
     	this.gateway = gateway;
@@ -99,18 +104,16 @@ public class CartController implements MyController, Initializable{
     	items.clear();
     	itemNames.clear();
     	itemQty.clear();
-
-    	String cart = user.getCart().toString();
+    	flag = true;
+    	subtotal = 0.0;
+    	totalItems = 0;
     	
-    	items = FXCollections.observableArrayList();
-    	itemNames = FXCollections.observableArrayList();
-    	itemQty = FXCollections.observableArrayList();
+    	String cart = user.getCart().toString();
 
     	Properties props = new Properties();
     	try {
     		props.load(new StringReader(cart.substring(1, cart.length() - 1).replace(",", "\n")));
     	} catch (IOException e1) {
-    		// TODO Auto-generated catch block
     		e1.printStackTrace();
     	} 
     	for(Entry<Object, Object> e : props.entrySet()) {
@@ -121,16 +124,22 @@ public class CartController implements MyController, Initializable{
 
     		cartList.getItems().add(updatedItem.getName());
     	}
-
+    	
     	cartList.setCellFactory(param -> new ListCell<String>() {
     		ImageView image = new ImageView();
+    		
     		@Override
     		public void updateItem(String name, boolean empty) {
     			super.updateItem(name, empty);
-
+    			/* This gets rid of a bug where first item was being run through twice */
+    			if(flag && !empty) {
+    				flag = false;
+    				return;
+    			}
+    			
     			Item item;
     			int qty;
-
+    			
     			if (empty) {
     				setText(null);
     				setGraphic(null);
@@ -138,6 +147,9 @@ public class CartController implements MyController, Initializable{
     			} else {
     				item = items.get(itemNames.indexOf(name));
     				qty = itemQty.get(itemNames.indexOf(name));
+    				subtotal += (item.getPrice() * qty);
+    				totalItems += qty;
+    				
     				image.setImage(item.getImage());
     				image.setFitHeight(100);
     				image.setFitWidth(100);
@@ -146,9 +158,12 @@ public class CartController implements MyController, Initializable{
     			for(int i = 0; i < (25 - item.getName().length()); i++) {
     				s += " ";
     			}
+    			
     			setFont(Font.font("consolas"));
-    			setText("Name: " + name + s + "Qty: " + qty);
+    			setText("Name: " + name + s + "Qty: " + qty + "\t\tPrice: " + String.format("$%.2f", item.getPrice()));
     			setGraphic(image);
+    			
+    			totalLabel.setText(String.format("Subtotal (%d items): $%.2f", totalItems, subtotal));
     		}
     	});
     }
@@ -157,7 +172,7 @@ public class CartController implements MyController, Initializable{
     public void initialize(URL arg0, ResourceBundle arg1) {
     	ObservableList<String> data = FXCollections.observableArrayList("1", "2", "3", "4", "5");
 		qtyBox.setItems(data);
-		qtyBox.setStyle("-fx-padding:0 0 0 65");
+		qtyBox.setStyle("-fx-padding:0 0 0 51");
 		
 		removeQty.setItems(data);
 		
