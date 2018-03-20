@@ -135,12 +135,10 @@ public class User {
 	}
 	
 	public Boolean removeItemFromCart(int id, int qty) {
-		System.out.println(cart.toString());
 		if(cart.get(id) < qty) {
 			AlertHelper.showWarningMessage("Error!", "Select a valid qty to be removed!", AlertType.ERROR);
 			return false;
 		} else if(cart.get(id) == qty) {
-			System.out.println("qty " + cart.get(id) + " removed " + qty);
 			cart.remove(id);
 			return true;
 		}
