@@ -133,12 +133,16 @@ public class AppController implements Initializable {
     			ObservableList<String> data = FXCollections.observableArrayList("My Account", "My Cart", "My Lists", "Log Out");
 				accountBox.getItems().setAll(data);
 				
+				accountBox.setVisibleRowCount(4);
+				
 				changeView(LIST, null);
 	    	});
 		} else {
 			Platform.runLater(() -> {
 				ObservableList<String> data = FXCollections.observableArrayList("Login", "Register");
 				accountBox.getItems().setAll(data);
+				
+				accountBox.setVisibleRowCount(2);
 				
 				changeView(LIST, null);
 	    	});
