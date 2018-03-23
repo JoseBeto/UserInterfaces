@@ -6,12 +6,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.PasswordField;
 import userInterfaces.AlertHelper;
 
 public class LoginController implements MyController{
 
 	@FXML private TextField emailText;
-    @FXML private TextField passwordText;
+    @FXML private PasswordField passwordText;
 	
     private UserTableGateway gateway;
     
