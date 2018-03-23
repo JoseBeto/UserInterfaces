@@ -129,11 +129,12 @@ public class AppController implements Initializable {
     public void updateAccountBox() {
     	User user = User.getInstance();
     	if(user.getId() > 1) {
-    		ObservableList<String> oldData = FXCollections.observableArrayList("Login", "Register");
-			ObservableList<String> data = FXCollections.observableArrayList("My Account", "My Cart", "My Lists", "Log Out");
-			
-			accountBox.getItems().addAll(data);
-			accountBox.getItems().removeAll(oldData);
+    		Platform.runLater(() -> {
+    			ObservableList<String> data = FXCollections.observableArrayList("My Account", "My Cart", "My Lists", "Log Out");
+				accountBox.getItems().setAll(data);
+				
+				changeView(LIST, null);
+	    	});
 		} else {
 			Platform.runLater(() -> {
 				ObservableList<String> data = FXCollections.observableArrayList("Login", "Register");
