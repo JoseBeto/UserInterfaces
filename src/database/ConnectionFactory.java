@@ -3,8 +3,10 @@ package database;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 public class ConnectionFactory {
@@ -33,5 +35,16 @@ public class ConnectionFactory {
 		}
 				
 		return conn;
+	}
+	
+	public static Connection createSqlLiteConnection() throws AppException
+	{			
+		try {
+			String url = "jdbc:sqlite:src/database/userInterfaces_database.db";
+		    Connection conn = DriverManager.getConnection(url);
+		    return conn;
+		} catch (SQLException e) {
+		    return null;
+		}
 	}
 }
