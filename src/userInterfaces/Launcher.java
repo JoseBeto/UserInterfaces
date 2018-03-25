@@ -15,10 +15,6 @@ import javafx.stage.Stage;
 public class Launcher extends Application {
 	private Connection conn;
 	
-	/* Database Global Variable */
-	private boolean IS_SQLITE = true; //This will connect the app to sqlite
-	//private boolean IS_SQLITE = false; //This will connect the app to phpmyadmin
-
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		AppController controller = AppController.getInstance();
@@ -45,14 +41,7 @@ public class Launcher extends Application {
 	public void init() throws Exception {
 		super.init();
 		try {
-			if( IS_SQLITE )
-			{
-				conn = ConnectionFactory.createSqlLiteConnection();
-			}
-			else
-			{
-				conn = ConnectionFactory.createConnection();
-			}
+			conn = ConnectionFactory.createConnection();
 		} catch(AppException e) {
 			Platform.exit();
 		}

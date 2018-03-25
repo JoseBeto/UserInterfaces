@@ -6,7 +6,6 @@
 		</accessrules>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="mysql-connector-java-5.1.40-bin.jar"/>
 	<classpathentry kind="lib" path="sqlite-jdbc-3.21.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
