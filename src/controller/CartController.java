@@ -137,6 +137,7 @@ public class CartController implements MyController, Initializable{
     		public void updateItem(String name, boolean empty) {
     			super.updateItem(name, empty);
     			/* This gets rid of a bug where first item was being run through twice */
+    			System.out.println("test" + items + name + totalItems);
     			if(flag && !empty) {
     				flag = false;
     				return;
@@ -177,7 +178,7 @@ public class CartController implements MyController, Initializable{
     public void initialize(URL arg0, ResourceBundle arg1) {
     	ObservableList<String> data = FXCollections.observableArrayList("1", "2", "3", "4", "5");
 		qtyBox.setItems(data);
-		qtyBox.setStyle("-fx-padding:0 0 0 51");
+		qtyBox.setStyle("-fx-padding:0 0 0 65");
 		
 		removeQty.setItems(data);
 		
