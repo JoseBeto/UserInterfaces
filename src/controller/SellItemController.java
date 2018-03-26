@@ -93,7 +93,7 @@ public class SellItemController implements MyController{
 			 if(file.exists()){
 				 break;
 			 }
-			 String message = "File • " + file.getName() + " • does not exist in \n" + file.getParent() + ":\n" + "Do you want to select a different file?";
+			 String message = "File " + file.getName() + " does not exist in \n" + file.getParent() + ":\n" + "Do you want to select a different file?";
 	         String title = "Warning";
 	         int reply = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
 	         if(reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION){
