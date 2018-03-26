@@ -81,7 +81,9 @@ public class CartController implements MyController, Initializable{
     	
     	gateway.updateCart(user);
     	
-    	updatedList();
+    	updateCart();
+    	updateList();
+    	updateTotalLabel();
     }
 
     @FXML
@@ -96,10 +98,11 @@ public class CartController implements MyController, Initializable{
     	
     	gateway.updateCart(user);
     	
-    	updatedList();
+    	updateCart();
+    	updateTotalLabel();
     }
 
-    public void updatedList() {
+    public void updateCart() {
     	cartList.getItems().clear();
     	items.clear();
     	itemNames.clear();
@@ -121,14 +124,10 @@ public class CartController implements MyController, Initializable{
 
     		cartList.getItems().add(updatedItem.getName());
     	}
-    	
-    	updateCart();
     }
     
-    public void updateCart() {
+    public void updateList() {
     	flag = true;
-    	subtotal = 0.0;
-    	totalItems = 0;
     	
     	cartList.setCellFactory(param -> new ListCell<String>() {
     		ImageView image = new ImageView();
@@ -137,7 +136,6 @@ public class CartController implements MyController, Initializable{
     		public void updateItem(String name, boolean empty) {
     			super.updateItem(name, empty);
     			/* This gets rid of a bug where first item was being run through twice */
-    			System.out.println("test" + items + name + totalItems);
     			if(flag && !empty) {
     				flag = false;
     				return;
@@ -153,25 +151,36 @@ public class CartController implements MyController, Initializable{
     			} else {
     				item = items.get(itemNames.indexOf(name));
     				qty = itemQty.get(itemNames.indexOf(name));
-    				subtotal += (item.getPrice() * qty);
-    				totalItems += qty;
     				
     				image.setImage(item.getImage());
     				image.setFitHeight(100);
     				image.setFitWidth(100);
+    				
+    				String s = "";
+        			for(int i = 0; i < (25 - item.getName().length()); i++) {
+        				s += " ";
+        			}
+        			
+        			setFont(Font.font("consolas"));
+        			setText("Name: " + name + s + "Qty: " + qty + "\t\tPrice: " + String.format("$%.2f", item.getPrice()));
+        			setGraphic(image);
     			}
-    			String s = "";
-    			for(int i = 0; i < (25 - item.getName().length()); i++) {
-    				s += " ";
-    			}
-    			
-    			setFont(Font.font("consolas"));
-    			setText("Name: " + name + s + "Qty: " + qty + "\t\tPrice: " + String.format("$%.2f", item.getPrice()));
-    			setGraphic(image);
-    			
-    			totalLabel.setText(String.format("Subtotal (%d items): $%.2f", totalItems, subtotal));
     		}
     	});
+    }
+    
+    public void updateTotalLabel() {
+    	double subtotal = 0.0;
+    	int totalItems = 0;
+    	
+    	for(String name : itemNames) {
+    		Item item = items.get(itemNames.indexOf(name));
+    		int qty = itemQty.get(itemNames.indexOf(name));
+    		subtotal += (item.getPrice() * qty);
+    		totalItems += qty;
+    	}
+
+    	totalLabel.setText(String.format("Subtotal (%d items): $%.2f", totalItems, subtotal));
     }
 
     @Override
@@ -186,6 +195,8 @@ public class CartController implements MyController, Initializable{
 		itemNames = FXCollections.observableArrayList();
 		itemQty = FXCollections.observableArrayList();
 
-		updatedList();
+		updateCart();
+		updateList();
+		updateTotalLabel();
 	}
 }
