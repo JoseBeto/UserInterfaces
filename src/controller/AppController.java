@@ -30,8 +30,9 @@ public class AppController implements Initializable {
 	public final static int LOGIN = 3;
 	public final static int REGISTER = 4;
 	public final static int MY_ACCOUNT = 5;
-	public final static int MY_CART = 6;
-	public final static int ADD_FUNDS = 7;
+	public final static int SELL_ITEM = 6;
+	public final static int MY_CART = 7;
+	public final static int ADD_FUNDS = 8;
 	
 	private static AppController myInstance = null;
 	private BorderPane rootPane = null;
@@ -70,6 +71,10 @@ public class AppController implements Initializable {
 				case MY_ACCOUNT:
 					fxmlFile = this.getClass().getResource("/view/AccountView.fxml");
 					controller = new AccountController(new UserTableGateway(conn));
+					break;
+				case SELL_ITEM:
+					fxmlFile = this.getClass().getResource("/view/SellItemView.fxml");
+					controller = new SellItemController(new ItemTableGateway(conn));
 					break;
 				case MY_CART:
 					fxmlFile = this.getClass().getResource("/view/CartView.fxml");
@@ -112,6 +117,9 @@ public class AppController implements Initializable {
 	    		break;
 	    	case "My Account":
 	    		changeView(MY_ACCOUNT, null);
+	    		break;
+	    	case "Sell Item":
+	    		changeView(SELL_ITEM, null);
 	    		break;
 	    	case "My Cart":
 	    		changeView(MY_CART, null);

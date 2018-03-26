@@ -46,6 +46,10 @@ public class Item {
 	public Image getImage() {
 		return (new Image(image.get()));
 	}
+	
+	public String getImageString() {
+		return image.get();
+	}
 
 	public void setImage(String image) {
 		this.image.set(image);

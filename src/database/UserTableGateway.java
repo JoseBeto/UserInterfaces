@@ -118,13 +118,14 @@ public class UserTableGateway {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("update user set first_name = ?, last_name = ?, email = ?, "
-					+ "password = ?, money = ? where id = ?");
+					+ "password = ?, money = ? , role = ? where id = ?");
 			st.setString(1, user.getFirstName());
 			st.setString(2, user.getLastName());
 			st.setString(3, user.getEmail());
 			st.setString(4, user.getPassword());
 			st.setDouble(5, user.getMoney());
-			st.setInt(6, user.getId());
+			st.setInt(6, user.getRole());
+			st.setInt(7, user.getId());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

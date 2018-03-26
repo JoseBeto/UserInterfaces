@@ -70,8 +70,6 @@ public class AccountController implements MyController, Initializable{
     	
     	gateway.updateUser(user);
     	AlertHelper.showWarningMessage("Success!", "Account upgraded!", AlertType.INFORMATION);
-    	
-    	AppController.getInstance().changeView(AppController.MY_ACCOUNT, null);
     }
 
 	@Override

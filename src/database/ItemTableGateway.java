@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Item;
@@ -13,6 +14,35 @@ public class ItemTableGateway {
 	
 	public ItemTableGateway(Connection conn) {
 		this.conn = conn;
+	}
+	
+	public void AddItem(Item item) throws AppException {
+		PreparedStatement st = null;
+		try {
+			String statement = "insert into item (name, price, image, "
+					+ "description) values (?, ?, ?, ?)";
+			st = conn.prepareStatement(statement, Statement.RETURN_GENERATED_KEYS);
+			st.setString(1, item.getName());
+			st.setDouble(2, item.getPrice());
+			st.setString(3, item.getImageString());
+			st.setString(4, item.getDesc());
+			st.executeUpdate();
+
+			ResultSet rs = st.getGeneratedKeys();
+			rs.next();
+			item.setId(rs.getInt(1));
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException(e);
+		} finally {
+			try {
+				if(st != null)
+					st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new AppException(e);
+			}
+		}
 	}
 	
 	public ObservableList<Item> getItems() throws AppException {
