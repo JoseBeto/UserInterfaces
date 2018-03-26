@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
-
 import java.util.Properties;
 import java.util.Map.Entry;
 import database.ItemTableGateway;
@@ -23,6 +22,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import model.Item;
 import model.User;
+import userInterfaces.AlertHelper;
 
 public class CartController implements MyController, Initializable{
 
@@ -38,7 +38,9 @@ public class CartController implements MyController, Initializable{
 	private ObservableList<Item> items;
 	private ObservableList<String> itemNames;
 	private ObservableList<Integer> itemQty;
+	
 	private boolean flag;
+	private double subtotal;
 	
 	public CartController(UserTableGateway gateway, ItemTableGateway itemGateway) {
     	this.gateway = gateway;
@@ -52,7 +54,24 @@ public class CartController implements MyController, Initializable{
 	
 	@FXML
     void checkOutButtonClicked(ActionEvent event) {
-
+		if( user.getMoney() < subtotal )
+		{	//Insufficient Funds
+			System.out.println("Insufficient Funds.");
+			AppController.getInstance().changeView(AppController.ADD_FUNDS, null);
+		}
+		else
+		{	//Sufficient Funds
+			if(
+				AlertHelper.showConfirmationMessage("Are you sure you want to submit this transaction?", "Submit transaction?", "Press OK to Confirm.")
+			  )
+			{
+				User.getInstance().setMoney(User.getInstance().getMoney() - subtotal);
+				User.getInstance().emptyCart();
+				new UserTableGateway(AppController.getInstance().getConnection()).updateCart(User.getInstance());
+				AlertHelper.showConfirmationMessage("Your transaction was successful!", "Transaction Complete.", "Press OK to Continue.");
+				AppController.getInstance().changeView(AppController.LIST, null);
+			}
+		}
     }
 	
 	@FXML
@@ -168,7 +187,7 @@ public class CartController implements MyController, Initializable{
     }
     
     public void updateTotalLabel() {
-    	double subtotal = 0.0;
+    	subtotal = 0.0;
     	int totalItems = 0;
     	
     	for(String name : itemNames) {

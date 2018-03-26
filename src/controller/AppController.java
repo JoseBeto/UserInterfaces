@@ -31,6 +31,7 @@ public class AppController implements Initializable {
 	public final static int REGISTER = 4;
 	public final static int MY_ACCOUNT = 5;
 	public final static int MY_CART = 6;
+	public final static int ADD_FUNDS = 7;
 	
 	private static AppController myInstance = null;
 	private BorderPane rootPane = null;
@@ -73,6 +74,10 @@ public class AppController implements Initializable {
 				case MY_CART:
 					fxmlFile = this.getClass().getResource("/view/CartView.fxml");
 					controller = new CartController(new UserTableGateway(conn), new ItemTableGateway(conn));
+					break;
+				case ADD_FUNDS:
+					fxmlFile = this.getClass().getResource("/view/AddFundsView.fxml");
+					//controller = new CartController(new UserTableGateway(conn), new
 					break;
 			}
 		
