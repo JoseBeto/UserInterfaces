@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 
 import java.util.Properties;
 import java.util.Map.Entry;
+
+import userInterfaces.AlertHelper;
 import database.ItemTableGateway;
 import database.UserTableGateway;
 import javafx.collections.FXCollections;
@@ -21,6 +24,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Alert.AlertType;
 import model.Item;
 import model.User;
 
@@ -53,8 +57,18 @@ public class CartController implements MyController, Initializable{
     }
 	
 	@FXML
-    void checkOutButtonClicked(ActionEvent event) {
-
+    void checkOutButtonClicked(ActionEvent event) 
+	{
+		if( user.getMoney() < subtotal )
+		{	//Insufficient Funds
+			System.out.println("Insufficient Funds.");
+			AppController.getInstance().changeView(AppController.ADD_FUNDS, null);
+		}
+		else
+		{	//Sufficient Funds
+			System.out.println("Sufficient Funds.");
+			AlertHelper.showConfirmationMessage("Are you sure you want to submit this transaction?", "Submit transaction?", "Press OK to Confirm.");
+		}
     }
 	
 	@FXML
