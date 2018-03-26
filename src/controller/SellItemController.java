@@ -1,11 +1,8 @@
 package controller;
 
-import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -17,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
 import model.Item;
 import userInterfaces.AlertHelper;
@@ -26,9 +24,10 @@ public class SellItemController implements MyController{
     @FXML private TextField nameText;
     @FXML private TextField priceText;
     @FXML private TextArea description;
+    @FXML private ImageView imageAddedIndicator;
+    
     private String image;
     private File file;
-    
     private Boolean imageAdded = false;
     private ItemTableGateway gateway;
 	
@@ -49,9 +48,10 @@ public class SellItemController implements MyController{
     		return;
     	}
 		
-		image = "/itemIcons/" + nameText.getText() + ".jpg";
+		String name = nameText.getText().replaceAll(" ", "_");
+		image = "/itemIcons/" + name + ".jpg";
 		try {
-            File dest = new File("V:\\git\\UserInterfaces\\src\\itemIcons\\" + nameText.getText() + ".jpg");
+            File dest = new File("\\itemIcons\\" + name + ".jpg");
             Files.copy(file.toPath(), dest.toPath());
         } catch (IOException ex) {
         	AlertHelper.showWarningMessage("Error!", "Image Error!", AlertType.ERROR);
@@ -100,6 +100,7 @@ public class SellItemController implements MyController{
 	        	 return;
 	         }
 		}
+		imageAddedIndicator.setImage(new Image("/view/checkmark.png"));
 		
     	imageAdded = true;
     }

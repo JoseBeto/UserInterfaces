@@ -28,7 +28,7 @@
       <TextField fx:id="priceText" layoutX="257.0" layoutY="125.0" prefWidth="200.0" promptText="price" />
       <Button layoutX="397.0" layoutY="377.0" mnemonicParsing="false" onAction="#saveButtonClicked" prefHeight="25.0" prefWidth="60.0" style="-fx-background-radius: 0px;" text="Save" />
       <Label alignment="CENTER_RIGHT" layoutX="152.0" layoutY="160.0" prefHeight="25.0" prefWidth="100.0" text="Description" />
-      <Button layoutY="10.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="3.0" prefWidth="130.0" style="-fx-background-radius: 0px;">
+      <Button layoutY="10.0" mnemonicParsing="false" onAction="#backButtonClicked" onMouseClicked="#backButtonClicked" prefHeight="3.0" prefWidth="130.0" style="-fx-background-radius: 0px;">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -41,6 +41,10 @@
          </padding>
       </Button>
       <TextArea fx:id="description" layoutX="257.0" layoutY="160.0" prefHeight="200.0" prefWidth="200.0" promptText="summary of item..." />
-      <Button layoutX="257.0" layoutY="378.0" mnemonicParsing="false" onAction="#addImageClicked" prefHeight="25.0" style="-fx-background-radius: 0px;" text="Add image" />
+      <Button fx:id="addImageButton" layoutX="257.0" layoutY="378.0" mnemonicParsing="false" onAction="#addImageClicked" prefHeight="25.0" style="-fx-background-radius: 0px;" text="Add image" />
+      <ImageView fx:id="imageAddedIndicator" fitHeight="25.0" fitWidth="25.0" layoutX="227.0" layoutY="378.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Red_X.png" />
+         </image></ImageView>
    </children>
 </Pane>
