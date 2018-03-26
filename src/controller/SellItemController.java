@@ -26,7 +26,6 @@ public class SellItemController implements MyController{
     @FXML private TextArea description;
     @FXML private ImageView imageAddedIndicator;
     
-    private String image;
     private File file;
     private Boolean imageAdded = false;
     private ItemTableGateway gateway;
@@ -49,7 +48,8 @@ public class SellItemController implements MyController{
     	}
 		
 		String name = nameText.getText().replaceAll(" ", "_");
-		image = "/itemIcons/" + name + ".jpg";
+		String image = "/itemIcons/" + name + ".jpg";
+		
 		try {
             File dest = new File(System.getProperty("user.dir") + "/src/itemIcons/" + name + ".jpg");
             Files.copy(file.toPath(), dest.toPath());

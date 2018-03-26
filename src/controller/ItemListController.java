@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
@@ -51,12 +50,8 @@ public class ItemListController implements Initializable, MyController {
     				setText(null);
     				setGraphic(null);
     				return;
-    			} else {
-    				String name = item.getName().replaceAll(" ", "_");
-    				String imageString = System.getProperty("user.dir") + "\\src\\itemIcons\\" + name + ".jpg";
-
-    				System.out.println(imageString);
-    				image.setImage(new Image(imageString));
+    			} else {;
+    				image.setImage(item.getImage());
     				image.setFitHeight(75);
     				image.setFitWidth(75);
     			}
