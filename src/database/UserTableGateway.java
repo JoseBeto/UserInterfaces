@@ -63,7 +63,7 @@ public class UserTableGateway {
 					return false;
 				}
 				user = new User(rs.getString("first_name"), rs.getString("last_name"), rs.getString("email"), 
-						rs.getString("password"), rs.getDouble("money"), rs.getString("cart"));
+						rs.getString("password"), rs.getDouble("money"), rs.getString("cart"), rs.getInt("role"));
 				user.setId(rs.getInt("id"));
 				User.changeInstance(user);
 			} else {
@@ -96,7 +96,7 @@ public class UserTableGateway {
 			
 			if(rs.next() == true) {
 				user = new User(rs.getString("first_name"), rs.getString("last_name"), rs.getString("email"), 
-						rs.getString("password"), rs.getDouble("money"), rs.getString("cart"));
+						rs.getString("password"), rs.getDouble("money"), rs.getString("cart"), rs.getInt("role"));
 				user.setId(rs.getInt("id"));
 				User.changeInstance(user);
 			}

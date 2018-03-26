@@ -16,12 +16,16 @@ public class User {
 	private static User myInstance = null;
 	
 	private int id;
+	private int role;
 	private SimpleStringProperty firstName;
 	private SimpleStringProperty lastName;
 	private SimpleStringProperty email;
 	private SimpleStringProperty password;
 	private SimpleDoubleProperty money;
 	private HashMap<Integer, Integer> cart;
+	
+	public final static int CUSTOMER = 2;
+	public final static int SELLER = 1;
 
 	public User() {
 		this.firstName = new SimpleStringProperty();
@@ -37,9 +41,10 @@ public class User {
 		setPassword("");
 		setMoney(0.0);
 		setId(1);
+		setRole(CUSTOMER);
 	}
 	
-	public User(String fName, String lName, String email, String password, Double money, String cart) {
+	public User(String fName, String lName, String email, String password, Double money, String cart, int role) {
 		this.firstName = new SimpleStringProperty();
 		this.lastName = new SimpleStringProperty();
 		this.email = new SimpleStringProperty();
@@ -53,6 +58,7 @@ public class User {
 		setPassword(password);
 		setMoney(money);
 		setCart(cart);
+		setRole(role);
 	}
 	
 	public String getFirstName() {
@@ -158,6 +164,14 @@ public class User {
 	
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public int getRole() {
+		return role;
+	}
+	
+	public void setRole(int role) {
+		this.role = role;
 	}
 
 	@Override

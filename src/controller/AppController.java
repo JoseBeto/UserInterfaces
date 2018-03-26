@@ -134,14 +134,25 @@ public class AppController implements Initializable {
     public void updateAccountBox() {
     	User user = User.getInstance();
     	if(user.getId() > 1) {
-    		Platform.runLater(() -> {
-    			ObservableList<String> data = FXCollections.observableArrayList("My Account", "My Cart", "My Lists", "Log Out");
-				accountBox.getItems().setAll(data);
-				
-				accountBox.setVisibleRowCount(4);
-				
-				changeView(LIST, null);
-	    	});
+    		if(user.getRole() == User.CUSTOMER) {
+    			Platform.runLater(() -> {
+        			ObservableList<String> data = FXCollections.observableArrayList("My Account", "My Cart", "My Lists", "Log Out");
+    				accountBox.getItems().setAll(data);
+    				
+    				accountBox.setVisibleRowCount(4);
+    				
+    				changeView(LIST, null);
+    	    	});
+    		} else if(user.getRole() == User.SELLER) {
+    			Platform.runLater(() -> {
+        			ObservableList<String> data = FXCollections.observableArrayList("My Account", "Sell Item", "My Cart", "My Lists", "Log Out");
+    				accountBox.getItems().setAll(data);
+    				
+    				accountBox.setVisibleRowCount(5);
+    				
+    				changeView(LIST, null);
+    	    	});
+    		}
 		} else {
 			Platform.runLater(() -> {
 				ObservableList<String> data = FXCollections.observableArrayList("Login", "Register");
