@@ -118,12 +118,13 @@ public class UserTableGateway {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("update user set first_name = ?, last_name = ?, email = ?, "
-					+ "password = ? where id = ?");
+					+ "password = ?, money = ? where id = ?");
 			st.setString(1, user.getFirstName());
 			st.setString(2, user.getLastName());
 			st.setString(3, user.getEmail());
 			st.setString(4, user.getPassword());
-			st.setInt(5, user.getId());
+			st.setDouble(5, user.getMoney());
+			st.setInt(6, user.getId());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -142,9 +143,10 @@ public class UserTableGateway {
 	public void updateCart(User user) throws AppException {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("update user set cart = ? where id = ?");
+			st = conn.prepareStatement("update user set cart = ?, money = ? where id = ?");
 			st.setString(1, user.getCart().toString());
-			st.setInt(2, user.getId());
+			st.setDouble(2, user.getMoney());
+			st.setInt(3, user.getId());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -159,4 +161,18 @@ public class UserTableGateway {
 			}
 		}
 	}
+	
+	public void insert()
+	{
+		String sql = "INSERT INTO user(id, first_name, last_name, money, email, password, cart) VALUES(NULL, 'David', 'Martinez', '500.00', 'drmartinez@yahoo.com', 'Pass12', NULL)";
+		try {
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 }

@@ -66,8 +66,16 @@ public class CartController implements MyController, Initializable{
 		}
 		else
 		{	//Sufficient Funds
-			System.out.println("Sufficient Funds.");
-			AlertHelper.showConfirmationMessage("Are you sure you want to submit this transaction?", "Submit transaction?", "Press OK to Confirm.");
+			if(
+				AlertHelper.showConfirmationMessage("Are you sure you want to submit this transaction?", "Submit transaction?", "Press OK to Confirm.")
+			  )
+			{
+				User.getInstance().setMoney(User.getInstance().getMoney() - subtotal);
+				User.getInstance().emptyCart();
+				new UserTableGateway(AppController.getInstance().getConnection()).updateCart(User.getInstance());
+				AlertHelper.showConfirmationMessage("Your transaction was successful!", "Transaction Complete.", "Press OK to Continue.");
+				AppController.getInstance().changeView(AppController.getInstance().LIST, null);
+			}
 		}
     }
 	

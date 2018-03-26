@@ -134,6 +134,11 @@ public class User {
 		cart.put(id, qty);
 	}
 	
+	public void emptyCart()
+	{
+		this.cart = new HashMap<Integer, Integer>();
+	}
+	
 	public Boolean removeItemFromCart(int id, int qty) {
 		if(cart.get(id) < qty) {
 			AlertHelper.showWarningMessage("Error!", "Select a valid qty to be removed!", AlertType.ERROR);
