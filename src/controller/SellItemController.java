@@ -51,7 +51,7 @@ public class SellItemController implements MyController{
 		String name = nameText.getText().replaceAll(" ", "_");
 		image = "/itemIcons/" + name + ".jpg";
 		try {
-            File dest = new File("\\itemIcons\\" + name + ".jpg");
+            File dest = new File(System.getProperty("user.dir") + "/src/itemIcons/" + name + ".jpg");
             Files.copy(file.toPath(), dest.toPath());
         } catch (IOException ex) {
         	AlertHelper.showWarningMessage("Error!", "Image Error!", AlertType.ERROR);
