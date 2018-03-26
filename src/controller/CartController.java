@@ -38,8 +38,6 @@ public class CartController implements MyController, Initializable{
 	private ObservableList<Item> items;
 	private ObservableList<String> itemNames;
 	private ObservableList<Integer> itemQty;
-	private double subtotal;
-	private int totalItems;
 	private boolean flag;
 	
 	public CartController(UserTableGateway gateway, ItemTableGateway itemGateway) {
