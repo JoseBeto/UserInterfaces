@@ -3,7 +3,6 @@ package controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import database.UserTableGateway;
 import userInterfaces.AlertHelper;
 import model.CardPayment;
@@ -16,7 +15,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -124,7 +122,7 @@ public class AddFundsController implements Initializable
 				User.getInstance().setMoney(User.getInstance().getMoney() + payMethod.getAmount());
 				new UserTableGateway(AppController.getInstance().getConnection()).updateUser(User.getInstance());
 				AlertHelper.showConfirmationMessage("Your submission was successful!", "Transaction Complete.", "Press OK to Continue.");
-				AppController.getInstance().changeView(AppController.getInstance().MY_CART, null);
+				AppController.getInstance().changeView(AppController.MY_CART, null);
 			}
 		}
 	}
