@@ -52,9 +52,11 @@ public class ItemListController implements Initializable, MyController {
     				setGraphic(null);
     				return;
     			} else {
-    				System.out.println(System.getProperty("user.dir") + "/src/itemIcons/" + item.getName() + ".jpg");
-    				
-    				image.setImage(item.getImage());
+    				String name = item.getName().replaceAll(" ", "_");
+    				String imageString = System.getProperty("user.dir") + "\\src\\itemIcons\\" + name + ".jpg";
+
+    				System.out.println(imageString);
+    				image.setImage(new Image(imageString));
     				image.setFitHeight(75);
     				image.setFitWidth(75);
     			}
