@@ -170,15 +170,15 @@ public class CartController implements MyController, Initializable{
     				qty = itemQty.get(itemNames.indexOf(name));
     				
     				image.setImage(item.getImage());
-    				image.setFitHeight(100);
-    				image.setFitWidth(100);
+    				image.setFitHeight(120);
+    				image.setFitWidth(120);
     				
     				String s = "";
         			for(int i = 0; i < (25 - item.getName().length()); i++) {
         				s += " ";
         			}
         			
-        			setFont(Font.font("consolas"));
+        			setFont(new Font("consolas", 14));
         			setText("Name: " + name + s + "Qty: " + qty + "\t\tPrice: " + String.format("$%.2f", item.getPrice()));
         			setGraphic(image);
     			}
@@ -204,7 +204,7 @@ public class CartController implements MyController, Initializable{
     public void initialize(URL arg0, ResourceBundle arg1) {
     	ObservableList<String> data = FXCollections.observableArrayList("1", "2", "3", "4", "5");
 		qtyBox.setItems(data);
-		qtyBox.setStyle("-fx-padding:0 0 0 65");
+		qtyBox.setStyle("-fx-padding:0 0 0 108");
 		
 		removeQty.setItems(data);
 		

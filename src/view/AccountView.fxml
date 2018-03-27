@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -15,23 +9,46 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="65.0" prefWidth="1476.0" text="My Account">
+      <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="65.0" prefWidth="1472.0" text="My Account">
          <font>
             <Font name="Consolas" size="36.0" />
          </font>
       </Label>
-      <Label alignment="CENTER_RIGHT" layoutX="192.0" layoutY="90.0" prefHeight="25.0" prefWidth="60.0" text="Email" />
-      <Label alignment="CENTER_RIGHT" layoutX="152.0" layoutY="125.0" prefHeight="25.0" prefWidth="100.0" text="First Name" />
-      <TextField fx:id="emailText" layoutX="257.0" layoutY="90.0" prefWidth="200.0" promptText="email" />
-      <TextField fx:id="firstNameText" layoutX="257.0" layoutY="125.0" prefWidth="200.0" promptText="first name" />
-      <Button layoutX="306.0" layoutY="348.0" mnemonicParsing="false" onAction="#saveButtonClicked" prefHeight="25.0" prefWidth="40.0" style="-fx-background-radius: 0px;" text="Save" />
-      <Label alignment="CENTER_RIGHT" layoutX="152.0" layoutY="160.0" prefHeight="25.0" prefWidth="100.0" text="Last Name" />
-      <TextField fx:id="lastNameText" layoutX="257.0" layoutY="160.0" prefWidth="200.0" promptText="last name" />
-      <Label alignment="CENTER_RIGHT" layoutX="192.0" layoutY="195.0" prefHeight="25.0" prefWidth="60.0" text="Password" />
-      <TextField fx:id="passwordText" layoutX="257.0" layoutY="195.0" prefWidth="200.0" promptText="password" />
-      <Button layoutY="10.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="3.0" prefWidth="130.0" style="-fx-background-radius: 0px;">
+      <Label alignment="CENTER_RIGHT" layoutX="560.0" layoutY="160.0" prefHeight="30.0" prefWidth="100.0" text="Email">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font></Label>
+      <Label alignment="CENTER_RIGHT" layoutX="560.0" layoutY="210.0" prefHeight="30.0" prefWidth="100.0" text="First Name">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font></Label>
+      <TextField fx:id="emailText" layoutX="670.0" layoutY="160.0" prefHeight="30.0" prefWidth="250.0" promptText="email">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font></TextField>
+      <TextField fx:id="firstNameText" layoutX="670.0" layoutY="210.0" prefHeight="30.0" prefWidth="250.0" promptText="first name">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font></TextField>
+      <Label alignment="CENTER_RIGHT" layoutX="560.0" layoutY="260.0" prefHeight="30.0" prefWidth="100.0" text="Last Name">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font></Label>
+      <TextField fx:id="lastNameText" layoutX="670.0" layoutY="260.0" prefHeight="30.0" prefWidth="250.0" promptText="last name">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font></TextField>
+      <Label alignment="CENTER_RIGHT" layoutX="560.0" layoutY="310.0" prefHeight="30.0" prefWidth="100.0" text="Password">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font></Label>
+      <TextField fx:id="passwordText" layoutX="670.0" layoutY="310.0" prefHeight="30.0" prefWidth="250.0" promptText="password">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font></TextField>
+      <Button layoutY="10.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="3.0" prefWidth="176.0" style="-fx-background-radius: 0px;">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -43,10 +60,29 @@
             <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
          </padding>
       </Button>
-      <Label alignment="CENTER_RIGHT" layoutX="192.0" layoutY="230.0" prefHeight="25.0" prefWidth="60.0" text="Money" />
-      <Label fx:id="moneyLabel" layoutX="257.0" layoutY="230.0" prefHeight="25.0" prefWidth="200.0" />
-      <Button fx:id="becomeSellerButton" layoutX="457.0" layoutY="265.0" mnemonicParsing="false" onAction="#becomeSellerClicked" prefHeight="25.0" prefWidth="100.0" style="-fx-background-radius: 0px;" text="Become a seller" />
-      <Label alignment="CENTER_RIGHT" layoutX="192.0" layoutY="265.0" prefHeight="25.0" prefWidth="60.0" text="Role:" />
-      <Label fx:id="roleLabel" layoutX="257.0" layoutY="265.0" prefHeight="25.0" prefWidth="200.0" />
+      <Label alignment="CENTER_RIGHT" layoutX="560.0" layoutY="360.0" prefHeight="30.0" prefWidth="100.0" text="Money">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font></Label>
+      <Label fx:id="moneyLabel" layoutX="670.0" layoutY="360.0" prefHeight="30.0" prefWidth="250.0">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font></Label>
+      <Button fx:id="becomeSellerButton" layoutX="920.0" layoutY="410.0" mnemonicParsing="false" onAction="#becomeSellerClicked" prefHeight="30.0" prefWidth="150.0" style="-fx-background-radius: 0px;" text="Become a seller">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font></Button>
+      <Label alignment="CENTER_RIGHT" layoutX="560.0" layoutY="410.0" prefHeight="30.0" prefWidth="100.0" text="Role:">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font></Label>
+      <Label fx:id="roleLabel" layoutX="670.0" layoutY="410.0" prefHeight="30.0" prefWidth="250.0">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font></Label>
+      <Button layoutX="720.0" layoutY="582.0" mnemonicParsing="false" onAction="#saveButtonClicked" prefHeight="30.0" prefWidth="60.0" style="-fx-background-radius: 0px;" text="Save">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font></Button>
    </children>
 </Pane>

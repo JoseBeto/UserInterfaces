@@ -52,14 +52,14 @@ public class ItemListController implements Initializable, MyController {
     				return;
     			} else {;
     				image.setImage(item.getImage());
-    				image.setFitHeight(75);
-    				image.setFitWidth(75);
+    				image.setFitHeight(120);
+    				image.setFitWidth(120);
     			}
     			String s = "";
     			for(int i = 0; i < (25 - item.getName().length()); i++) {
     				s += " ";
     			}
-    			setFont(Font.font("consolas"));
+    			setFont(new Font("consolas", 14));
     			setText(item.getName() + s + String.format("$%.2f", item.getPrice()));
     			setGraphic(image);
     		}
