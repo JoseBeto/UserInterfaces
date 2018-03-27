@@ -64,6 +64,11 @@ public class SellItemController implements MyController{
     	
     	gateway.AddItem(item);
     	
+    	try { //Giving time for project to refresh itself
+			Thread.sleep(1700);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
     	AlertHelper.showWarningMessage("Success!", "Item created!", AlertType.INFORMATION);
     	
     	AppController.getInstance().changeView(AppController.LIST, null);
