@@ -28,7 +28,7 @@ public class Launcher extends Application {
 		Parent root = loader.load();
 		controller.setRootPane((BorderPane) root);
 		
-		Scene scene = new Scene(root, 650, 450);
+		Scene scene = new Scene(root, 1500, 900);
 	    
 		primaryStage.setTitle("userInterfaces");
 		primaryStage.setScene(scene);
