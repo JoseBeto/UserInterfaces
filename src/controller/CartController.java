@@ -14,7 +14,6 @@ import database.UserTableGateway;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -24,9 +23,7 @@ import model.Item;
 import model.User;
 import userInterfaces.AlertHelper;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class CartController implements MyController, Initializable{
@@ -143,24 +140,28 @@ public class CartController implements MyController, Initializable{
 
     	ObservableList<Integer> data = FXCollections.observableArrayList(1, 2, 3, 4, 5);
     	qtyColumn.setCellFactory(tc -> {
-            ComboBox<Integer> combo = new ComboBox<>();
-            combo.getItems().addAll(data);
-            TableCell<Item, Integer> cell = new TableCell<Item, Integer>() {
-                @Override
-                protected void updateItem(Integer reason, boolean empty) {
-                    super.updateItem(reason, empty);
-                    if (empty) {
-                        setGraphic(null);
-                    } else {
-                        combo.setValue(reason);
-                        setGraphic(combo);
-                    }
-                }
-            };
-            combo.setOnAction(e -> System.out.println("updated")
-            	/*user.updateCart(cell.getItem(), combo.getValue())*/);
-            return cell ;
-        });
+    		ComboBox<Integer> combo = new ComboBox<>();
+    		combo.getItems().addAll(data);
+    		TableCell<Item, Integer> cell = new TableCell<Item, Integer>() {
+    			@Override
+    			protected void updateItem(Integer reason, boolean empty) {
+    				super.updateItem(reason, empty);
+    				if (empty) {
+    					setGraphic(null);
+    				} else {
+    					combo.setValue(reason);
+    					setGraphic(combo);
+    				}
+    			}
+    		};
+    		combo.setOnAction(e -> {
+    			String itemName = cartList.getColumns().get(1).getCellData(cell.getIndex()).toString();
+    			Item item = items.get(itemNames.indexOf(itemName));
+    			
+    			user.updateCart(item.getId(), combo.getValue());
+    		});
+    		return cell ;
+    	});
 
     	cartList.setItems(items);
     }

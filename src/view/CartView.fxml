@@ -70,7 +70,7 @@
       </Button>
    </top>
    <center>
-      <TableView fx:id="cartList" editable="true" prefHeight="478.0" prefWidth="1050.0" style="-fx-column-header-background-color: blue;" BorderPane.alignment="CENTER">
+      <TableView fx:id="cartList" editable="true" prefHeight="478.0" prefWidth="1050.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="imageColumn" prefWidth="500.0" />
           <TableColumn fx:id="nameColumn" prefWidth="150.0" style="-fx-font-family: consolas; -fx-font-size: 14;" text="Name" />
