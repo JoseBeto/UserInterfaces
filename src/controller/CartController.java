@@ -141,6 +141,7 @@ public class CartController implements MyController, Initializable{
     	ObservableList<Integer> data = FXCollections.observableArrayList(1, 2, 3, 4, 5);
     	qtyColumn.setCellFactory(tc -> {
     		ComboBox<Integer> combo = new ComboBox<>();
+    		combo.setPrefWidth(100);
     		combo.getItems().addAll(data);
     		TableCell<Item, Integer> cell = new TableCell<Item, Integer>() {
     			@Override
