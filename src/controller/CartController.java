@@ -40,7 +40,7 @@ public class CartController implements MyController, Initializable{
 	@FXML private TableView<Item> itemList;
     @FXML private TableColumn<?, ?> imageColumn;
     @FXML private TableColumn<Item, String> nameColumn;
-    @FXML private TableColumn<Item, Integer> qtyColumn;
+    @FXML private TableColumn<Item, String> qtyColumn;
     @FXML private TableColumn<Item, String> priceColumn;
 	
 	private UserTableGateway gateway;
@@ -235,19 +235,21 @@ public class CartController implements MyController, Initializable{
 		qtyColumn.setCellValueFactory(new PropertyValueFactory<>("qty"));
 		priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 		
-		/*qtyColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		qtyColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
     	qtyColumn.setOnEditCommit(
-    	    new EventHandler<CellEditEvent<AuthorBook, String>>() {
-    	    	public void handle(CellEditEvent<AuthorBook, String> t) {
-    	    		double x = Integer.parseInt(t.getNewValue().toString().substring(0, t.getNewValue().length()));
+    	    new EventHandler<CellEditEvent<Item, String>>() {
+    	    	public void handle(CellEditEvent<Item, String> t) {
+    	    		//user.updateCart(item.getId(), Integer.parseInt(qtyBox.getValue()));
+    	    		System.out.println(t);
+    	    		/*double x = Integer.parseInt(t.getNewValue().toString().substring(0, t.getNewValue().length()));
     	            x /= 100;
-    	    		((AuthorBook) t.getTableView().getItems().get(
+    	    		((Item) t.getTableView().getItems().get(
     	                t.getTablePosition().getRow())
-    	                ).setRoyalty(new BigDecimal(x));
+    	                ).setRoyalty(new BigDecimal(x));*/
     	        }
     	    }
-    	);*/
+    	);
     	
 		itemList.setItems(items);
 	}
