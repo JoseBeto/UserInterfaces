@@ -60,7 +60,7 @@ public class SellItemController implements MyController{
 		
     	Item item;
     	item = new Item(nameText.getText(), Double.valueOf(priceText.getText()), 
-    			description.getText(), image);
+    			description.getText(), image, 0);
     	
     	gateway.AddItem(item);
     	

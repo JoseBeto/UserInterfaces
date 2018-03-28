@@ -53,7 +53,7 @@ public class ItemTableGateway {
 			st = conn.prepareStatement("select * from item");
 			ResultSet rs = st.executeQuery();
 			while(rs.next()) {
-				Item item = new Item(rs.getString("name"), rs.getDouble("price"), rs.getString("description"), rs.getString("image"));
+				Item item = new Item(rs.getString("name"), rs.getDouble("price"), rs.getString("description"), rs.getString("image"), 0);
 				item.setGateway(this);
 				item.setId(rs.getInt("id"));
 				items.add(item);
@@ -82,7 +82,7 @@ public class ItemTableGateway {
 			
 			ResultSet rs = st.executeQuery();
 			while(rs.next()) {
-				item = new Item(rs.getString("name"), rs.getDouble("price"), rs.getString("description"), rs.getString("image"));
+				item = new Item(rs.getString("name"), rs.getDouble("price"), rs.getString("description"), rs.getString("image"), 0);
 				item.setGateway(this);
 				item.setId(rs.getInt("id"));
 			}

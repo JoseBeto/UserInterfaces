@@ -4,6 +4,7 @@ import database.ItemTableGateway;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class Item {
 
@@ -12,10 +13,11 @@ public class Item {
 	private SimpleDoubleProperty price;
 	private SimpleStringProperty image;
 	private SimpleStringProperty desc;
+	private int qty;
 	
 	private ItemTableGateway gateway;
 	
-	public Item(String name, Double price, String desc, String image) {
+	public Item(String name, Double price, String desc, String image, int qty) {
 		this.name = new SimpleStringProperty();
 		this.price = new SimpleDoubleProperty();
 		this.image = new SimpleStringProperty();
@@ -25,6 +27,7 @@ public class Item {
 		setPrice(price);
 		setImage(image);
 		setDesc(desc);
+		setQty(qty);
 	}
 
 	public String getName() {
@@ -47,6 +50,14 @@ public class Item {
 		return (new Image(image.get()));
 	}
 	
+	public ImageView getImageView() {
+		ImageView imageView = new ImageView(image.get());
+		imageView.setFitHeight(200);
+		imageView.setFitWidth(200);
+		
+		return (imageView);
+	}
+	
 	public String getImageString() {
 		return image.get();
 	}
@@ -61,6 +72,14 @@ public class Item {
 
 	public void setDesc(String desc) {
 		this.desc.set(desc);
+	}
+	
+	public int getQty() {
+		return qty;
+	}
+	
+	public void setQty(int qty) {
+		this.qty = qty;
 	}
 	
 	public int getId() {
