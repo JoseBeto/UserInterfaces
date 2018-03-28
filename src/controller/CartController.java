@@ -135,7 +135,7 @@ public class CartController implements MyController, Initializable{
 
     	nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
     	qtyColumn.setCellValueFactory(new PropertyValueFactory<>("qty"));
-    	priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+    	priceColumn.setCellValueFactory(new PropertyValueFactory<>("formattedPrice"));
     	imageColumn.setCellValueFactory(new PropertyValueFactory<>("imageView"));
 
     	ObservableList<Integer> data = FXCollections.observableArrayList(1, 2, 3, 4, 5);

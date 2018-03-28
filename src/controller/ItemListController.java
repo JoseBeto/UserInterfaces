@@ -60,7 +60,7 @@ public class ItemListController implements Initializable, MyController {
     				s += " ";
     			}
     			setFont(new Font("consolas", 14));
-    			setText(item.getName() + s + String.format("$%.2f", item.getPrice()));
+    			setText(item.getName() + s + item.getFormattedPrice());
     			setGraphic(image);
     		}
     	});

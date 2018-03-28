@@ -41,6 +41,10 @@ public class Item {
 	public double getPrice() {
 		return price.get();
 	}
+	
+	public String getFormattedPrice() {
+		return String.format("$%.2f", getPrice());
+	}
 
 	public void setPrice(double price) {
 		this.price.set(price);
