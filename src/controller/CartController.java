@@ -26,7 +26,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class CartController implements MyController, Initializable{
+public class CartController implements MyController, Initializable {
 	@FXML private Label totalLabel;
 	@FXML private TableView<Item> cartList;
     @FXML private TableColumn<Item, ImageView> imageColumn;
