@@ -17,7 +17,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import model.Item;
 import model.User;
 import userInterfaces.AlertHelper;
@@ -140,15 +142,25 @@ public class CartController implements MyController, Initializable{
     	imageColumn.setCellValueFactory(new PropertyValueFactory<>("imageView"));
 
     	ObservableList<Integer> data = FXCollections.observableArrayList(1, 2, 3, 4, 5);
-    	qtyColumn.setCellFactory(ComboBoxTableCell.forTableColumn(data));
-
-    	qtyColumn.setOnEditCommit(
-    			new EventHandler<CellEditEvent<Item, Integer>>() {
-    				public void handle(CellEditEvent<Item, Integer> t) {
-    					user.updateCart(cartList.getSelectionModel().getSelectedItem().getId()
-    							, t.getNewValue());
-    				}
-    			});
+    	qtyColumn.setCellFactory(tc -> {
+            ComboBox<Integer> combo = new ComboBox<>();
+            combo.getItems().addAll(data);
+            TableCell<Item, Integer> cell = new TableCell<Item, Integer>() {
+                @Override
+                protected void updateItem(Integer reason, boolean empty) {
+                    super.updateItem(reason, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        combo.setValue(reason);
+                        setGraphic(combo);
+                    }
+                }
+            };
+            combo.setOnAction(e -> System.out.println("updated")
+            	/*user.updateCart(cell.getItem(), combo.getValue())*/);
+            return cell ;
+        });
 
     	cartList.setItems(items);
     }
