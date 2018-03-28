@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.scene.image.ImageView;
@@ -14,22 +15,33 @@ import database.UserTableGateway;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import model.Item;
 import model.User;
 import userInterfaces.AlertHelper;
 
 public class CartController implements MyController, Initializable{
 
-	@FXML private ListView<String> cartList;
-	@FXML private ComboBox<String> qtyBox;
+	//@FXML private ListView<String> cartList;
+	//@FXML private ComboBox<String> qtyBox;
 	@FXML private ComboBox<String> removeQty;
 	@FXML private Label totalLabel;
+	@FXML private TableView<Item> itemList;
+    @FXML private TableColumn<?, ?> imageColumn;
+    @FXML private TableColumn<Item, String> nameColumn;
+    @FXML private TableColumn<Item, Integer> qtyColumn;
+    @FXML private TableColumn<Item, String> priceColumn;
 	
 	private UserTableGateway gateway;
 	private ItemTableGateway itemGateway;
@@ -38,7 +50,7 @@ public class CartController implements MyController, Initializable{
 	private ObservableList<Item> items;
 	private ObservableList<String> itemNames;
 	private ObservableList<Integer> itemQty;
-	
+    
 	private boolean flag;
 	private double subtotal;
 	
@@ -84,7 +96,7 @@ public class CartController implements MyController, Initializable{
 		removeQty.setValue(itemQty.get(itemNames.indexOf(selected)).toString());
     }
 
-    @FXML
+    /*@FXML
     void qtyBoxChanged(ActionEvent event) {
     	if(cartList.getSelectionModel().getSelectedItem() == null)
     		return;
@@ -101,7 +113,7 @@ public class CartController implements MyController, Initializable{
     	updateCart();
     	updateList();
     	updateTotalLabel();
-    }
+    }*/
 
     @FXML
     void removeButtonClicked(ActionEvent event) {
@@ -120,7 +132,7 @@ public class CartController implements MyController, Initializable{
     }
 
     public void updateCart() {
-    	cartList.getItems().clear();
+    	//cartList.getItems().clear();
     	items.clear();
     	itemNames.clear();
     	itemQty.clear();
@@ -139,7 +151,7 @@ public class CartController implements MyController, Initializable{
     		itemQty.add(Integer.valueOf((String) e.getValue()));
     		itemNames.add(updatedItem.getName());
 
-    		cartList.getItems().add(updatedItem.getName());
+    		//cartList.getItems().add(updatedItem.getName());
     	}
     }
     
@@ -203,9 +215,6 @@ public class CartController implements MyController, Initializable{
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
     	ObservableList<String> data = FXCollections.observableArrayList("1", "2", "3", "4", "5");
-		qtyBox.setItems(data);
-		qtyBox.setStyle("-fx-padding:0 0 0 108");
-		
 		removeQty.setItems(data);
 		
 		items = FXCollections.observableArrayList();
@@ -213,7 +222,33 @@ public class CartController implements MyController, Initializable{
 		itemQty = FXCollections.observableArrayList();
 
 		updateCart();
-		updateList();
-		updateTotalLabel();
+		//updateList();
+		//updateTotalLabel();
+		
+		
+		
+		
+		
+		
+		
+		nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+		qtyColumn.setCellValueFactory(new PropertyValueFactory<>("qty"));
+		priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+		
+		/*qtyColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
+    	qtyColumn.setOnEditCommit(
+    	    new EventHandler<CellEditEvent<AuthorBook, String>>() {
+    	    	public void handle(CellEditEvent<AuthorBook, String> t) {
+    	    		double x = Integer.parseInt(t.getNewValue().toString().substring(0, t.getNewValue().length()));
+    	            x /= 100;
+    	    		((AuthorBook) t.getTableView().getItems().get(
+    	                t.getTablePosition().getRow())
+    	                ).setRoyalty(new BigDecimal(x));
+    	        }
+    	    }
+    	);*/
+    	
+		itemList.setItems(items);
 	}
 }
