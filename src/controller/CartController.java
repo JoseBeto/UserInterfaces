@@ -2,16 +2,13 @@ package controller;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Font;
 import java.util.Properties;
 import java.util.Map.Entry;
+import javax.swing.JOptionPane;
 import database.ItemTableGateway;
 import database.UserTableGateway;
 import javafx.collections.FXCollections;
@@ -20,39 +17,28 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import model.Item;
 import model.User;
 import userInterfaces.AlertHelper;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.ComboBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class CartController implements MyController, Initializable{
-
-	//@FXML private ListView<String> cartList;
-	//@FXML private ComboBox<String> qtyBox;
-	@FXML private ComboBox<String> removeQty;
 	@FXML private Label totalLabel;
-	@FXML private TableView<Item> itemList; //CHANGE TO CARTLIST
+	@FXML private TableView<Item> cartList;
     @FXML private TableColumn<Item, ImageView> imageColumn;
     @FXML private TableColumn<Item, String> nameColumn;
     @FXML private TableColumn<Item, Integer> qtyColumn;
     @FXML private TableColumn<Item, String> priceColumn;
-	
 	private UserTableGateway gateway;
 	private ItemTableGateway itemGateway;
 	private User user = User.getInstance();
-	
-	private ObservableList<Item> items;
-	private ObservableList<String> itemNames;
-    
-	private boolean flag;
+	private ObservableList<Item> items = FXCollections.observableArrayList();;
+	private ObservableList<String> itemNames = FXCollections.observableArrayList();;
 	private double subtotal;
 	
 	public CartController(UserTableGateway gateway, ItemTableGateway itemGateway) {
@@ -79,7 +65,7 @@ public class CartController implements MyController, Initializable{
 			  )
 			{
 				User.getInstance().setMoney(User.getInstance().getMoney() - subtotal);
-				User.getInstance(). emptyCart();
+				User.getInstance().emptyCart();
 				new UserTableGateway(AppController.getInstance().getConnection()).updateCart(User.getInstance());
 				AlertHelper.showConfirmationMessage("Your transaction was successful!", "Transaction Complete.", "Press OK to Continue.");
 				AppController.getInstance().changeView(AppController.LIST, null);
@@ -87,21 +73,20 @@ public class CartController implements MyController, Initializable{
 		}
     }
 	
-	/* REMOVE */
-	@FXML
-    void listClicked(MouseEvent event) {}
-	@FXML
-	void qtyBoxChanged(ActionEvent event) {}
-
-	
     @FXML
     void removeButtonClicked(ActionEvent event) {
-    	if(itemList.getSelectionModel().getSelectedItem() == null)
+    	if(cartList.getSelectionModel().getSelectedItem() == null)
     		return;
     	
-    	Item item = items.get(itemNames.indexOf(itemList.getSelectionModel().getSelectedItem()));
+    	String message = "Are you sure you want to remove this item from your cart?";
+    	int reply = JOptionPane.showConfirmDialog(null, message, "Warning", JOptionPane.YES_NO_OPTION);
+        if(reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION){
+        	return;
+        }
+    	
+    	Item item = items.get(itemNames.indexOf(cartList.getSelectionModel().getSelectedItem().getName()));
 
-    	if(!user.removeItemFromCart(item.getId(), Integer.parseInt(removeQty.getValue())))
+    	if(!user.removeItemFromCart(item.getId(), item.getQty()))
     		return;
     	
     	gateway.updateCart(user);
@@ -146,36 +131,25 @@ public class CartController implements MyController, Initializable{
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-    	ObservableList<String> data = FXCollections.observableArrayList("1", "2", "3", "4", "5");
-		removeQty.setItems(data);
-		
-		items = FXCollections.observableArrayList();
-		itemNames = FXCollections.observableArrayList();
+    	updateCart();
+    	updateTotalLabel();
 
-		updateCart();
-		updateTotalLabel();
-		
-		nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-		qtyColumn.setCellValueFactory(new PropertyValueFactory<>("qty"));
-		priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-		imageColumn.setCellValueFactory(new PropertyValueFactory<>("imageView"));
-		
-		/*qtyColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+    	nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+    	qtyColumn.setCellValueFactory(new PropertyValueFactory<>("qty"));
+    	priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+    	imageColumn.setCellValueFactory(new PropertyValueFactory<>("imageView"));
+
+    	ObservableList<Integer> data = FXCollections.observableArrayList(1, 2, 3, 4, 5);
+    	qtyColumn.setCellFactory(ComboBoxTableCell.forTableColumn(data));
 
     	qtyColumn.setOnEditCommit(
-    	    new EventHandler<CellEditEvent<Item, String>>() {
-    	    	public void handle(CellEditEvent<Item, String> t) {
-    	    		//user.updateCart(item.getId(), Integer.parseInt(qtyBox.getValue()));
-    	    		System.out.println(t);
-    	    		/*double x = Integer.parseInt(t.getNewValue().toString().substring(0, t.getNewValue().length()));
-    	            x /= 100;
-    	    		((Item) t.getTableView().getItems().get(
-    	                t.getTablePosition().getRow())
-    	                ).setRoyalty(new BigDecimal(x));
-    	        }
-    	    }
-    	);*/
-    	
-		itemList.setItems(items);
-	}
+    			new EventHandler<CellEditEvent<Item, Integer>>() {
+    				public void handle(CellEditEvent<Item, Integer> t) {
+    					user.updateCart(cartList.getSelectionModel().getSelectedItem().getId()
+    							, t.getNewValue());
+    				}
+    			});
+
+    	cartList.setItems(items);
+    }
 }

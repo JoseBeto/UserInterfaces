@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -12,26 +18,21 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <bottom>
       <HBox prefHeight="50.0" prefWidth="650.0" BorderPane.alignment="CENTER">
          <children>
-            <ComboBox fx:id="removeQty" prefHeight="30.0" prefWidth="65.0" style="-fx-background-radius: 0px;">
-               <HBox.margin>
-                  <Insets left="200.0" />
-               </HBox.margin>
-            </ComboBox>
             <Button maxWidth="116.0" mnemonicParsing="false" onAction="#removeButtonClicked" prefHeight="30.0" prefWidth="116.0" style="-fx-background-radius: 0px;" text="Remove Item">
                <HBox.margin>
-                  <Insets />
+                  <Insets left="100.0" />
                </HBox.margin>
                <font>
                   <Font name="Consolas" size="14.0" />
                </font>
             </Button>
-            <Label fx:id="totalLabel" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="600.0">
+            <Label fx:id="totalLabel" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="900.0">
                <HBox.margin>
-                  <Insets left="150.0" />
+                  <Insets left="160.0" />
                </HBox.margin>
                <font>
                   <Font name="Consolas" size="14.0" />
@@ -69,7 +70,7 @@
       </Button>
    </top>
    <center>
-      <TableView fx:id="itemList" prefHeight="478.0" prefWidth="1050.0" style="-fx-column-header-background-color: blue;" BorderPane.alignment="CENTER">
+      <TableView fx:id="cartList" editable="true" prefHeight="478.0" prefWidth="1050.0" style="-fx-column-header-background-color: blue;" BorderPane.alignment="CENTER">
         <columns>
           <TableColumn fx:id="imageColumn" prefWidth="500.0" />
           <TableColumn fx:id="nameColumn" prefWidth="150.0" style="-fx-font-family: consolas; -fx-font-size: 14;" text="Name" />
