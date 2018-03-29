@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
@@ -72,6 +73,9 @@ public class UserListController implements MyController, Initializable {
 		user.removeItemFromList(fromListName, item.getId());
 
 		userGateway.updateLists(user);
+		
+		AlertHelper.showWarningMessage("Success!", "Item moved from list: " +
+				fromListName + " to list: " + toListName, AlertType.INFORMATION);
 	}
 
 	@FXML
@@ -96,7 +100,21 @@ public class UserListController implements MyController, Initializable {
 	
 	@FXML
     void addToCartButtonClicked(ActionEvent event) {
+		Item item = itemList.getSelectionModel().getSelectedItem();
+		String listName = userLists.getSelectionModel().getSelectedItem();
 
+		if(item == null || listName == null)
+			return;
+		
+		items.remove(item);
+		
+		user.removeItemFromList(listName, item.getId());
+		user.addToCart(item, 1);
+		
+		userGateway.updateCart(user);
+		userGateway.updateLists(user);
+		
+		AlertHelper.showWarningMessage("Success!", "item added to cart", AlertType.INFORMATION);
     }
 	
 	@FXML
