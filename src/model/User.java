@@ -130,7 +130,7 @@ public class User {
 		if(cart.containsKey(item.getId())) {
 			if(cart.get(item.getId()) + qty > 5) {
 				AlertHelper.showWarningMessage("Error!", "Cannot have more than 5 of this "
-						+ "item!", AlertType.ERROR);
+						+ "item in your cart!", AlertType.ERROR);
 				return false;
 			} else {
 				qty += cart.get(item.getId());
@@ -209,6 +209,7 @@ public class User {
 	}
 	
 	public void removeItemFromList(String listName, int itemId) {
+		listName = listName.replaceAll(" ", "_");
 		HashMap<Integer, Integer> map = lists.get(listName);
 		map.remove(itemId);
 	}

@@ -106,15 +106,14 @@ public class UserListController implements MyController, Initializable {
 		if(item == null || listName == null)
 			return;
 		
-		items.remove(item);
-		
-		user.removeItemFromList(listName, item.getId());
-		user.addToCart(item, 1);
-		
-		userGateway.updateCart(user);
-		userGateway.updateLists(user);
-		
-		AlertHelper.showWarningMessage("Success!", "item added to cart", AlertType.INFORMATION);
+		if(user.addToCart(item, 1)) {
+			items.remove(item);
+			user.removeItemFromList(listName, item.getId());
+			userGateway.updateCart(user);
+			userGateway.updateLists(user);
+			
+			AlertHelper.showWarningMessage("Success!", "item added to cart", AlertType.INFORMATION);
+		}
     }
 	
 	@FXML

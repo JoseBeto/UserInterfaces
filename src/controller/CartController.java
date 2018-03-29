@@ -158,6 +158,8 @@ public class CartController implements MyController, Initializable {
     			user.updateCart(item.getId(), combo.getValue());
     			updateCart();
     			updateTotalLabel();
+    			
+    			gateway.updateCart(user);
     		});
     		return cell ;
     	});
