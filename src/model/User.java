@@ -220,6 +220,12 @@ public class User {
 		map.put(itemId, 1);
 	}
 	
+	public void removeList(String listName) {
+		listName = listName.replaceAll(" ", "_");
+		
+		lists.remove(listName);
+	}
+	
 	public int getId() {
 		return id;
 	}

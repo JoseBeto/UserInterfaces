@@ -29,8 +29,10 @@ public class UserListController implements MyController, Initializable {
 	private ItemTableGateway itemGateway;
 	private UserTableGateway userGateway;
 	private User user = User.getInstance();
+	
 	private ObservableList<Item> items;
-
+	private ObservableList<String> listNames;
+	
 	public UserListController(ItemTableGateway itemGateway, UserTableGateway userGateway) {
 		this.itemGateway = itemGateway;
 		this.userGateway = userGateway;
@@ -38,8 +40,20 @@ public class UserListController implements MyController, Initializable {
 	
 	@FXML
 	void removeListClicked(ActionEvent event) {
-		if(userLists.getSelectionModel().getSelectedItem() == null)
+		String listName = userLists.getSelectionModel().getSelectedItem();
+		if(listName == null)
 			return;
+		
+		String message = "Are you sure you want to remove list: " + listName;
+		String title = "Warning";
+		if(!AlertHelper.showDecisionMessage(title, message))
+			return;
+		
+		listNames.remove(listName);
+		
+		user.removeList(listName);
+		
+		userGateway.updateLists(user);
 	}
 
 	@FXML
@@ -147,6 +161,7 @@ public class UserListController implements MyController, Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		userLists.setItems(user.getListNames());
+		listNames = user.getListNames();
+		userLists.setItems(listNames);
 	}
 }
