@@ -143,12 +143,9 @@ public class UserListController implements MyController, Initializable {
     				image.setFitHeight(120);
     				image.setFitWidth(120);
     			}
-    			String s = "";
-    			for(int i = 0; i < (25 - item.getName().length()); i++) {
-    				s += " ";
-    			}
+    			String s = String.format("\t%-50s %-20s", item.getName(), item.getFormattedPrice());
     			setFont(new Font("consolas", 14));
-    			setText(item.getName() + s + item.getFormattedPrice());
+    			setText(s);
     			setGraphic(image);
     		}
     	});
