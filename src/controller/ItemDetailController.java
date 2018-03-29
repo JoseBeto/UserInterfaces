@@ -60,8 +60,12 @@ public class ItemDetailController implements Initializable, MyController {
 			AppController.getInstance().changeView(AppController.LOGIN, null);
 			return;
 		}
-			
-		System.out.println("Retreive user " + user.getFirstName() + "'s list options");
+		
+		String listName = addToListBox.getSelectionModel().getSelectedItem();
+		
+		user.addItemToList(listName, item.getId());
+		gateway.updateLists(user);
+		AlertHelper.showWarningMessage("Success!", item.getName() + " added to list: " + listName, AlertType.INFORMATION);
     }
 
 	@Override
@@ -78,8 +82,7 @@ public class ItemDetailController implements Initializable, MyController {
 		
 		ObservableList<String> listData = FXCollections.observableArrayList();
 		if(User.getInstance().getId() != 1) {
-			/* GET LIST DATA */
-			//listData.setAll(User.getInstance().getList());
+			listData.setAll(User.getInstance().getListNames());
 		}
 		listData.add("Create list...");
 		addToListBox.setItems(listData);

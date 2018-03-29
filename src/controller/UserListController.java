@@ -2,41 +2,142 @@ package controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Map.Entry;
+import database.ItemTableGateway;
+import database.UserTableGateway;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Font;
+import model.Item;
+import model.User;
+import userInterfaces.AlertHelper;
 
 public class UserListController implements MyController, Initializable {
 
-	@FXML private ComboBox<?> moveListBox;
-	@FXML private ListView<?> userLists;
-	@FXML private ListView<?> itemList;
+	@FXML private ComboBox<String> moveListBox;
+	@FXML private ListView<String> userLists;
+	@FXML private ListView<Item> itemList;
+	
+	private ItemTableGateway itemGateway;
+	private UserTableGateway userGateway;
+	private User user = User.getInstance();
+	private ObservableList<Item> items;
 
-	public UserListController() {
-		
+	public UserListController(ItemTableGateway itemGateway, UserTableGateway userGateway) {
+		this.itemGateway = itemGateway;
+		this.userGateway = userGateway;
 	}
 	
 	@FXML
 	void removeListClicked(ActionEvent event) {
-
+		if(userLists.getSelectionModel().getSelectedItem() == null)
+			return;
 	}
 
 	@FXML
-	void moveListChanged(ActionEvent event) {
+	void moveListClicked(ActionEvent event) {
+		Item item = itemList.getSelectionModel().getSelectedItem();
 
+		if(item == null)
+			return;
+
+		String fromListName = userLists.getSelectionModel().getSelectedItem();
+		String toListName = moveListBox.getSelectionModel().getSelectedItem();
+
+		items.remove(item);
+
+		user.addItemToList(toListName, item.getId());
+		user.removeItemFromList(fromListName, item.getId());
+
+		userGateway.updateLists(user);
 	}
 
 	@FXML
 	void removeItemClicked(ActionEvent event) {
+		Item item = itemList.getSelectionModel().getSelectedItem();
+		String listName = userLists.getSelectionModel().getSelectedItem();
+		
+		if(item == null)
+    		return;
+    	
+		String message = "Are you sure you want to remove item: " + item
+				+" from your list: " + listName;
+		String title = "Warning";
+		if(!AlertHelper.showDecisionMessage(title, message))
+			return;
 
+		items.remove(item);
+		
+    	user.removeItemFromList(listName, item.getId());
+    	userGateway.updateLists(user);
 	}
 	
 	@FXML
     void addToCartButtonClicked(ActionEvent event) {
 
+    }
+	
+	@FXML
+    void userListClicked(MouseEvent event) {
+		String userListName = userLists.getSelectionModel().getSelectedItem();
+		
+		if(userListName == null)
+			return;
+		
+		/*********************
+		 * Update moveListBox to other lists
+		 * 
+		 */
+		ObservableList<String> otherListNames = user.getListNames();
+		otherListNames.remove(userListName);
+		
+		moveListBox.setItems(otherListNames);
+		
+		/*********************
+		 * Set itemList to all items in selected list
+		 * 
+		 */
+		
+		items = FXCollections.observableArrayList();
+		
+		for(Entry<Integer, Integer> e : user.getListWithName(userListName).entrySet()) {
+			items.add(itemGateway.getItemById(e.getKey()));
+		}
+		
+		itemList.setItems(items);
+
+    	itemList.setCellFactory(param -> new ListCell<Item>() {
+    		ImageView image = new ImageView();
+    		@Override
+    		public void updateItem(Item item, boolean empty) {
+    			super.updateItem(item, empty);
+
+    			if (empty) {
+    				setText(null);
+    				setGraphic(null);
+    				return;
+    			} else {;
+    				image.setImage(item.getImage());
+    				image.setFitHeight(120);
+    				image.setFitWidth(120);
+    			}
+    			String s = "";
+    			for(int i = 0; i < (25 - item.getName().length()); i++) {
+    				s += " ";
+    			}
+    			setFont(new Font("consolas", 14));
+    			setText(item.getName() + s + item.getFormattedPrice());
+    			setGraphic(image);
+    		}
+    	});
     }
 
 	@FXML
@@ -46,7 +147,6 @@ public class UserListController implements MyController, Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
-		
+		userLists.setItems(user.getListNames());
 	}
 }

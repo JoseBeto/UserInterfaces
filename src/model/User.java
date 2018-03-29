@@ -8,6 +8,8 @@ import java.util.Properties;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert.AlertType;
 import userInterfaces.AlertHelper;
 
@@ -23,6 +25,7 @@ public class User {
 	private SimpleStringProperty password;
 	private SimpleDoubleProperty money;
 	private HashMap<Integer, Integer> cart;
+	private HashMap<String, HashMap<Integer, Integer>> lists;
 	
 	public final static int CUSTOMER = 2;
 	public final static int SELLER = 1;
@@ -44,13 +47,14 @@ public class User {
 		setRole(CUSTOMER);
 	}
 	
-	public User(String fName, String lName, String email, String password, Double money, String cart, int role) {
+	public User(String fName, String lName, String email, String password, Double money, String cart, String lists, int role) {
 		this.firstName = new SimpleStringProperty();
 		this.lastName = new SimpleStringProperty();
 		this.email = new SimpleStringProperty();
 		this.password = new SimpleStringProperty();
 		this.money = new SimpleDoubleProperty();
 		this.cart = new HashMap<Integer, Integer>();
+		this.lists = new HashMap<String, HashMap<Integer, Integer>>();
 		
 		setFirstName(fName);
 		setLastName(lName);
@@ -58,6 +62,7 @@ public class User {
 		setPassword(password);
 		setMoney(money);
 		setCart(cart);
+		setLists(lists);
 		setRole(role);
 	}
 	
@@ -156,6 +161,63 @@ public class User {
 		
 		cart.put(id, cart.get(id) - qty);
 		return true;
+	}
+	
+	public HashMap<String, HashMap<Integer, Integer>> getLists() {
+		return lists;
+	}
+	
+	public void setLists(String lists) {
+		Properties props = new Properties();
+		try {
+			props.load(new StringReader(lists.substring(1, lists.length() - 1).replace("},", "}\n")));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		for(Entry<Object, Object> e : props.entrySet()) {
+			
+			HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+			String list = (String) e.getValue();
+			Properties props2 = new Properties();
+			
+			try {
+				props2.load(new StringReader(list.substring(1, list.length() - 1).replace(",", "\n")));
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			for(Entry<Object, Object> e2 : props2.entrySet()) {
+			    map.put(Integer.valueOf((String) e2.getKey()), Integer.valueOf((String) e2.getValue()));
+			}
+			
+			this.lists.put((String) e.getKey(), map);
+		}
+	}
+	
+	public ObservableList<String> getListNames() {
+		ObservableList<String> listNames = FXCollections.observableArrayList();
+		
+		for(Entry<String, HashMap<Integer, Integer>> e : getLists().entrySet()) {
+			listNames.add(e.getKey().replaceAll("_", " "));
+		}
+		
+		return listNames;
+	}
+	
+	public HashMap<Integer, Integer> getListWithName(String name) {
+		name = name.replaceAll(" ", "_");
+		return lists.get(name);
+	}
+	
+	public void removeItemFromList(String listName, int itemId) {
+		HashMap<Integer, Integer> map = lists.get(listName);
+		map.remove(itemId);
+	}
+	
+	public void addItemToList(String listName, int itemId) {
+		listName = listName.replaceAll(" ", "_");
+		
+		HashMap<Integer, Integer> map = lists.get(listName);
+		map.put(itemId, 1);
 	}
 	
 	public int getId() {

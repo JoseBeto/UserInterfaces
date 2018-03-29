@@ -8,7 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import java.util.Properties;
 import java.util.Map.Entry;
-import javax.swing.JOptionPane;
 import database.ItemTableGateway;
 import database.UserTableGateway;
 import javafx.collections.FXCollections;
@@ -68,33 +67,32 @@ public class CartController implements MyController, Initializable {
 				AppController.getInstance().changeView(AppController.LIST, null);
 			}
 		}
-    }
-	
-    @FXML
-    void removeButtonClicked(ActionEvent event) {
-    	if(cartList.getSelectionModel().getSelectedItem() == null)
-    		return;
-    	
-    	String message = "Are you sure you want to remove this item from your cart?";
-    	int reply = JOptionPane.showConfirmDialog(null, message, "Warning", JOptionPane.YES_NO_OPTION);
-        if(reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION){
-        	return;
-        }
-    	
-    	Item item = items.get(itemNames.indexOf(cartList.getSelectionModel().getSelectedItem().getName()));
+	}
 
-    	if(!user.removeItemFromCart(item.getId(), item.getQty()))
-    		return;
-    	
-    	gateway.updateCart(user);
-    	
-    	updateCart();
-    	updateTotalLabel();
-    }
+	@FXML
+	void removeButtonClicked(ActionEvent event) {
+		if(cartList.getSelectionModel().getSelectedItem() == null)
+			return;
 
-    public void updateCart() {
-    	items.clear();
-    	itemNames.clear();
+		String message = "Are you sure you want to remove this item from your cart?";
+		String title = "Warning";
+		if(!AlertHelper.showDecisionMessage(title, message))
+			return;
+
+		Item item = items.get(itemNames.indexOf(cartList.getSelectionModel().getSelectedItem().getName()));
+
+		if(!user.removeItemFromCart(item.getId(), item.getQty()))
+			return;
+
+		gateway.updateCart(user);
+
+		updateCart();
+		updateTotalLabel();
+	}
+
+	public void updateCart() {
+		items.clear();
+		itemNames.clear();
     	
     	String cart = user.getCart().toString();
 

@@ -63,7 +63,7 @@ public class UserTableGateway {
 					return false;
 				}
 				user = new User(rs.getString("first_name"), rs.getString("last_name"), rs.getString("email"), 
-						rs.getString("password"), rs.getDouble("money"), rs.getString("cart"), rs.getInt("role"));
+						rs.getString("password"), rs.getDouble("money"), rs.getString("cart"), rs.getString("lists"), rs.getInt("role"));
 				user.setId(rs.getInt("id"));
 				User.changeInstance(user);
 			} else {
@@ -96,7 +96,7 @@ public class UserTableGateway {
 			
 			if(rs.next() == true) {
 				user = new User(rs.getString("first_name"), rs.getString("last_name"), rs.getString("email"), 
-						rs.getString("password"), rs.getDouble("money"), rs.getString("cart"), rs.getInt("role"));
+						rs.getString("password"), rs.getDouble("money"), rs.getString("cart"), rs.getString("lists"), rs.getInt("role"));
 				user.setId(rs.getInt("id"));
 				User.changeInstance(user);
 			}
@@ -148,6 +148,27 @@ public class UserTableGateway {
 			st.setString(1, user.getCart().toString());
 			st.setDouble(2, user.getMoney());
 			st.setInt(3, user.getId());
+			st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException(e);
+		} finally {
+			try {
+				if(st != null)
+					st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new AppException(e);
+			}
+		}
+	}
+	
+	public void updateLists(User user) throws AppException {
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("update user set lists = ? where id = ?");
+			st.setString(1, user.getLists().toString());
+			st.setInt(2, user.getId());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
