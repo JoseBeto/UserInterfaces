@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -22,7 +23,7 @@
             <Font name="Consolas" size="36.0" />
          </font>
       </Label>
-      <Label fx:id="priceLabel" layoutX="14.0" layoutY="449.0" prefHeight="30.0" prefWidth="389.0">
+      <Label fx:id="priceLabel" alignment="CENTER" layoutX="14.0" layoutY="449.0" prefHeight="30.0" prefWidth="389.0">
          <font>
             <Font name="Consolas" size="14.0" />
          </font>
@@ -44,7 +45,7 @@
             <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
          </padding>
       </Button>
-      <Button layoutX="14.0" layoutY="529.0" mnemonicParsing="false" onAction="#addToCartButtonClicked" prefHeight="30.0" prefWidth="389.0" style="-fx-background-radius: 0px;" text="Add To Cart">
+      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="529.0" mnemonicParsing="false" onAction="#addToCartButtonClicked" prefHeight="30.0" prefWidth="389.0" style="-fx-background-radius: 0px;" text="Add To Cart">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></Button>
@@ -56,13 +57,13 @@
             <Font name="Consolas" size="14.0" />
          </font>
       </Label>
-      <Label contentDisplay="CENTER" layoutX="14.0" layoutY="569.0" prefHeight="30.0" prefWidth="130.0" text="Add To List">
-         <graphic>
-            <ComboBox fx:id="addToListBox" onAction="#addToListBoxChanged" prefHeight="30.0" prefWidth="389.0" style="-fx-background-radius: 0px;" />
-         </graphic>
+      <Label contentDisplay="CENTER" layoutX="14.0" layoutY="569.0" prefHeight="30.0" prefWidth="163.0" style="-fx-background-radius: 0px;" text="Add To List">
          <font>
             <Font name="Consolas" size="14.0" />
          </font>
+         <graphic>
+            <ComboBox fx:id="addToListBox" onAction="#addToListBoxChanged" prefHeight="30.0" prefWidth="389.0" style="-fx-background-radius: 0px;" visibleRowCount="5" />
+         </graphic>
       </Label>
    </children>
 </Pane>
