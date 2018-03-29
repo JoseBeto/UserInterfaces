@@ -55,17 +55,7 @@ public class ItemDetailController implements Initializable, MyController {
 
 	@FXML
     void addToListBoxChanged(ActionEvent event) {
-		if(addToListBox.getSelectionModel().getSelectedItem().equals("")){
-			System.out.println("Passed");
-			return;
-		}
-		
 		User user = User.getInstance();
-		if(user.getId() == 1) {
-			AlertHelper.showWarningMessage("Error!", "Not logged in!", AlertType.ERROR);
-			addToListBox.setValue("");
-			return;
-		}
 			
 		System.out.println("Retreive user " + user.getFirstName() + "'s list options");
     }
@@ -86,8 +76,9 @@ public class ItemDetailController implements Initializable, MyController {
 		if(User.getInstance().getId() != 1) {
 			/* GET LIST DATA */
 			//listData.setAll(User.getInstance().getList());
+			listData.add("Create list...");
 		}
-		listData.add("Create list...");
+		//Need some way to tell guest to login to create a list
 		addToListBox.setItems(listData);
 	}
 }
