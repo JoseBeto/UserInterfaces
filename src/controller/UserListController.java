@@ -33,6 +33,11 @@ public class UserListController implements MyController, Initializable {
 	void removeItemClicked(ActionEvent event) {
 
 	}
+	
+	@FXML
+    void addToCartButtonClicked(ActionEvent event) {
+
+    }
 
 	@FXML
 	void backButtonClicked(MouseEvent event) {

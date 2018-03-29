@@ -22,30 +22,39 @@
    <bottom>
       <HBox prefHeight="50.0" prefWidth="650.0" BorderPane.alignment="CENTER">
          <children>
-            <Button maxWidth="116.0" mnemonicParsing="false" onAction="#removeListClicked" prefHeight="30.0" prefWidth="116.0" style="-fx-background-radius: 0px;" text="Remove List">
+            <Pane prefHeight="50.0" prefWidth="200.0" style="-fx-border-color: black;">
+               <children>
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="43.0" layoutY="9.0" maxWidth="116.0" mnemonicParsing="false" onAction="#removeListClicked" prefHeight="30.0" prefWidth="116.0" style="-fx-background-radius: 0px;" text="Remove List" textAlignment="CENTER">
+                     <font>
+                        <Font name="Consolas" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
                <HBox.margin>
-                  <Insets left="50.0" />
+                  <Insets left="10.0" />
                </HBox.margin>
-               <font>
-                  <Font name="Consolas" size="14.0" />
-               </font>
-            </Button>
-            <ComboBox fx:id="moveListBox" onAction="#moveListChanged" prefHeight="30.0" prefWidth="150.0" promptText="Move to List" style="-fx-background-radius: 0px; -fx-font-family: consolas; -fx-font-size: 14;">
+            </Pane>
+            <Pane prefHeight="50.0" prefWidth="1270.0" style="-fx-border-color: black;">
                <HBox.margin>
-                  <Insets left="250.0" />
+                  <Insets left="10.0" />
                </HBox.margin>
-            </ComboBox>
-            <Button mnemonicParsing="false" onAction="#removeItemClicked" prefHeight="30.0" prefWidth="150.0" style="-fx-background-radius: 0px;" text="Remove Item">
-               <font>
-                  <Font name="Consolas" size="14.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="580.0" />
-               </HBox.margin>
-            </Button>
+               <children>
+                  <ComboBox fx:id="moveListBox" layoutX="170.0" layoutY="9.0" onAction="#moveListChanged" prefHeight="30.0" prefWidth="150.0" promptText="Move to List" style="-fx-background-radius: 0px; -fx-font-family: consolas; -fx-font-size: 14;" />
+                  <Button layoutX="560.0" layoutY="9.0" mnemonicParsing="false" onAction="#addToCartButtonClicked" prefHeight="30.0" prefWidth="150.0" style="-fx-background-radius: 0px;" text="Add to Cart">
+                     <font>
+                        <Font name="Consolas" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="950.0" layoutY="9.0" mnemonicParsing="false" onAction="#removeItemClicked" prefHeight="30.0" prefWidth="150.0" style="-fx-background-radius: 0px;" text="Remove Item">
+                     <font>
+                        <Font name="Consolas" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
          </children>
          <BorderPane.margin>
-            <Insets bottom="30.0" />
+            <Insets bottom="35.0" />
          </BorderPane.margin>
       </HBox>
    </bottom>
