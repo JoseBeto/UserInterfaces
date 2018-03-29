@@ -24,7 +24,6 @@ public class AlertHelper {
 		
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK){
-		    System.out.println("Transaction Successful.");
 		    return true;
 		} else {
 		    // ... user chose CANCEL or closed the dialog

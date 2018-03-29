@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import database.ItemTableGateway;
@@ -100,10 +99,8 @@ public class SellItemController implements MyController{
 			 }
 			 String message = "File " + file.getName() + " does not exist in \n" + file.getParent() + ":\n" + "Do you want to select a different file?";
 	         String title = "Warning";
-	         int reply = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
-	         if(reply == JOptionPane.NO_OPTION || reply == JOptionPane.CLOSED_OPTION){
+	         if(!AlertHelper.showConfirmationMessage(title, "File does not exist!", message))
 	        	 return;
-	         }
 		}
 		imageAddedIndicator.setImage(new Image("/view/checkmark.png"));
 		

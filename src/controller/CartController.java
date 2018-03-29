@@ -59,9 +59,7 @@ public class CartController implements MyController, Initializable {
 		}
 		else
 		{	//Sufficient Funds
-			if(
-				AlertHelper.showConfirmationMessage("Are you sure you want to submit this transaction?", "Submit transaction?", "Press OK to Confirm.")
-			  )
+			if(AlertHelper.showConfirmationMessage("Are you sure you want to submit this transaction?", "Submit transaction?", "Press OK to Confirm."))
 			{
 				User.getInstance().setMoney(User.getInstance().getMoney() - subtotal);
 				User.getInstance().emptyCart();
@@ -160,6 +158,8 @@ public class CartController implements MyController, Initializable {
     			Item item = items.get(itemNames.indexOf(itemName));
     			
     			user.updateCart(item.getId(), combo.getValue());
+    			updateCart();
+    			updateTotalLabel();
     		});
     		return cell ;
     	});

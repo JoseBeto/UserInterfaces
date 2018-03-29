@@ -43,7 +43,7 @@ public class ItemDetailController implements Initializable, MyController {
     void addToCartButtonClicked(ActionEvent event) {
 		User user = User.getInstance();
 		if(user.getId() == 1) {
-			AlertHelper.showWarningMessage("Error!", "Not logged in!", AlertType.ERROR);
+			AppController.getInstance().changeView(AppController.LOGIN, null);
 			return;
 		}
 		
@@ -56,6 +56,10 @@ public class ItemDetailController implements Initializable, MyController {
 	@FXML
     void addToListBoxChanged(ActionEvent event) {
 		User user = User.getInstance();
+		if(user.getId() == 1) {
+			AppController.getInstance().changeView(AppController.LOGIN, null);
+			return;
+		}
 			
 		System.out.println("Retreive user " + user.getFirstName() + "'s list options");
     }
@@ -76,9 +80,8 @@ public class ItemDetailController implements Initializable, MyController {
 		if(User.getInstance().getId() != 1) {
 			/* GET LIST DATA */
 			//listData.setAll(User.getInstance().getList());
-			listData.add("Create list...");
 		}
-		//Need some way to tell guest to login to create a list
+		listData.add("Create list...");
 		addToListBox.setItems(listData);
 	}
 }

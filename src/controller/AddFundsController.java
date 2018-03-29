@@ -94,31 +94,30 @@ public class AddFundsController implements Initializable
 		{
 			switch(paymentMethodBox.getSelectionModel().getSelectedIndex())
 			{
-				case 0: //Buy
-					payMethod = new PaypalMethod();
-					payMethod.fillMethodDetails(paypalEmailText.getText(), paypalPassText.getText(), paypalAmountRequested.getText());
-					break;
-				case 1: //Sell
-					payMethod = new CardPayment();
-					payMethod.fillMethodDetails(cardNumberText.getText(), expDateText.getText(), fullnameText.getText(), amountText.getText());
-					break;
-				case 2: //Contact Us
-					System.out.println("You selected Bank Account.");
-					//paymentPane.setCenter(null);
-					paymentPane.setCenter(bankGrid);
-					break;
-				case 3: //About
-					System.out.println("You selected Bitcoin");
-					//paymentPane.setCenter(null);
-					paymentPane.setCenter(coinGrid);
-					break;
+			case 0: //Buy
+				payMethod = new PaypalMethod();
+				payMethod.fillMethodDetails(paypalEmailText.getText(), paypalPassText.getText(), paypalAmountRequested.getText());
+				break;
+			case 1: //Sell
+				payMethod = new CardPayment();
+				payMethod.fillMethodDetails(cardNumberText.getText(), expDateText.getText(), fullnameText.getText(), amountText.getText());
+				break;
+			case 2: //Contact Us
+				System.out.println("You selected Bank Account.");
+				//paymentPane.setCenter(null);
+				paymentPane.setCenter(bankGrid);
+				break;
+			case 3: //About
+				System.out.println("You selected Bitcoin");
+				//paymentPane.setCenter(null);
+				paymentPane.setCenter(coinGrid);
+				break;
 			}
-						
-			if(
-					AlertHelper.showConfirmationMessage("Are you sure you want to submit this transaction?", "Submit transaction?", "Press OK to Confirm.")
-					&& payMethod.validateMethod() 
-			  )
+
+			if(AlertHelper.showConfirmationMessage("Are you sure you want to submit this transaction?", "Submit transaction?", "Press OK to Confirm.")
+					&& payMethod.validateMethod())
 			{
+				System.out.println("Transaction Successful.");
 				User.getInstance().setMoney(User.getInstance().getMoney() + payMethod.getAmount());
 				new UserTableGateway(AppController.getInstance().getConnection()).updateUser(User.getInstance());
 				AlertHelper.showConfirmationMessage("Your submission was successful!", "Transaction Complete.", "Press OK to Continue.");
