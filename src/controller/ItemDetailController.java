@@ -60,13 +60,19 @@ public class ItemDetailController implements Initializable, MyController {
 			AppController.getInstance().changeView(AppController.LOGIN, null);
 			return;
 		}
+
+		String listName = addToListBox.getValue();
 		
-		String listName = addToListBox.getSelectionModel().getSelectedItem();
+		if(listName.equals("Create list...")) {
+			
+			return;
+		}
 		
 		user.addItemToList(listName, item.getId());
 		gateway.updateLists(user);
+
 		AlertHelper.showWarningMessage("Success!", item.getName() + " added to list: " + listName, AlertType.INFORMATION);
-    }
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -74,7 +80,7 @@ public class ItemDetailController implements Initializable, MyController {
 		priceLabel.setText("Price: " + item.getFormattedPrice());
 		itemImage.setImage(item.getImage());
 		descLabel.setText(item.getDesc());
-		
+
 		ObservableList<String> data = FXCollections.observableArrayList("1", "2", "3", "4", "5");
 		qtyBox.setItems(data);
 		qtyBox.setStyle("-fx-padding:0 0 0 200");
