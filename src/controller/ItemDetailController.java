@@ -71,6 +71,7 @@ public class ItemDetailController implements Initializable, MyController {
 		user.addItemToList(listName, item.getId());
 		gateway.updateLists(user);
 
+		AppController.getInstance().changeView(AppController.ITEM_DETAIL, item);
 		AlertHelper.showWarningMessage("Success!", item.getName() + " added to list: " + listName, AlertType.INFORMATION);
 	}
 

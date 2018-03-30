@@ -29,14 +29,16 @@ public class UserListController implements MyController, Initializable {
 	
 	private ItemTableGateway itemGateway;
 	private UserTableGateway userGateway;
+	private String startingList;
 	private User user = User.getInstance();
 	
 	private ObservableList<Item> items;
 	private ObservableList<String> listNames;
 	
-	public UserListController(ItemTableGateway itemGateway, UserTableGateway userGateway) {
+	public UserListController(ItemTableGateway itemGateway, UserTableGateway userGateway, String startingList) {
 		this.itemGateway = itemGateway;
 		this.userGateway = userGateway;
+		this.startingList = startingList;
 	}
 	
 	@FXML
@@ -55,17 +57,24 @@ public class UserListController implements MyController, Initializable {
 		user.removeList(listName);
 		
 		userGateway.updateLists(user);
+		
+		/********************
+		 * Updating items shown
+		 * 
+		 */
+		items.clear();
+		userListClicked(null);
 	}
 
 	@FXML
 	void moveListClicked(ActionEvent event) {
 		Item item = itemList.getSelectionModel().getSelectedItem();
+		String toListName = moveListBox.getSelectionModel().getSelectedItem();
 
-		if(item == null)
+		if(item == null || toListName == null)
 			return;
 
 		String fromListName = userLists.getSelectionModel().getSelectedItem();
-		String toListName = moveListBox.getSelectionModel().getSelectedItem();
 
 		items.remove(item);
 
@@ -74,6 +83,7 @@ public class UserListController implements MyController, Initializable {
 
 		userGateway.updateLists(user);
 		
+		AppController.getInstance().changeView(AppController.MY_LISTS, fromListName);
 		AlertHelper.showWarningMessage("Success!", "Item moved from list: " +
 				fromListName + " to list: " + toListName, AlertType.INFORMATION);
 	}
@@ -123,6 +133,7 @@ public class UserListController implements MyController, Initializable {
 		if(userListName == null)
 			return;
 		
+		moveListBox.setValue(null);
 		/*********************
 		 * Update moveListBox to other lists
 		 * 
@@ -177,5 +188,7 @@ public class UserListController implements MyController, Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		listNames = user.getListNames();
 		userLists.setItems(listNames);
+		userLists.getSelectionModel().select(startingList);
+		userListClicked(null);
 	}
 }

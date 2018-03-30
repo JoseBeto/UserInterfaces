@@ -84,7 +84,8 @@ public class AppController implements Initializable {
 					break;
 				case MY_LISTS:
 					fxmlFile = this.getClass().getResource("/view/UserListView.fxml");
-					controller = new UserListController(new ItemTableGateway(conn), new UserTableGateway(conn));
+					controller = new UserListController(new ItemTableGateway(conn), new UserTableGateway(conn)
+							, (String) arg);
 					break;
 				case ADD_FUNDS:
 					fxmlFile = this.getClass().getResource("/view/AddFundsView.fxml");
