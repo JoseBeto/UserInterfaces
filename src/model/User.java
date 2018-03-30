@@ -168,6 +168,8 @@ public class User {
 	}
 	
 	public void setLists(String lists) {
+		if(lists.equals(""))
+			return;
 		Properties props = new Properties();
 		try {
 			props.load(new StringReader(lists.substring(1, lists.length() - 1).replace("},", "}\n")));
