@@ -34,7 +34,6 @@ public class AppController implements Initializable {
 	public final static int MY_CART = 7;
 	public final static int MY_LISTS = 8;
 	public final static int ADD_FUNDS = 9;
-	public final static int CREATE_LIST = 10;
 	
 	private static AppController myInstance = null;
 	private BorderPane rootPane = null;
@@ -90,10 +89,6 @@ public class AppController implements Initializable {
 				case ADD_FUNDS:
 					fxmlFile = this.getClass().getResource("/view/AddFundsView.fxml");
 					//controller = new CartController(new UserTableGateway(conn), new
-					break;
-				case CREATE_LIST:
-					fxmlFile = this.getClass().getResource("/view/CreateListView.fxml");
-					controller = new CreateListController(new UserTableGateway(conn), (Item) arg);
 					break;
 			}
 		

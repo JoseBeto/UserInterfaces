@@ -84,7 +84,7 @@
          <font>
             <Font name="Consolas" size="14.0" />
          </font></Button>
-      <Button layoutX="920.0" layoutY="360.0" mnemonicParsing="false" onAction="#loadMoneyClicked" prefHeight="30.0" prefWidth="150.0" style="-fx-background-radius: 0px;" text="Load money">
+      <Button layoutX="920.0" layoutY="360.0" mnemonicParsing="false" onAction="#addFundsClicked" prefHeight="30.0" prefWidth="150.0" style="-fx-background-radius: 0px;" text="Add funds">
          <font>
             <Font name="Consolas" size="14.0" />
          </font>

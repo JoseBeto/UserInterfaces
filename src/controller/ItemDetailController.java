@@ -64,7 +64,17 @@ public class ItemDetailController implements Initializable, MyController {
 		String listName = addToListBox.getValue();
 		
 		if(listName.equals("Create list...")) {
-			AppController.getInstance().changeView(AppController.CREATE_LIST, item);
+			AppController.getInstance().changeView(AppController.ITEM_DETAIL, item);
+			
+			String newList = AlertHelper.showInputMessage("Create list", "Create new list");
+			
+			if(newList != null && !newList.equals("")) {
+				user.getLists().createList(newList);
+		    	gateway.updateLists(user);
+		    	
+		    	AlertHelper.showWarningMessage("Success!", "List: " + newList + " created!", AlertType.INFORMATION);
+		    	AppController.getInstance().changeView(AppController.ITEM_DETAIL, item);
+			}
 			return;
 		}
 		

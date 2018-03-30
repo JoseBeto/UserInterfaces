@@ -73,7 +73,7 @@ public class AccountController implements MyController, Initializable{
     }
     
     @FXML
-    void loadMoneyClicked(ActionEvent event) {
+    void addFundsClicked(ActionEvent event) {
     	AppController.getInstance().changeView(AppController.ADD_FUNDS, null);
     }
 
