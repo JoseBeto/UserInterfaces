@@ -23,6 +23,7 @@ import model.User;
 import userInterfaces.AlertHelper;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class CartController implements MyController, Initializable {
@@ -51,20 +52,18 @@ public class CartController implements MyController, Initializable {
 	
 	@FXML
     void checkOutButtonClicked(ActionEvent event) {
-		if( user.getMoney() < subtotal )
-		{	//Insufficient Funds
-			System.out.println("Insufficient Funds.");
-			AppController.getInstance().changeView(AppController.ADD_FUNDS, null);
+		if( user.getMoney() < subtotal ) {	//Insufficient Funds
+			AlertHelper.showWarningMessage("Error!", "Insufficient funds!", AlertType.ERROR);
+			return;
 		}
-		else
-		{	//Sufficient Funds
-			if(AlertHelper.showConfirmationMessage("Are you sure you want to submit this transaction?", "Submit transaction?", "Press OK to Confirm."))
-			{
-				User.getInstance().setMoney(User.getInstance().getMoney() - subtotal);
-				User.getInstance().getCart().emptyCart();
-				new UserTableGateway(AppController.getInstance().getConnection()).updateCart(User.getInstance());
-				AlertHelper.showConfirmationMessage("Your transaction was successful!", "Transaction Complete.", "Press OK to Continue.");
-				AppController.getInstance().changeView(AppController.LIST, null);
+		else {	//Sufficient Funds
+			if(AlertHelper.showDecisionMessage("Warning", "Are you sure you want to submit this transaction?")) {
+				user.setMoney(user.getMoney() - subtotal);
+				user.getCart().emptyCart();
+				
+				gateway.updateCart(user);
+				AppController.getInstance().changeView(AppController.MY_CART, null);
+				AlertHelper.showWarningMessage("Success!", "Your transaction was successful!", AlertType.INFORMATION);
 			}
 		}
 	}

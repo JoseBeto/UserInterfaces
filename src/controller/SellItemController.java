@@ -98,8 +98,7 @@ public class SellItemController implements MyController{
 				 break;
 			 }
 			 String message = "File " + file.getName() + " does not exist in \n" + file.getParent() + ":\n" + "Do you want to select a different file?";
-	         String title = "Warning";
-	         if(!AlertHelper.showConfirmationMessage(title, "File does not exist!", message))
+	         if(!AlertHelper.showDecisionMessage("Warning", message))
 	        	 return;
 		}
 		imageAddedIndicator.setImage(new Image("/view/checkmark.png"));

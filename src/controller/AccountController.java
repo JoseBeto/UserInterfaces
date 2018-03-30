@@ -71,6 +71,11 @@ public class AccountController implements MyController, Initializable{
     	gateway.updateUser(user);
     	AlertHelper.showWarningMessage("Success!", "Account upgraded!", AlertType.INFORMATION);
     }
+    
+    @FXML
+    void loadMoneyClicked(ActionEvent event) {
+    	AppController.getInstance().changeView(AppController.ADD_FUNDS, null);
+    }
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

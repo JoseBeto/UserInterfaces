@@ -80,9 +80,14 @@
          <font>
             <Font name="Consolas" size="14.0" />
          </font></Label>
-      <Button layoutX="720.0" layoutY="582.0" mnemonicParsing="false" onAction="#saveButtonClicked" prefHeight="30.0" prefWidth="60.0" style="-fx-background-radius: 0px;" text="Save">
+      <Button layoutX="720.0" layoutY="747.0" mnemonicParsing="false" onAction="#saveButtonClicked" prefHeight="30.0" prefWidth="60.0" style="-fx-background-radius: 0px;" text="Save">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></Button>
+      <Button layoutX="920.0" layoutY="360.0" mnemonicParsing="false" onAction="#loadMoneyClicked" prefHeight="30.0" prefWidth="150.0" style="-fx-background-radius: 0px;" text="Load money">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font>
+      </Button>
    </children>
 </Pane>

@@ -15,21 +15,6 @@ public class AlertHelper {
 		alert.showAndWait();
 	}
 	
-	public static boolean showConfirmationMessage(String title, String header, String content) {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle(title);
-		alert.setHeaderText(header);
-		alert.setContentText(content);
-		
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK){
-		    return true;
-		} else {
-		    // ... user chose CANCEL or closed the dialog
-			return false;
-		}
-	}
-	
 	public static boolean showDecisionMessage(String title, String header) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle(title);

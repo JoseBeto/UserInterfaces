@@ -18,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
@@ -114,15 +115,13 @@ public class AddFundsController implements Initializable
 				break;
 			}
 
-			if(AlertHelper.showConfirmationMessage("Are you sure you want to submit this transaction?", "Submit transaction?", "Press OK to Confirm.")
+			if(AlertHelper.showDecisionMessage("Warning", "Are you sure you want to add these funds?")
 					&& payMethod.validateMethod())
 			{
-				System.out.println("Transaction Successful.");
 				User.getInstance().setMoney(User.getInstance().getMoney() + payMethod.getAmount());
 				new UserTableGateway(AppController.getInstance().getConnection()).updateUser(User.getInstance());
-				AlertHelper.showConfirmationMessage("Your submission was successful!", "Transaction Complete.", "Press OK to Continue.");
-				AppController.getInstance().changeView(AppController.MY_CART, null);
-				User.getInstance().getCart().emptyCart();
+				AlertHelper.showWarningMessage("Success!", "Funds added!", AlertType.INFORMATION);
+				AppController.getInstance().changeView(AppController.MY_ACCOUNT, null);
 			}
 		}
 	}
