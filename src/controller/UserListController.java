@@ -188,7 +188,10 @@ public class UserListController implements MyController, Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		listNames = user.getListNames();
 		userLists.setItems(listNames);
-		userLists.getSelectionModel().select(startingList);
+		if(startingList == null)
+			userLists.getSelectionModel().select(0);
+		else
+			userLists.getSelectionModel().select(startingList);
 		userListClicked(null);
 	}
 }
