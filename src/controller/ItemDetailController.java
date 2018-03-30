@@ -47,7 +47,7 @@ public class ItemDetailController implements Initializable, MyController {
 			return;
 		}
 		
-		if(user.addToCart(item, Integer.parseInt(qtyBox.getValue()))) {
+		if(user.getCart().addToCart(item, Integer.parseInt(qtyBox.getValue()))) {
 			gateway.updateCart(user);
 			AlertHelper.showWarningMessage("Success!", qtyBox.getValue() + " items added to cart", AlertType.INFORMATION);
 		}
@@ -68,7 +68,7 @@ public class ItemDetailController implements Initializable, MyController {
 			return;
 		}
 		
-		user.addItemToList(listName, item.getId());
+		user.getLists().addItemToList(listName, item.getId());
 		gateway.updateLists(user);
 
 		AppController.getInstance().changeView(AppController.ITEM_DETAIL, item);
@@ -89,7 +89,7 @@ public class ItemDetailController implements Initializable, MyController {
 		
 		ObservableList<String> listData = FXCollections.observableArrayList();
 		if(User.getInstance().getId() != 1) {
-			listData.setAll(User.getInstance().getListNames());
+			listData.setAll(User.getInstance().getLists().getListNames());
 		}
 		listData.add("Create list...");
 		addToListBox.setItems(listData);

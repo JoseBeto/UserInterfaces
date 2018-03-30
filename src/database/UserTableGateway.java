@@ -28,7 +28,7 @@ public class UserTableGateway {
 			st.setString(3, user.getEmail());
 			st.setString(4, user.getPassword());
 			st.setDouble(5, user.getMoney());
-			st.setString(6, user.getCart().toString());
+			st.setString(6, user.getCart().getCart().toString());
 			st.executeUpdate();
 
 			ResultSet rs = st.getGeneratedKeys();
@@ -145,7 +145,7 @@ public class UserTableGateway {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("update user set cart = ?, money = ? where id = ?");
-			st.setString(1, user.getCart().toString());
+			st.setString(1, user.getCart().getCart().toString());
 			st.setDouble(2, user.getMoney());
 			st.setInt(3, user.getId());
 			st.executeUpdate();
@@ -167,7 +167,7 @@ public class UserTableGateway {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("update user set lists = ? where id = ?");
-			st.setString(1, user.getLists().toString());
+			st.setString(1, user.getLists().getLists().toString());
 			st.setInt(2, user.getId());
 			st.executeUpdate();
 		} catch (SQLException e) {

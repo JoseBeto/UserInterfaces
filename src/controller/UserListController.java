@@ -54,7 +54,7 @@ public class UserListController implements MyController, Initializable {
 		
 		listNames.remove(listName);
 		
-		user.removeList(listName);
+		user.getLists().removeList(listName);
 		
 		userGateway.updateLists(user);
 		
@@ -78,8 +78,8 @@ public class UserListController implements MyController, Initializable {
 
 		items.remove(item);
 
-		user.addItemToList(toListName, item.getId());
-		user.removeItemFromList(fromListName, item.getId());
+		user.getLists().addItemToList(toListName, item.getId());
+		user.getLists().removeItemFromList(fromListName, item.getId());
 
 		userGateway.updateLists(user);
 		
@@ -104,7 +104,7 @@ public class UserListController implements MyController, Initializable {
 
 		items.remove(item);
 		
-    	user.removeItemFromList(listName, item.getId());
+    	user.getLists().removeItemFromList(listName, item.getId());
     	userGateway.updateLists(user);
 	}
 	
@@ -116,9 +116,9 @@ public class UserListController implements MyController, Initializable {
 		if(item == null || listName == null)
 			return;
 		
-		if(user.addToCart(item, 1)) {
+		if(user.getCart().addToCart(item, 1)) {
 			items.remove(item);
-			user.removeItemFromList(listName, item.getId());
+			user.getLists().removeItemFromList(listName, item.getId());
 			userGateway.updateCart(user);
 			userGateway.updateLists(user);
 			
@@ -138,7 +138,7 @@ public class UserListController implements MyController, Initializable {
 		 * Update moveListBox to other lists
 		 * 
 		 */
-		ObservableList<String> otherListNames = user.getListNames();
+		ObservableList<String> otherListNames = user.getLists().getListNames();
 		otherListNames.remove(userListName);
 		
 		moveListBox.setItems(otherListNames);
@@ -150,7 +150,7 @@ public class UserListController implements MyController, Initializable {
 		
 		items = FXCollections.observableArrayList();
 		
-		for(Entry<Integer, Integer> e : user.getListWithName(userListName).entrySet()) {
+		for(Entry<Integer, Integer> e : user.getLists().getListWithName(userListName).entrySet()) {
 			items.add(itemGateway.getItemById(e.getKey()));
 		}
 		
@@ -186,7 +186,7 @@ public class UserListController implements MyController, Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		listNames = user.getListNames();
+		listNames = user.getLists().getListNames();
 		userLists.setItems(listNames);
 		if(startingList == null)
 			userLists.getSelectionModel().select(0);

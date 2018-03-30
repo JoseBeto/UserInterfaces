@@ -30,7 +30,7 @@ public class CreateListController implements MyController {
     	
     	User user = User.getInstance();
     	
-    	user.createList(listNameText.getText());
+    	user.getLists().createList(listNameText.getText());
     	userGateway.updateLists(user);
     	
     	AlertHelper.showWarningMessage("Success!", "List: " + listNameText.getText() + " created!", AlertType.INFORMATION);

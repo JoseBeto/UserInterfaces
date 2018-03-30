@@ -122,7 +122,7 @@ public class AddFundsController implements Initializable
 				new UserTableGateway(AppController.getInstance().getConnection()).updateUser(User.getInstance());
 				AlertHelper.showConfirmationMessage("Your submission was successful!", "Transaction Complete.", "Press OK to Continue.");
 				AppController.getInstance().changeView(AppController.MY_CART, null);
-				User.getInstance().emptyCart();
+				User.getInstance().getCart().emptyCart();
 			}
 		}
 	}

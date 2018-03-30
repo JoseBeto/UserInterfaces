@@ -61,7 +61,7 @@ public class CartController implements MyController, Initializable {
 			if(AlertHelper.showConfirmationMessage("Are you sure you want to submit this transaction?", "Submit transaction?", "Press OK to Confirm."))
 			{
 				User.getInstance().setMoney(User.getInstance().getMoney() - subtotal);
-				User.getInstance().emptyCart();
+				User.getInstance().getCart().emptyCart();
 				new UserTableGateway(AppController.getInstance().getConnection()).updateCart(User.getInstance());
 				AlertHelper.showConfirmationMessage("Your transaction was successful!", "Transaction Complete.", "Press OK to Continue.");
 				AppController.getInstance().changeView(AppController.LIST, null);
@@ -81,7 +81,7 @@ public class CartController implements MyController, Initializable {
 
 		Item item = items.get(itemNames.indexOf(cartList.getSelectionModel().getSelectedItem().getName()));
 
-		if(!user.removeItemFromCart(item.getId(), item.getQty()))
+		if(!user.getCart().removeItemFromCart(item.getId(), item.getQty()))
 			return;
 
 		gateway.updateCart(user);
@@ -94,7 +94,7 @@ public class CartController implements MyController, Initializable {
 		items.clear();
 		itemNames.clear();
     	
-    	String cart = user.getCart().toString();
+    	String cart = user.getCart().getCart().toString();
 
     	Properties props = new Properties();
     	try {
@@ -155,7 +155,7 @@ public class CartController implements MyController, Initializable {
     			String itemName = cartList.getColumns().get(1).getCellData(cell.getIndex()).toString();
     			Item item = items.get(itemNames.indexOf(itemName));
     			
-    			user.updateCart(item.getId(), combo.getValue());
+    			user.getCart().updateCart(item.getId(), combo.getValue());
     			updateCart();
     			updateTotalLabel();
     			
