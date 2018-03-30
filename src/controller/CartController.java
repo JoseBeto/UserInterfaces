@@ -35,8 +35,8 @@ public class CartController implements MyController, Initializable {
 	private UserTableGateway gateway;
 	private ItemTableGateway itemGateway;
 	private User user = User.getInstance();
-	private ObservableList<Item> items = FXCollections.observableArrayList();;
-	private ObservableList<String> itemNames = FXCollections.observableArrayList();;
+	private ObservableList<Item> items = FXCollections.observableArrayList();
+	private ObservableList<String> itemNames = FXCollections.observableArrayList();
 	private double subtotal;
 	
 	public CartController(UserTableGateway gateway, ItemTableGateway itemGateway) {
