@@ -37,6 +37,14 @@ public class RegisterController implements MyController{
     		AlertHelper.showWarningMessage("Error!", "Password field is empty!", AlertType.ERROR);
     		return;
     	}
+    	
+    	for(User user : gateway.getUsers()) {
+    		if(user.getEmail().equals(emailText.getText())) {
+    			AlertHelper.showWarningMessage("Error!", "Email already taken!", AlertType.ERROR);
+        		return;
+    		}
+    	}
+    	
     	User user;
     	user = new User(firstNameText.getText(), lastNameText.getText(), 
     			emailText.getText(), passwordText.getText(), 0.0, "", "{Wish_List={}}", User.CUSTOMER);

@@ -42,7 +42,7 @@ public class ItemDetailController implements Initializable, MyController {
 	@FXML
     void addToCartButtonClicked(ActionEvent event) {
 		User user = User.getInstance();
-		if(user.getId() == 1) {
+		if(user.getEmail().equals("guest")) {
 			AppController.getInstance().changeView(AppController.LOGIN, null);
 			return;
 		}
@@ -56,7 +56,7 @@ public class ItemDetailController implements Initializable, MyController {
 	@FXML
     void addToListBoxChanged(ActionEvent event) {
 		User user = User.getInstance();
-		if(user.getId() == 1) {
+		if(user.getEmail().equals("guest")) {
 			AppController.getInstance().changeView(AppController.LOGIN, null);
 			return;
 		}
@@ -88,7 +88,7 @@ public class ItemDetailController implements Initializable, MyController {
 		qtyBox.setValue("1");
 		
 		ObservableList<String> listData = FXCollections.observableArrayList();
-		if(User.getInstance().getId() != 1) {
+		if(!User.getInstance().getEmail().equals("guest")) {
 			listData.setAll(User.getInstance().getLists().getListNames());
 		}
 		listData.add("Create list...");

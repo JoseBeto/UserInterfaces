@@ -139,8 +139,7 @@ public class AppController implements Initializable {
 	    		changeView(MY_LISTS, null);
 	    		break;
 	    	case "Log Out":
-	    		UserTableGateway gateway = new UserTableGateway(conn);
-				gateway.setUserById(1);
+	    		User.changeInstance(new User());
 				AlertHelper.showWarningMessage("Success!", "Logged out!", AlertType.INFORMATION);
 				updateAccountBox();
 				break;
@@ -155,8 +154,17 @@ public class AppController implements Initializable {
 
     public void updateAccountBox() {
     	User user = User.getInstance();
-    	if(user.getId() > 1) {
-    		if(user.getRole() == User.CUSTOMER) {
+    	if(user.getEmail().equals("guest")) {
+    		Platform.runLater(() -> {
+				ObservableList<String> data = FXCollections.observableArrayList("Login", "Register");
+				accountBox.getItems().setAll(data);
+				
+				accountBox.setVisibleRowCount(2);
+				
+				changeView(LIST, null);
+	    	});
+		} else {
+			if(user.getRole() == User.CUSTOMER) {
     			Platform.runLater(() -> {
         			ObservableList<String> data = FXCollections.observableArrayList("My Account", "My Cart", "My Lists", "Log Out");
     				accountBox.getItems().setAll(data);
@@ -175,15 +183,6 @@ public class AppController implements Initializable {
     				changeView(LIST, null);
     	    	});
     		}
-		} else {
-			Platform.runLater(() -> {
-				ObservableList<String> data = FXCollections.observableArrayList("Login", "Register");
-				accountBox.getItems().setAll(data);
-				
-				accountBox.setVisibleRowCount(2);
-				
-				changeView(LIST, null);
-	    	});
 		}
     }
 	

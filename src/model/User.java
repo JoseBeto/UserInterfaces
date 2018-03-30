@@ -7,7 +7,6 @@ public class User {
 
 	private static User myInstance = null;
 	
-	private int id;
 	private int role;
 	private SimpleStringProperty firstName;
 	private SimpleStringProperty lastName;
@@ -29,10 +28,9 @@ public class User {
 		
 		setFirstName("guest");
 		setLastName("");
-		setEmail("");
+		setEmail("guest");
 		setPassword("");
 		setMoney(0.0);
-		setId(1);
 		setRole(CUSTOMER);
 	}
 	
@@ -91,14 +89,6 @@ public class User {
 
 	public void setMoney(double money) {
 		this.money.set(money);
-	}
-	
-	public int getId() {
-		return id;
-	}
-	
-	public void setId(int id) {
-		this.id = id;
 	}
 	
 	public int getRole() {
