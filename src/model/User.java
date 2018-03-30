@@ -203,13 +203,15 @@ public class User {
 		return listNames;
 	}
 	
-	public HashMap<Integer, Integer> getListWithName(String name) {
-		name = name.replaceAll(" ", "_");
-		return lists.get(name);
+	public HashMap<Integer, Integer> getListWithName(String listName) {
+		listName = listName.replaceAll(" ", "_");
+		
+		return lists.get(listName);
 	}
 	
 	public void removeItemFromList(String listName, int itemId) {
 		listName = listName.replaceAll(" ", "_");
+		
 		HashMap<Integer, Integer> map = lists.get(listName);
 		map.remove(itemId);
 	}
@@ -225,6 +227,12 @@ public class User {
 		listName = listName.replaceAll(" ", "_");
 		
 		lists.remove(listName);
+	}
+	
+	public void createList(String listName) {
+		listName = listName.replaceAll(" ", "_");
+		
+		lists.put(listName, new HashMap<Integer, Integer>());
 	}
 	
 	public int getId() {
