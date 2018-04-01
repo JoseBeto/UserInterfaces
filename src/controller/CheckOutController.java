@@ -24,7 +24,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import model.Item;
-import model.PaymentMethod;
 import model.User;
 import userInterfaces.AlertHelper;
 
@@ -52,23 +51,6 @@ public class CheckOutController implements Initializable, MyController {
     	this.itemGateway = itemGateway;
     	this.subtotal = subtotal;
     	this.payGateway = payGateway;
-	}
-
-	public void test() {
-		if( user.getMoney() < subtotal ) {	//Insufficient Funds
-			AlertHelper.showWarningMessage("Error!", "Insufficient funds!", AlertType.ERROR);
-			return;
-		}
-		else {	//Sufficient Funds
-			if(AlertHelper.showDecisionMessage("Warning", "Are you sure you want to submit this transaction?")) {
-				user.setMoney(user.getMoney() - subtotal);
-				user.getCart().emptyCart();
-
-				gateway.updateCart(user);
-				AppController.getInstance().changeView(AppController.MY_CART, null);
-				AlertHelper.showWarningMessage("Success!", "Your transaction was successful!", AlertType.INFORMATION);
-			}
-		}
 	}
 
 	@FXML

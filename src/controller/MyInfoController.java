@@ -1,13 +1,16 @@
 package controller;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import database.PaymentMethodsGateway;
 import database.UserTableGateway;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
+import javafx.util.Pair;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -63,7 +66,23 @@ public class MyInfoController implements MyController, Initializable {
     
     @FXML
     void addFundsClicked(ActionEvent event) {
-    	AppController.getInstance().changeView(AppController.ADD_FUNDS, null);
+    	HashMap<String, Integer> payMethods = user.getPaymentMethods();
+    	Pair<String,Object> amountPaymentMethod = AlertHelper.showPaymentMethods(new PaymentMethodsGateway
+    			(AppController.getInstance().getConnection()).getPaymentMethods(payMethods));
+
+    	if(amountPaymentMethod == null) //User hit cancel
+    		return;
+    	else if(amountPaymentMethod.getKey().isEmpty()){ //User didn't enter an amount
+    		return;
+    	} else {
+    		Double money = Double.parseDouble(amountPaymentMethod.getKey());
+    		user.setMoney(user.getMoney() + money);
+    		
+    		AppController.getInstance().changeView(AppController.MY_ACCOUNT, null);
+    		AlertHelper.showWarningMessage("Success!", (String.format("$%.2f dollars added to wallet!", money)) , AlertType.INFORMATION);
+    		
+    		gateway.updateUser(user);
+    	}
     }
 
 	@Override

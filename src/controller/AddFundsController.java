@@ -195,6 +195,8 @@ public class AddFundsController implements Initializable, MyController
 					AppController.getInstance().changeView(view, null);
 				else if(view == AccountController.PAYMETHODS)
 					AppController.getInstance().changeView(AppController.MY_ACCOUNT, view);
+				else if(view == AccountController.INFO)
+					AppController.getInstance().changeView(AppController.MY_ACCOUNT, view);
 			}
 		}
 	}
