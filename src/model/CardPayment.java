@@ -8,7 +8,6 @@ public class CardPayment implements PaymentMethod {
 	private String cardNumber;
 	private String expDate;
 	private String name;
-	private String amountRequested;
 	
 	public String getCardNumber() {
 		return cardNumber;
@@ -33,9 +32,6 @@ public class CardPayment implements PaymentMethod {
 		} else if(name.equals("")) {
 			AlertHelper.showWarningMessage("Error!", "Name field is empty!", AlertType.ERROR);
 			return false;
-		} else if(amountRequested.equals("") || Double.parseDouble(amountRequested) == 0) {
-			AlertHelper.showWarningMessage("Error!", "Amount requested must be above 0.0!", AlertType.ERROR);
-			return false;
 		}
 		
 		return true;
@@ -47,13 +43,6 @@ public class CardPayment implements PaymentMethod {
 		cardNumber = args[0];
 		expDate = args[1];
 		name = args[2];
-		amountRequested = args[3];
-	}
-
-	@Override
-	public double getAmount() {
-		// TODO Auto-generated method stub
-		return Double.parseDouble(amountRequested);
 	}
 	
 	@Override

@@ -26,7 +26,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
-public class AddFundsController implements Initializable, MyController 
+public class AddPaymentMethodController implements Initializable, MyController 
 {
 	
 	@FXML ComboBox<String> paymentMethodBox;
@@ -40,25 +40,21 @@ public class AddFundsController implements Initializable, MyController
 	
 	@FXML TextField paypalEmailText;
 	@FXML PasswordField paypalPassText;
-	@FXML TextField paypalAmountRequested;
 	
 	@FXML TextField cardNumberText;
 	@FXML TextField expDateText;
 	@FXML TextField fullnameText;
-	@FXML TextField amountText;
 	
 	@FXML Button submitButton;
 	
 	private User user = User.getInstance();
 	private UserTableGateway userGateway;
 	private PaymentMethodsGateway payGateway;
-	private Connection conn;
 	private int view;
 	
-	public AddFundsController(UserTableGateway userGateway, PaymentMethodsGateway payGateway, Connection conn, int view) {
+	public AddPaymentMethodController(UserTableGateway userGateway, PaymentMethodsGateway payGateway, int view) {
 		this.userGateway = userGateway;
 		this.payGateway = payGateway;
-		this.conn = conn;
 		
 		this.view = view;
 	}
@@ -82,28 +78,6 @@ public class AddFundsController implements Initializable, MyController
 					String newValue) {
 				if (!newValue.matches("\\d*")) {
 					cardNumberText.setText(oldValue);
-				}
-			}
-		});
-
-		//Prevents user from entering a non digit and more than one decimal point
-		amountText.textProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, 
-					String newValue) {
-				if (!newValue.matches("\\d*(\\.\\d*)?")) {
-					amountText.setText(oldValue);
-				}
-			}
-		});
-
-		//Prevents user from entering a non digit and more than one decimal point
-		paypalAmountRequested.textProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, 
-					String newValue) {
-				if (!newValue.matches("\\d*(\\.\\d*)?")) {
-					paypalAmountRequested.setText(oldValue);
 				}
 			}
 		});
@@ -159,11 +133,11 @@ public class AddFundsController implements Initializable, MyController
 			{
 			case 0: //Buy
 				payMethod = new PaypalMethod();
-				payMethod.fillMethodDetails(paypalEmailText.getText(), paypalPassText.getText(), paypalAmountRequested.getText());
+				payMethod.fillMethodDetails(paypalEmailText.getText(), paypalPassText.getText());
 				break;
 			case 1: //Sell
 				payMethod = new CardPayment();
-				payMethod.fillMethodDetails(cardNumberText.getText(), expDateText.getText(), fullnameText.getText(), amountText.getText());
+				payMethod.fillMethodDetails(cardNumberText.getText(), expDateText.getText(), fullnameText.getText());
 				break;
 			case 2: //Contact Us
 				System.out.println("You selected Bank Account.");
@@ -178,26 +152,20 @@ public class AddFundsController implements Initializable, MyController
 			}
 			if(!payMethod.validateMethod()) //Validation failed
 				return;
-			
-			if(AlertHelper.showDecisionMessage("Warning", "Are you sure you want to add these funds?")
-					&& payMethod.validateMethod())
-			{
-				user.setMoney(user.getMoney() + payMethod.getAmount());
-				
-				userGateway.updateUser(user);
-				AlertHelper.showWarningMessage("Success!", "Funds added!", AlertType.INFORMATION);
-				
-				payGateway.addPaymentMethod(payMethod);
-				user.addPaymentMethod(payMethod);
-				userGateway.updatePaymentMethods(user);
-				
-				if(view == AppController.CHECK_OUT)
-					AppController.getInstance().changeView(view, null);
-				else if(view == AccountController.PAYMETHODS)
-					AppController.getInstance().changeView(AppController.MY_ACCOUNT, view);
-				else if(view == AccountController.INFO)
-					AppController.getInstance().changeView(AppController.MY_ACCOUNT, view);
-			}
+
+			AlertHelper.showWarningMessage("Success!", "Payment method added!", AlertType.INFORMATION);
+
+			payGateway.addPaymentMethod(payMethod);
+			user.addPaymentMethod(payMethod);
+			userGateway.updatePaymentMethods(user);
+
+			if(view == AppController.CHECK_OUT)
+				AppController.getInstance().changeView(view, null);
+			else if(view == AccountController.PAYMETHODS)
+				AppController.getInstance().changeView(AppController.MY_ACCOUNT, view);
+			else if(view == AccountController.INFO)
+				AppController.getInstance().changeView(AppController.MY_ACCOUNT, view);
+
 		}
 	}
 }

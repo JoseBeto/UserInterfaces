@@ -7,7 +7,6 @@ public class PaypalMethod implements PaymentMethod {
 
 	private String paypalEmail;
 	private String password;
-	private String amountRequested;
 	
 	@Override
 	public boolean validateMethod() {
@@ -16,9 +15,6 @@ public class PaypalMethod implements PaymentMethod {
 			return false;
 		} else if(password.equals("")) {
 			AlertHelper.showWarningMessage("Error!", "Paypal password field is empty!", AlertType.ERROR);
-			return false;
-		} else if(amountRequested.equals("") || Double.parseDouble(amountRequested) == 0) {
-			AlertHelper.showWarningMessage("Error!", "Amount requested must be above 0.0!", AlertType.ERROR);
 			return false;
 		}
 		
@@ -32,18 +28,11 @@ public class PaypalMethod implements PaymentMethod {
 		//{
 			paypalEmail = args[0]; //NEED TO SANITIZE INPUT FIRST
 			password = args[1];
-			amountRequested = args[2];
 		//}
 	}
 
 	public String getEmail(){ return paypalEmail; }
 	public String getPassword(){ return password; }
-
-	@Override
-	public double getAmount() {
-		// TODO Auto-generated method stub
-		return Double.parseDouble(amountRequested);
-	}
 	
 	@Override
 	public String toString() {

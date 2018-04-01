@@ -94,9 +94,9 @@ public class AppController implements Initializable {
 							, new PaymentMethodsGateway(conn), (Double) arg);
 					break;
 				case ADD_FUNDS:
-					fxmlFile = this.getClass().getResource("/view/AddFundsView.fxml");
-					controller = new AddFundsController(new UserTableGateway(conn), new PaymentMethodsGateway(conn)
-							, conn, (Integer) arg);
+					fxmlFile = this.getClass().getResource("/view/AddPaymentMethodView.fxml");
+					controller = new AddPaymentMethodController(new UserTableGateway(conn), new PaymentMethodsGateway(conn)
+							, (Integer) arg);
 					break;
 			}
 		

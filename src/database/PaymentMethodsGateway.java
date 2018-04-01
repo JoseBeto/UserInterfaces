@@ -62,7 +62,7 @@ private Connection conn;
 					ResultSet rs = st.executeQuery();
 					if(rs.next()) {
 						PaymentMethod paymentMethod = new PaypalMethod();
-						paymentMethod.fillMethodDetails(rs.getString("email"), rs.getString("password"), "");
+						paymentMethod.fillMethodDetails(rs.getString("email"), rs.getString("password"));
 						paymentMethods.add(paymentMethod);
 					}
 				} else if(e.getValue() == PaymentMethod.CREDIT_CARD) {
@@ -72,7 +72,7 @@ private Connection conn;
 					ResultSet rs = st.executeQuery();
 					if(rs.next()) {
 						PaymentMethod paymentMethod = new CardPayment();
-						paymentMethod.fillMethodDetails(rs.getString("cardNumber"), rs.getString("expDate"), rs.getString("name"), "");
+						paymentMethod.fillMethodDetails(rs.getString("cardNumber"), rs.getString("expDate"), rs.getString("name"));
 						paymentMethods.add(paymentMethod);
 					}
 				}

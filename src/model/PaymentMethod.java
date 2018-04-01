@@ -7,7 +7,6 @@ public interface PaymentMethod
 	
 	public boolean validateMethod();
 	public void fillMethodDetails(String... args);
-	public double getAmount();
 	public int getTypeMethod();
 	public String getKey();
 }

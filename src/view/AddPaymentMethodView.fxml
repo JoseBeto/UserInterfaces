@@ -96,9 +96,7 @@
                <children>
                   <Label text="Paypal Email:" />
                   <Label text="Paypal Password:" GridPane.rowIndex="2" />
-                  <Label text="Amount Requested:" GridPane.rowIndex="4" />
                   <TextField fx:id="paypalEmailText" promptText="&lt;Insert Email Here&gt;" GridPane.rowIndex="1" />
-                  <TextField fx:id="paypalAmountRequested" promptText="&lt;Insert Amount Here&gt;" GridPane.rowIndex="5" />
                   <PasswordField fx:id="paypalPassText" GridPane.rowIndex="3" />
                </children>
             </GridPane>
@@ -122,11 +120,9 @@
                   <Label text="Card Number:" />
                   <Label text="Expiration Date:" GridPane.rowIndex="2" />
                   <Label text="Full Name on Card:" GridPane.rowIndex="4" />
-                  <Label text="Amount Requesting:" GridPane.rowIndex="6" />
                   <TextField fx:id="cardNumberText" GridPane.rowIndex="1" />
                   <TextField fx:id="expDateText" promptText="MM/yy" GridPane.rowIndex="3" />
                   <TextField fx:id="fullnameText" GridPane.rowIndex="5" />
-                  <TextField fx:id="amountText" GridPane.rowIndex="7" />
                </children>
             </GridPane>
          </center>
