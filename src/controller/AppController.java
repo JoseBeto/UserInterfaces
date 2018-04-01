@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.util.ResourceBundle;
 import database.AppException;
 import database.ItemTableGateway;
+import database.PaymentMethodsGateway;
 import database.UserTableGateway;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -33,7 +34,8 @@ public class AppController implements Initializable {
 	public final static int SELL_ITEM = 6;
 	public final static int MY_CART = 7;
 	public final static int MY_LISTS = 8;
-	public final static int ADD_FUNDS = 9;
+	public final static int CHECK_OUT = 9;
+	public final static int ADD_FUNDS = 10;
 	
 	private static AppController myInstance = null;
 	private BorderPane rootPane = null;
@@ -85,6 +87,11 @@ public class AppController implements Initializable {
 					fxmlFile = this.getClass().getResource("/view/UserListView.fxml");
 					controller = new UserListController(new ItemTableGateway(conn), new UserTableGateway(conn)
 							, (String) arg);
+					break;
+				case CHECK_OUT:
+					fxmlFile = this.getClass().getResource("/view/CheckOutView.fxml");
+					controller = new CheckOutController(new UserTableGateway(conn), new ItemTableGateway(conn)
+							, new PaymentMethodsGateway(conn), (Double) arg);
 					break;
 				case ADD_FUNDS:
 					fxmlFile = this.getClass().getResource("/view/AddFundsView.fxml");
