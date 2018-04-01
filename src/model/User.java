@@ -1,5 +1,10 @@
 package model;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.HashMap;
+import java.util.Properties;
+import java.util.Map.Entry;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -15,6 +20,7 @@ public class User {
 	private SimpleDoubleProperty money;
 	private Cart cart;
 	private Lists lists;
+	private HashMap<Integer, Integer> paymentMethods = new HashMap<Integer, Integer>();
 	
 	public final static int CUSTOMER = 2;
 	public final static int SELLER = 1;
@@ -34,7 +40,8 @@ public class User {
 		setRole(CUSTOMER);
 	}
 	
-	public User(String fName, String lName, String email, String password, Double money, String cart, String lists, int role) {
+	public User(String fName, String lName, String email, String password
+			, Double money, String cart, String lists, String paymentMethodString , int role) {
 		this.firstName = new SimpleStringProperty();
 		this.lastName = new SimpleStringProperty();
 		this.email = new SimpleStringProperty();
@@ -49,6 +56,7 @@ public class User {
 		setPassword(password);
 		setMoney(money);
 		setRole(role);
+		setPaymentMethods(paymentMethodString);
 	}
 	
 	public String getFirstName() {
@@ -105,6 +113,29 @@ public class User {
 	
 	public Lists getLists() {
 		return lists;
+	}
+	
+	public void addPaymentMethod(PaymentMethod paymentMethod) {
+		paymentMethods.put(paymentMethod.getId(), paymentMethod.getTypeMethod());
+	}
+	
+	public HashMap<Integer, Integer> getPaymentMethods() {
+		return paymentMethods;
+	}
+	
+	public void setPaymentMethods(String paymentMethods) {
+		if(paymentMethods.equals(""))
+			return;
+		Properties props = new Properties();
+		try {
+			props.load(new StringReader(paymentMethods.substring(1, paymentMethods.length() - 1).replace(",", "\n")));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		for(Entry<Object, Object> e : props.entrySet()) {
+		    this.paymentMethods.put(Integer.valueOf((String) e.getKey()), Integer.valueOf((String) e.getValue()));
+		}
 	}
 
 	@Override

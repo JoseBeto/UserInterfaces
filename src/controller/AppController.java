@@ -71,7 +71,7 @@ public class AppController implements Initializable {
 					break;
 				case MY_ACCOUNT:
 					fxmlFile = this.getClass().getResource("/view/AccountView.fxml");
-					controller = new AccountController(new UserTableGateway(conn));
+					controller = new AccountController(conn);
 					break;
 				case SELL_ITEM:
 					fxmlFile = this.getClass().getResource("/view/SellItemView.fxml");

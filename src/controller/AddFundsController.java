@@ -3,6 +3,8 @@ package controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import database.PaymentMethodsGateway;
 import database.UserTableGateway;
 import userInterfaces.AlertHelper;
 import model.CardPayment;
@@ -166,10 +168,19 @@ public class AddFundsController implements Initializable
 			if(AlertHelper.showDecisionMessage("Warning", "Are you sure you want to add these funds?")
 					&& payMethod.validateMethod())
 			{
-				User.getInstance().setMoney(User.getInstance().getMoney() + payMethod.getAmount());
-				new UserTableGateway(AppController.getInstance().getConnection()).updateUser(User.getInstance());
+				User user = User.getInstance();
+				
+				user.setMoney(user.getMoney() + payMethod.getAmount());
+				
+				new UserTableGateway(AppController.getInstance().getConnection()).updateUser(user);
 				AlertHelper.showWarningMessage("Success!", "Funds added!", AlertType.INFORMATION);
+				
 				AppController.getInstance().changeView(AppController.MY_ACCOUNT, null);
+				
+				
+				new PaymentMethodsGateway(AppController.getInstance().getConnection()).addPaymentMethod(payMethod);
+				user.addPaymentMethod(payMethod);
+				new UserTableGateway(AppController.getInstance().getConnection()).updatePaymentMethods(user);
 			}
 		}
 	}

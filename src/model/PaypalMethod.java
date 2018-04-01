@@ -5,6 +5,8 @@ import userInterfaces.AlertHelper;
 
 public class PaypalMethod implements PaymentMethod {
 
+	private int id;
+	
 	private String paypalEmail;
 	private String password;
 	private String amountRequested;
@@ -48,5 +50,20 @@ public class PaypalMethod implements PaymentMethod {
 	@Override
 	public String toString() {
 		return "Paypal account " + paypalEmail;
+	}
+
+	@Override
+	public int getTypeMethod() {
+		return PAYPAL;
+	}
+
+	@Override
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@Override
+	public int getId() {
+		return id;
 	}
 }

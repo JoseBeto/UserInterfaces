@@ -1,35 +1,30 @@
 package controller;
 
+import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.util.ResourceBundle;
-
+import database.AppException;
+import database.PaymentMethodsGateway;
 import database.UserTableGateway;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
+import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
-import model.User;
-import userInterfaces.AlertHelper;
+import javafx.scene.layout.BorderPane;
 
 public class AccountController implements MyController, Initializable{
-
-	@FXML private TextField emailText;
-    @FXML private TextField firstNameText;
-    @FXML private TextField lastNameText;
-    @FXML private TextField passwordText;
-    @FXML private Label moneyLabel;
-    @FXML private Label roleLabel;
-    @FXML private Button becomeSellerButton;
     
-	private UserTableGateway gateway;
-	private User user = User.getInstance();
+	@FXML private BorderPane contentPane;
+	private Connection conn;
 	
-	public AccountController(UserTableGateway gateway) {
-    	this.gateway = gateway;
+	public final static int INFO = 1;
+	public final static int PAYMETHODS = 2;
+	public final static int ORDERS = 3;
+	
+	public AccountController(Connection conn) {
+    	this.conn = conn;
     }
 	
 	@FXML
@@ -38,57 +33,51 @@ public class AccountController implements MyController, Initializable{
     }
 
     @FXML
-    void saveButtonClicked(ActionEvent event) {
-    	if(emailText.getText().equals("")) {
-    		AlertHelper.showWarningMessage("Error!", "Email field is empty!", AlertType.ERROR);
-    		return;
-    	} else if(firstNameText.getText().equals("")) {
-    		AlertHelper.showWarningMessage("Error!", "First name field is empty!", AlertType.ERROR);
-    		return;
-    	} else if(lastNameText.getText().equals("")) {
-    		AlertHelper.showWarningMessage("Error!", "Last name field is empty!", AlertType.ERROR);
-    		return;
-    	} else if(passwordText.getText().equals("")) {
-    		AlertHelper.showWarningMessage("Error!", "Password field is empty!", AlertType.ERROR);
-    		return;
-    	}
-    	
-    	user.setEmail(emailText.getText());
-    	user.setFirstName(firstNameText.getText());
-    	user.setLastName(lastNameText.getText());
-    	user.setPassword(passwordText.getText());
-    	
-    	gateway.updateUser(user);
-    	
-    	AlertHelper.showWarningMessage("Success!", "Account updated!", AlertType.INFORMATION);
+    void myInfoClicked(MouseEvent event) {
+    	changeView(INFO, null);
     }
     
     @FXML
-    void becomeSellerClicked(ActionEvent event) {
-    	user.setRole(User.SELLER);
-    	AppController.getInstance().updateAccountBox();
-    	
-    	gateway.updateUser(user);
-    	AlertHelper.showWarningMessage("Success!", "Account upgraded!", AlertType.INFORMATION);
-    }
-    
-    @FXML
-    void addFundsClicked(ActionEvent event) {
-    	AppController.getInstance().changeView(AppController.ADD_FUNDS, null);
+    void myPastOrdersClicked(MouseEvent event) {
+    	changeView(ORDERS, null);
     }
 
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-    	emailText.setText(user.getEmail());
-    	firstNameText.setText(user.getFirstName());
-    	lastNameText.setText(user.getLastName());
-    	passwordText.setText(user.getPassword());
-    	moneyLabel.setText(String.format("$%.2f", user.getMoney()));
-    	if(user.getRole() == User.SELLER) {
-    		roleLabel.setText("Seller");
-    		becomeSellerButton.setVisible(false);
-    	} else if(user.getRole() == User.CUSTOMER) {
-    		roleLabel.setText("Customer");
-    	}
+    @FXML
+    void myPaymentMethodsClicked(MouseEvent event) {
+    	changeView(PAYMETHODS, null);
+    }
+
+	public void changeView(int viewType, Object arg) throws AppException {
+		try {
+			MyController controller = null;
+			URL fxmlFile = null;
+			switch(viewType) {
+				case INFO:
+					fxmlFile = this.getClass().getResource("/view/MyInfoView.fxml");
+					controller = new MyInfoController(new UserTableGateway(conn));
+					break;
+				case PAYMETHODS:
+					fxmlFile = this.getClass().getResource("/view/MyPaymentMethodsView.fxml");
+					controller = new MyPaymentMethodsController(new UserTableGateway(conn), new PaymentMethodsGateway(conn));
+					break;
+				case ORDERS:
+					fxmlFile = this.getClass().getResource("/view/MyPastOrdersView.fxml");
+					controller = new MyPastOrdersController();
+					break;
+			}
+		
+			FXMLLoader loader = new FXMLLoader(fxmlFile);
+			loader.setController(controller);
+		
+			Parent viewNode = loader.load();
+			contentPane.setCenter(viewNode);
+		} catch (IOException e) {
+			throw new AppException(e);
+		}
 	}
+	
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+    	changeView(INFO, null);
+    }
 }

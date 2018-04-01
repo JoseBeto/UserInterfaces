@@ -5,18 +5,32 @@ import userInterfaces.AlertHelper;
 
 public class CardPayment implements PaymentMethod {
 
+	private int id;
+	
 	private String cardNumber;
 	private String expDate;
 	private String name;
 	private String amountRequested;
+	
+	public String getCardNumber() {
+		return cardNumber;
+	}
+	
+	public String getExpDate() {
+		return expDate;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
 	@Override
 	public boolean validateMethod() {
 		if(cardNumber.length() != 16) {
 			AlertHelper.showWarningMessage("Error!", "Card number must be 16 digits!", AlertType.ERROR);
 			return false;
 		} else if(!expDate.matches("(0?[1-9]|1[0-2])/[0-9][0-9]$")) {
-			AlertHelper.showWarningMessage("Error!", "Invalid expiration date! Format must be mm/yy and date must be "
-					+ "before current date!", AlertType.ERROR);
+			AlertHelper.showWarningMessage("Error!", "Invalid expiration date! Format must be mm/yy!", AlertType.ERROR);
 			return false;
 		} else if(name.equals("")) {
 			AlertHelper.showWarningMessage("Error!", "Name field is empty!", AlertType.ERROR);
@@ -47,5 +61,20 @@ public class CardPayment implements PaymentMethod {
 	@Override
 	public String toString() {
 		return "Card ending in " + String.valueOf(cardNumber).substring(12);
+	}
+
+	@Override
+	public int getTypeMethod() {
+		return CREDIT_CARD;
+	}
+
+	@Override
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	@Override
+	public int getId() {
+		return id;
 	}
 }

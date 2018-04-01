@@ -49,6 +49,10 @@
          <font>
             <Font name="Consolas" size="14.0" />
          </font></PasswordField>
+      <Button layoutX="700.0" layoutY="718.0" mnemonicParsing="false" onAction="#registerButtonClicked" prefHeight="30.0" prefWidth="100.0" style="-fx-background-radius: 0px;" text="Register">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font></Button>
       <Button layoutY="10.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="3.0" prefWidth="176.0" style="-fx-background-radius: 0px;">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
@@ -61,9 +65,5 @@
             <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
          </padding>
       </Button>
-      <Button layoutX="700.0" layoutY="718.0" mnemonicParsing="false" onAction="#registerButtonClicked" prefHeight="30.0" prefWidth="100.0" text="Register">
-         <font>
-            <Font name="Consolas" size="14.0" />
-         </font></Button>
    </children>
 </Pane>
