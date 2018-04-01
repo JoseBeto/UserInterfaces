@@ -49,8 +49,8 @@ private Connection conn;
 		}
 	}
 
-	public ObservableList<PaymentMethod> getPaymentMethods(HashMap<String, Integer> payMethods) throws AppException {
-		ObservableList<PaymentMethod> paymentMethods = FXCollections.observableArrayList();
+	public ObservableList<Object> getPaymentMethods(HashMap<String, Integer> payMethods) throws AppException {
+		ObservableList<Object> paymentMethods = FXCollections.observableArrayList();
 
 		PreparedStatement st = null;
 		try {

@@ -36,12 +36,12 @@ public class CheckOutController implements Initializable, MyController {
     @FXML private TableColumn<Item, String> nameColumn;
     @FXML private TableColumn<Item, Integer> qtyColumn;
     @FXML private TableColumn<Item, String> priceColumn;
-    @FXML private ComboBox<PaymentMethod> paymentMethodsBox;
+    @FXML private ComboBox<Object> paymentMethodsBox;
     
 	private User user = User.getInstance();
 	private Double subtotal;
 	private ObservableList<Item> items = FXCollections.observableArrayList();
-	private ObservableList<PaymentMethod> paymentMethods = FXCollections.observableArrayList();
+	private ObservableList<Object> paymentMethods = FXCollections.observableArrayList();
 	private UserTableGateway gateway;
 	private ItemTableGateway itemGateway;
 	private PaymentMethodsGateway payGateway;
@@ -71,12 +71,41 @@ public class CheckOutController implements Initializable, MyController {
 		}
 	}
 
-    @FXML
-    void PlaceOrderButtonClicked(ActionEvent event) {
-    	
-    	
-    	
-    	AppController.getInstance().changeView(AppController.MY_CART, null);
+	@FXML
+	void PlaceOrderButtonClicked(ActionEvent event) {
+		int walletIndex = paymentMethods.size() - 2;
+		int selectedIndex = paymentMethodsBox.getSelectionModel().getSelectedIndex();
+		if(selectedIndex == -1) {
+			AlertHelper.showWarningMessage("Error!", "No payment method selected!", AlertType.ERROR);
+    		return;
+		}
+
+		if(AlertHelper.showDecisionMessage("Warning", "Are you sure you want to submit this transaction?")) {
+			if(selectedIndex == walletIndex) {
+				if(user.getMoney() < subtotal) {	//Insufficient Funds
+					AlertHelper.showWarningMessage("Error!", "Insufficient funds!", AlertType.ERROR);
+					return;
+				}
+				user.setMoney(user.getMoney() - subtotal);
+			}
+		}
+
+		user.getCart().emptyCart();
+		gateway.updateCart(user);
+		AlertHelper.showWarningMessage("Success!", "Your transaction was successful!", AlertType.INFORMATION);
+		AppController.getInstance().changeView(AppController.MY_CART, null);
+	}
+	
+	@FXML
+    void paymentMethodChanged(ActionEvent event) {
+		int addPaymentIndex = paymentMethods.size() - 1;
+		int selectedIndex = paymentMethodsBox.getSelectionModel().getSelectedIndex();
+		
+		
+		if(selectedIndex == addPaymentIndex) {
+			AppController.getInstance().changeView(AppController.ADD_FUNDS, AppController.CHECK_OUT);
+			return;
+		}
     }
 
     @FXML
@@ -114,7 +143,7 @@ public class CheckOutController implements Initializable, MyController {
     	
     	HashMap<String, Integer> payMethods = user.getPaymentMethods();
 		paymentMethods = payGateway.getPaymentMethods(payMethods);
-		//paymentMethods.add("test");
+		paymentMethods.addAll(String.format("Wallet ($%.2f)", user.getMoney()), "Add Payment Method");
 		paymentMethodsBox.setItems(paymentMethods);
 	}
 }

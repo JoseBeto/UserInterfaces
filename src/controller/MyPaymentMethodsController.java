@@ -3,7 +3,6 @@ package controller;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-
 import database.PaymentMethodsGateway;
 import database.UserTableGateway;
 import javafx.collections.FXCollections;
@@ -12,18 +11,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
-import model.Item;
-import model.PaymentMethod;
 import model.User;
 
 public class MyPaymentMethodsController implements MyController, Initializable {
 
-	@FXML private ListView<PaymentMethod> paymentMethodsList;
+	@FXML private ListView<Object> paymentMethodsList;
 	
 	private User user = User.getInstance();
 	private UserTableGateway gateway;
 	private PaymentMethodsGateway payGateway;
-	private ObservableList<PaymentMethod> paymentMethods = FXCollections.observableArrayList();
+	private ObservableList<Object> paymentMethods = FXCollections.observableArrayList();
 	
 	public MyPaymentMethodsController(UserTableGateway gateway, PaymentMethodsGateway payGateway) {
 		this.gateway = gateway;
@@ -32,7 +29,7 @@ public class MyPaymentMethodsController implements MyController, Initializable {
 	
 	@FXML
     void addPaymentMethodClicked(ActionEvent event) {
-		AppController.getInstance().changeView(AppController.ADD_FUNDS, null);
+		AppController.getInstance().changeView(AppController.ADD_FUNDS, AccountController.PAYMETHODS);
 		
 		//user.addPaymentMethod(paymentMethod);
 		//gateway.updatePaymentMethods(user);

@@ -18,12 +18,14 @@ public class AccountController implements MyController, Initializable{
     
 	@FXML private BorderPane contentPane;
 	private Connection conn;
+	private Object arg;
 	
 	public final static int INFO = 1;
 	public final static int PAYMETHODS = 2;
 	public final static int ORDERS = 3;
 	
-	public AccountController(Connection conn) {
+	public AccountController(Connection conn, Object arg) {
+		this.arg = arg;
     	this.conn = conn;
     }
 	
@@ -78,6 +80,9 @@ public class AccountController implements MyController, Initializable{
 	
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-    	changeView(INFO, null);
+    	if(arg == null)
+    		changeView(INFO, null);
+    	else
+    		changeView((Integer) arg, null);
     }
 }

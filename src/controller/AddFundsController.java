@@ -2,8 +2,8 @@ package controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.util.ResourceBundle;
-
 import database.PaymentMethodsGateway;
 import database.UserTableGateway;
 import userInterfaces.AlertHelper;
@@ -26,7 +26,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
-public class AddFundsController implements Initializable 
+public class AddFundsController implements Initializable, MyController 
 {
 	
 	@FXML ComboBox<String> paymentMethodBox;
@@ -48,6 +48,20 @@ public class AddFundsController implements Initializable
 	@FXML TextField amountText;
 	
 	@FXML Button submitButton;
+	
+	private User user = User.getInstance();
+	private UserTableGateway userGateway;
+	private PaymentMethodsGateway payGateway;
+	private Connection conn;
+	private int view;
+	
+	public AddFundsController(UserTableGateway userGateway, PaymentMethodsGateway payGateway, Connection conn, int view) {
+		this.userGateway = userGateway;
+		this.payGateway = payGateway;
+		this.conn = conn;
+		
+		this.view = view;
+	}
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
@@ -168,19 +182,19 @@ public class AddFundsController implements Initializable
 			if(AlertHelper.showDecisionMessage("Warning", "Are you sure you want to add these funds?")
 					&& payMethod.validateMethod())
 			{
-				User user = User.getInstance();
-				
 				user.setMoney(user.getMoney() + payMethod.getAmount());
 				
-				new UserTableGateway(AppController.getInstance().getConnection()).updateUser(user);
+				userGateway.updateUser(user);
 				AlertHelper.showWarningMessage("Success!", "Funds added!", AlertType.INFORMATION);
 				
-				AppController.getInstance().changeView(AppController.MY_ACCOUNT, null);
-				
-				
-				new PaymentMethodsGateway(AppController.getInstance().getConnection()).addPaymentMethod(payMethod);
+				payGateway.addPaymentMethod(payMethod);
 				user.addPaymentMethod(payMethod);
-				new UserTableGateway(AppController.getInstance().getConnection()).updatePaymentMethods(user);
+				userGateway.updatePaymentMethods(user);
+				
+				if(view == AppController.CHECK_OUT)
+					AppController.getInstance().changeView(view, null);
+				else if(view == AccountController.PAYMETHODS)
+					AppController.getInstance().changeView(AppController.MY_ACCOUNT, view);
 			}
 		}
 	}

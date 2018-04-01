@@ -73,7 +73,7 @@ public class AppController implements Initializable {
 					break;
 				case MY_ACCOUNT:
 					fxmlFile = this.getClass().getResource("/view/AccountView.fxml");
-					controller = new AccountController(conn);
+					controller = new AccountController(conn, arg);
 					break;
 				case SELL_ITEM:
 					fxmlFile = this.getClass().getResource("/view/SellItemView.fxml");
@@ -95,7 +95,8 @@ public class AppController implements Initializable {
 					break;
 				case ADD_FUNDS:
 					fxmlFile = this.getClass().getResource("/view/AddFundsView.fxml");
-					//controller = new CartController(new UserTableGateway(conn), new
+					controller = new AddFundsController(new UserTableGateway(conn), new PaymentMethodsGateway(conn)
+							, conn, (Integer) arg);
 					break;
 			}
 		

@@ -16,7 +16,7 @@
    <bottom>
       <HBox prefHeight="50.0" prefWidth="650.0" BorderPane.alignment="CENTER">
          <children>
-            <ComboBox fx:id="paymentMethodsBox" prefHeight="30.0" prefWidth="400.0" promptText="Select Payment Method" style="-fx-background-radius: 0px; -fx-font-family: consolas; -fx-font-size: 14;">
+            <ComboBox fx:id="paymentMethodsBox" onAction="#paymentMethodChanged" prefHeight="30.0" prefWidth="400.0" promptText="Select Payment Method" style="-fx-background-radius: 0px; -fx-font-family: consolas; -fx-font-size: 14;">
                <HBox.margin>
                   <Insets left="80.0" />
                </HBox.margin>
