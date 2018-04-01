@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import javafx.collections.FXCollections;
@@ -25,23 +24,17 @@ private Connection conn;
 		PreparedStatement st = null;
 		try {
 			if(paymentMethod.getTypeMethod() == PaymentMethod.PAYPAL) {
-				String statement = "insert into paymentMethod_paypal (email, password) values (?, ?)";
-				st = conn.prepareStatement(statement, Statement.RETURN_GENERATED_KEYS);
+				st = conn.prepareStatement("insert into paymentMethod_paypal (email, password) values (?, ?)");
 				st.setString(1, ((PaypalMethod) paymentMethod).getEmail());
 				st.setString(2, ((PaypalMethod) paymentMethod).getPassword());
 				st.executeUpdate();
 			} else if(paymentMethod.getTypeMethod() == PaymentMethod.CREDIT_CARD) {
-				String statement = "insert into paymentMethod_creditCard (cardNumber, expDate, name) values (?, ?, ?)";
-				st = conn.prepareStatement(statement, Statement.RETURN_GENERATED_KEYS);
+				st = conn.prepareStatement("insert into paymentMethod_creditCard (cardNumber, expDate, name) values (?, ?, ?)");
 				st.setString(1, ((CardPayment) paymentMethod).getCardNumber());
 				st.setString(2, ((CardPayment) paymentMethod).getExpDate());
 				st.setString(3, ((CardPayment) paymentMethod).getName());
 				st.executeUpdate();
-			} 
-
-			ResultSet rs = st.getGeneratedKeys();
-			rs.next();
-			paymentMethod.setId(rs.getInt(1));
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AppException(e);
@@ -56,31 +49,30 @@ private Connection conn;
 		}
 	}
 
-	public ObservableList<PaymentMethod> getPaymentMethods(HashMap<Integer, Integer> payMethods) throws AppException {
+	public ObservableList<PaymentMethod> getPaymentMethods(HashMap<String, Integer> payMethods) throws AppException {
 		ObservableList<PaymentMethod> paymentMethods = FXCollections.observableArrayList();
 
 		PreparedStatement st = null;
 		try {
-			for(Entry<Integer, Integer> e : payMethods.entrySet()) {
+			for(Entry<String, Integer> e : payMethods.entrySet()) {
 				if(e.getValue() == PaymentMethod.PAYPAL) {
-					st = conn.prepareStatement("select * from paymentMethod_paypal where id = ?");
-					st.setInt(1, e.getKey());
+					st = conn.prepareStatement("select * from paymentMethod_paypal where email = ?");
+					st.setString(1, e.getKey());
 					
 					ResultSet rs = st.executeQuery();
 					if(rs.next()) {
 						PaymentMethod paymentMethod = new PaypalMethod();
 						paymentMethod.fillMethodDetails(rs.getString("email"), rs.getString("password"), "");
-						paymentMethod.setId(rs.getInt("id"));
 						paymentMethods.add(paymentMethod);
 					}
 				} else if(e.getValue() == PaymentMethod.CREDIT_CARD) {
-					st = conn.prepareStatement("select * from paymentMethod_creditCard where id = ?");
-					st.setInt(1, e.getKey());
+					st = conn.prepareStatement("select * from paymentMethod_creditCard where cardNumber = ?");
+					st.setString(1, e.getKey());
+					
 					ResultSet rs = st.executeQuery();
 					if(rs.next()) {
 						PaymentMethod paymentMethod = new CardPayment();
 						paymentMethod.fillMethodDetails(rs.getString("cardNumber"), rs.getString("expDate"), rs.getString("name"), "");
-						paymentMethod.setId(rs.getInt("id"));
 						paymentMethods.add(paymentMethod);
 					}
 				}

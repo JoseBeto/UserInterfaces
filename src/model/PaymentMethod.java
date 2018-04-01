@@ -9,6 +9,5 @@ public interface PaymentMethod
 	public void fillMethodDetails(String... args);
 	public double getAmount();
 	public int getTypeMethod();
-	public void setId(int id);
-	public int getId();
+	public String getKey();
 }

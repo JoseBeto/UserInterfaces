@@ -5,8 +5,6 @@ import userInterfaces.AlertHelper;
 
 public class CardPayment implements PaymentMethod {
 
-	private int id;
-	
 	private String cardNumber;
 	private String expDate;
 	private String name;
@@ -69,12 +67,7 @@ public class CardPayment implements PaymentMethod {
 	}
 
 	@Override
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	@Override
-	public int getId() {
-		return id;
+	public String getKey() {
+		return cardNumber;
 	}
 }

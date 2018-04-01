@@ -45,7 +45,7 @@ public class MyPaymentMethodsController implements MyController, Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		HashMap<Integer, Integer> payMethods = user.getPaymentMethods();
+		HashMap<String, Integer> payMethods = user.getPaymentMethods();
 		paymentMethods = payGateway.getPaymentMethods(payMethods);
 		
 		paymentMethodsList.setItems(paymentMethods);

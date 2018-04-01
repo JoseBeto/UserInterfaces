@@ -20,7 +20,7 @@ public class User {
 	private SimpleDoubleProperty money;
 	private Cart cart;
 	private Lists lists;
-	private HashMap<Integer, Integer> paymentMethods = new HashMap<Integer, Integer>();
+	private HashMap<String, Integer> paymentMethods = new HashMap<String, Integer>();
 	
 	public final static int CUSTOMER = 2;
 	public final static int SELLER = 1;
@@ -116,10 +116,10 @@ public class User {
 	}
 	
 	public void addPaymentMethod(PaymentMethod paymentMethod) {
-		paymentMethods.put(paymentMethod.getId(), paymentMethod.getTypeMethod());
+		paymentMethods.put(paymentMethod.getKey(), paymentMethod.getTypeMethod());
 	}
 	
-	public HashMap<Integer, Integer> getPaymentMethods() {
+	public HashMap<String, Integer> getPaymentMethods() {
 		return paymentMethods;
 	}
 	
@@ -134,7 +134,7 @@ public class User {
 			e1.printStackTrace();
 		}
 		for(Entry<Object, Object> e : props.entrySet()) {
-		    this.paymentMethods.put(Integer.valueOf((String) e.getKey()), Integer.valueOf((String) e.getValue()));
+		    this.paymentMethods.put((String) e.getKey(), Integer.valueOf((String) e.getValue()));
 		}
 	}
 
