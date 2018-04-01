@@ -2,14 +2,20 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
+import java.util.ResourceBundle;
+
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import database.ItemTableGateway;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -18,7 +24,7 @@ import javafx.scene.control.Alert.AlertType;
 import model.Item;
 import userInterfaces.AlertHelper;
 
-public class SellItemController implements MyController{
+public class SellItemController implements Initializable, MyController{
 
     @FXML private TextField nameText;
     @FXML private TextField priceText;
@@ -98,11 +104,25 @@ public class SellItemController implements MyController{
 				 break;
 			 }
 			 String message = "File " + file.getName() + " does not exist in \n" + file.getParent() + ":\n" + "Do you want to select a different file?";
-	         if(!AlertHelper.showDecisionMessage("Warning", message))
-	        	 return;
+			 if(!AlertHelper.showDecisionMessage("Warning", message))
+				 return;
 		}
 		imageAddedIndicator.setImage(new Image("/view/checkmark.png"));
-		
-    	imageAdded = true;
+
+		imageAdded = true;
+    }
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+    	//Prevents user from entering a non digit and more than one decimal point
+    	priceText.textProperty().addListener(new ChangeListener<String>() {
+    		@Override
+    		public void changed(ObservableValue<? extends String> observable, String oldValue, 
+    				String newValue) {
+    			if (!newValue.matches("\\d*(\\.\\d*)?")) {
+    				priceText.setText(oldValue);
+    			}
+    		}
+    	});
     }
 }
