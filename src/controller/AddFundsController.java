@@ -9,6 +9,8 @@ import model.CardPayment;
 import model.PaymentMethod;
 import model.PaypalMethod;
 import model.User;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -51,11 +53,55 @@ public class AddFundsController implements Initializable
 		// TODO Auto-generated method stub
 		methodsList = FXCollections.observableArrayList("Paypal", "Credit Card", "Bank Account", "Bitcoin");
 		paymentMethodBox.getItems().setAll(methodsList);
-		
+
 		paymentPane.setCenter(null);
 		paymentPane.setLeft(null);
 		paymentPane.setRight(null);
 		paymentPane.setBottom(null);
+
+		//Prevents user from entering a non digit
+		cardNumberText.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, 
+					String newValue) {
+				if (!newValue.matches("\\d*")) {
+					cardNumberText.setText(oldValue);
+				}
+			}
+		});
+
+		//Prevents user from entering a non digit and more than one decimal point
+		amountText.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, 
+					String newValue) {
+				if (!newValue.matches("\\d*(\\.\\d*)?")) {
+					amountText.setText(oldValue);
+				}
+			}
+		});
+
+		//Prevents user from entering a non digit and more than one decimal point
+		paypalAmountRequested.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, 
+					String newValue) {
+				if (!newValue.matches("\\d*(\\.\\d*)?")) {
+					paypalAmountRequested.setText(oldValue);
+				}
+			}
+		});
+
+		//Prevents user from entering a non digit and more than one decimal point
+		expDateText.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, 
+					String newValue) {
+				if (!newValue.matches("(0?[1-9]|1[0-2])?/?[0-9]?[0-9]?$")) {
+					expDateText.setText(oldValue);
+				}
+			}
+		});
 	}
 
 	//Action Event Listener for Category Box
@@ -114,7 +160,9 @@ public class AddFundsController implements Initializable
 				paymentPane.setCenter(coinGrid);
 				break;
 			}
-
+			if(!payMethod.validateMethod()) //Validation failed
+				return;
+			
 			if(AlertHelper.showDecisionMessage("Warning", "Are you sure you want to add these funds?")
 					&& payMethod.validateMethod())
 			{

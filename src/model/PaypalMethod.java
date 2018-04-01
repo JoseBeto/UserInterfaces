@@ -1,17 +1,28 @@
 package model;
 
+import javafx.scene.control.Alert.AlertType;
+import userInterfaces.AlertHelper;
+
 public class PaypalMethod implements PaymentMethod {
 
 	private String paypalEmail;
 	private String password;
-	private double amountRequested;
+	private String amountRequested;
 	
 	@Override
 	public boolean validateMethod() {
-		// TODO Auto-generated method stub
-		if( paypalEmail != null && password != null && amountRequested != 0.0 )
-			return true;
-		return false;
+		if(paypalEmail.equals("")) {
+			AlertHelper.showWarningMessage("Error!", "Invalid email!", AlertType.ERROR);
+			return false;
+		} else if(password.equals("")) {
+			AlertHelper.showWarningMessage("Error!", "Paypal password field is empty!", AlertType.ERROR);
+			return false;
+		} else if(amountRequested.equals("") || Double.parseDouble(amountRequested) == 0) {
+			AlertHelper.showWarningMessage("Error!", "Amount requested must be above 0.0!", AlertType.ERROR);
+			return false;
+		}
+		
+		return true;
 	}
 
 	@Override
@@ -21,7 +32,7 @@ public class PaypalMethod implements PaymentMethod {
 		//{
 			paypalEmail = args[0]; //NEED TO SANITIZE INPUT FIRST
 			password = args[1];
-			amountRequested = Double.parseDouble(args[2]);
+			amountRequested = args[2];
 		//}
 	}
 
@@ -31,6 +42,11 @@ public class PaypalMethod implements PaymentMethod {
 	@Override
 	public double getAmount() {
 		// TODO Auto-generated method stub
-		return amountRequested;
+		return Double.parseDouble(amountRequested);
+	}
+	
+	@Override
+	public String toString() {
+		return "Paypal account " + paypalEmail;
 	}
 }
