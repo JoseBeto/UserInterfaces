@@ -91,4 +91,30 @@ private Connection conn;
 		}
 		return paymentMethods;
 	}
+	
+	public void removePaymentMethod(PaymentMethod paymentMethod) throws AppException {
+		PreparedStatement st = null;
+		try {
+			if(paymentMethod.getTypeMethod() == PaymentMethod.PAYPAL) {
+				st = conn.prepareStatement("delete from paymentMethod_paypal where email = ?");
+				st.setString(1, paymentMethod.getKey());
+				st.executeUpdate();
+			} else if(paymentMethod.getTypeMethod() == PaymentMethod.CREDIT_CARD) {
+				st = conn.prepareStatement("delete from paymentMethod_creditCard where cardNumber = ?");
+				st.setString(1, paymentMethod.getKey());
+				st.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException(e);
+		} finally {
+			try {
+				if(st != null)
+					st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new AppException(e);
+			}
+		}
+	}
 }

@@ -119,6 +119,10 @@ public class User {
 		paymentMethods.put(paymentMethod.getKey(), paymentMethod.getTypeMethod());
 	}
 	
+	public void removePaymentMethod(PaymentMethod paymentMethod) {
+		paymentMethods.remove(paymentMethod.getKey());
+	}
+	
 	public HashMap<String, Integer> getPaymentMethods() {
 		return paymentMethods;
 	}

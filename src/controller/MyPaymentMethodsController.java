@@ -11,7 +11,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+import model.PaymentMethod;
 import model.User;
+import userInterfaces.AlertHelper;
 
 public class MyPaymentMethodsController implements MyController, Initializable {
 
@@ -28,23 +30,34 @@ public class MyPaymentMethodsController implements MyController, Initializable {
 	}
 	
 	@FXML
-    void addPaymentMethodClicked(ActionEvent event) {
+	void addPaymentMethodClicked(ActionEvent event) {
 		AppController.getInstance().changeView(AppController.ADD_FUNDS, AccountController.PAYMETHODS);
+	}
+
+	@FXML
+	void removePaymentMethodClicked(ActionEvent event) {
+		if(paymentMethodsList.getSelectionModel().getSelectedItem() == null)
+			return;
+
+		String message = "Are you sure you want to remove this payment method?";
+		String title = "Warning";
+		if(!AlertHelper.showDecisionMessage(title, message))
+			return;
 		
-		//user.addPaymentMethod(paymentMethod);
-		//gateway.updatePaymentMethods(user);
-    }
+		Object selectedPaymentMethod = paymentMethodsList.getSelectionModel().getSelectedItem();
+		
+		paymentMethods.remove(selectedPaymentMethod);
+		user.removePaymentMethod((PaymentMethod) selectedPaymentMethod);
+		
+		gateway.updatePaymentMethods(user);
+		payGateway.removePaymentMethod((PaymentMethod) selectedPaymentMethod);
+	}
 
-    @FXML
-    void removePaymentMethodClicked(ActionEvent event) {
-
-    }
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		HashMap<String, Integer> payMethods = user.getPaymentMethods();
 		paymentMethods = payGateway.getPaymentMethods(payMethods);
-		
+
 		paymentMethodsList.setItems(paymentMethods);
 	}
 }
