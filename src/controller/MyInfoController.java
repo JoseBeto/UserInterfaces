@@ -76,7 +76,7 @@ public class MyInfoController implements MyController, Initializable {
     		return;
     	} else {
     		Double money = Double.parseDouble(amountPaymentMethod.getKey());
-    		user.setMoney(user.getMoney() + money);
+    		user.setWallet(user.getWallet() + money);
     		
     		AppController.getInstance().changeView(AppController.MY_ACCOUNT, null);
     		AlertHelper.showWarningMessage("Success!", (String.format("$%.2f dollars added to wallet!", money)) , AlertType.INFORMATION);
@@ -91,7 +91,7 @@ public class MyInfoController implements MyController, Initializable {
     	firstNameText.setText(user.getFirstName());
     	lastNameText.setText(user.getLastName());
     	passwordText.setText(user.getPassword());
-    	walletLabel.setText(String.format("$%.2f", user.getMoney()));
+    	walletLabel.setText(String.format("$%.2f", user.getWallet()));
     	if(user.getRole() == User.SELLER)
     		sellerCheckbox.setSelected(true);
 	}

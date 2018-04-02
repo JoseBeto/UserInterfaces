@@ -17,7 +17,7 @@ public class User {
 	private SimpleStringProperty lastName;
 	private SimpleStringProperty email;
 	private SimpleStringProperty password;
-	private SimpleDoubleProperty money;
+	private SimpleDoubleProperty wallet;
 	private Cart cart;
 	private Lists lists;
 	private HashMap<String, Integer> paymentMethods = new HashMap<String, Integer>();
@@ -30,23 +30,23 @@ public class User {
 		this.lastName = new SimpleStringProperty();
 		this.email = new SimpleStringProperty();
 		this.password = new SimpleStringProperty();
-		this.money = new SimpleDoubleProperty();
+		this.wallet = new SimpleDoubleProperty();
 		
 		setFirstName("guest");
 		setLastName("");
 		setEmail("guest");
 		setPassword("");
-		setMoney(0.0);
+		setWallet(0.0);
 		setRole(CUSTOMER);
 	}
 	
 	public User(String fName, String lName, String email, String password
-			, Double money, String cart, String lists, String paymentMethodString , int role) {
+			, Double wallet, String cart, String lists, String paymentMethodString , int role) {
 		this.firstName = new SimpleStringProperty();
 		this.lastName = new SimpleStringProperty();
 		this.email = new SimpleStringProperty();
 		this.password = new SimpleStringProperty();
-		this.money = new SimpleDoubleProperty();
+		this.wallet = new SimpleDoubleProperty();
 		this.cart = new Cart(cart);
 		this.lists = new Lists(lists);
 		
@@ -54,7 +54,7 @@ public class User {
 		setLastName(lName);
 		setEmail(email);
 		setPassword(password);
-		setMoney(money);
+		setWallet(wallet);
 		setRole(role);
 		setPaymentMethods(paymentMethodString);
 	}
@@ -91,12 +91,12 @@ public class User {
 		this.password.set(password);
 	}
 	
-	public Double getMoney() {
-		return money.get();
+	public Double getWallet() {
+		return wallet.get();
 	}
 
-	public void setMoney(double money) {
-		this.money.set(money);
+	public void setWallet(double wallet) {
+		this.wallet.set(wallet);
 	}
 	
 	public int getRole() {

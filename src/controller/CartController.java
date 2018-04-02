@@ -51,7 +51,7 @@ public class CartController implements MyController, Initializable {
 	
 	@FXML
     void checkOutButtonClicked(ActionEvent event) {
-		AppController.getInstance().changeView(AppController.CHECK_OUT, subtotal);
+		AppController.getInstance().changeView(AppController.CHECK_OUT, null);
 	}
 
 	@FXML

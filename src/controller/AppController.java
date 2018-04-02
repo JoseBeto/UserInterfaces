@@ -91,7 +91,7 @@ public class AppController implements Initializable {
 				case CHECK_OUT:
 					fxmlFile = this.getClass().getResource("/view/CheckOutView.fxml");
 					controller = new CheckOutController(new UserTableGateway(conn), new ItemTableGateway(conn)
-							, new PaymentMethodsGateway(conn), (Double) arg);
+							, new PaymentMethodsGateway(conn));
 					break;
 				case ADD_FUNDS:
 					fxmlFile = this.getClass().getResource("/view/AddPaymentMethodView.fxml");

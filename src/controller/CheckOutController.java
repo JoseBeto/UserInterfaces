@@ -38,18 +38,16 @@ public class CheckOutController implements Initializable, MyController {
     @FXML private ComboBox<Object> paymentMethodsBox;
     
 	private User user = User.getInstance();
-	private Double subtotal;
+	private Double total = 0.0;
 	private ObservableList<Item> items = FXCollections.observableArrayList();
 	private ObservableList<Object> paymentMethods = FXCollections.observableArrayList();
 	private UserTableGateway gateway;
 	private ItemTableGateway itemGateway;
 	private PaymentMethodsGateway payGateway;
 	
-	public CheckOutController(UserTableGateway gateway, ItemTableGateway itemGateway, PaymentMethodsGateway payGateway
-			, Double subtotal) {
+	public CheckOutController(UserTableGateway gateway, ItemTableGateway itemGateway, PaymentMethodsGateway payGateway) {
     	this.gateway = gateway;
     	this.itemGateway = itemGateway;
-    	this.subtotal = subtotal;
     	this.payGateway = payGateway;
 	}
 
@@ -62,14 +60,16 @@ public class CheckOutController implements Initializable, MyController {
     		return;
 		}
 
-		if(AlertHelper.showDecisionMessage("Warning", "Are you sure you want to submit this transaction?")) {
-			if(selectedIndex == walletIndex) {
-				if(user.getMoney() < subtotal) {	//Insufficient Funds
-					AlertHelper.showWarningMessage("Error!", "Insufficient funds!", AlertType.ERROR);
-					return;
-				}
-				user.setMoney(user.getMoney() - subtotal);
+		if(selectedIndex == walletIndex) {
+			if(user.getWallet() < total) {	//Insufficient Funds
+				AlertHelper.showWarningMessage("Error!", "Insufficient funds!", AlertType.ERROR);
+				return;
 			}
+			user.setWallet(user.getWallet() - total);
+		}
+		
+		if(!AlertHelper.showDecisionMessage("Warning", "Are you sure you want to submit this transaction?")) {
+			return;
 		}
 
 		user.getCart().emptyCart();
@@ -113,19 +113,23 @@ public class CheckOutController implements Initializable, MyController {
     
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		totalLabel.setText(String.format("Order Total: $%.2f", subtotal));
+		getItems();
+    	for(Item item : items) {
+    		total += (item.getPrice() * item.getQty());
+    	}
+		
+		totalLabel.setText(String.format("Order Total: $%.2f", total));
 		
 		nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
     	qtyColumn.setCellValueFactory(new PropertyValueFactory<>("qty"));
     	priceColumn.setCellValueFactory(new PropertyValueFactory<>("formattedPrice"));
     	imageColumn.setCellValueFactory(new PropertyValueFactory<>("imageView"));
 
-    	getItems();
     	cartList.setItems(items);
     	
     	HashMap<String, Integer> payMethods = user.getPaymentMethods();
 		paymentMethods = payGateway.getPaymentMethods(payMethods);
-		paymentMethods.addAll(String.format("Wallet ($%.2f)", user.getMoney()), "Add Payment Method");
+		paymentMethods.addAll(String.format("Wallet ($%.2f)", user.getWallet()), "Add Payment Method");
 		paymentMethodsBox.setItems(paymentMethods);
 	}
 }
