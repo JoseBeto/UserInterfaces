@@ -43,11 +43,11 @@
          <font>
             <Font name="Consolas" size="14.0" />
          </font></TextField>
-      <Label alignment="CENTER_RIGHT" layoutX="160.0" layoutY="310.0" prefHeight="30.0" prefWidth="100.0" text="Money">
+      <Label alignment="CENTER_RIGHT" layoutX="160.0" layoutY="310.0" prefHeight="30.0" prefWidth="100.0" text="Wallet">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></Label>
-      <Label fx:id="moneyLabel" layoutX="270.0" layoutY="310.0" prefHeight="30.0" prefWidth="250.0">
+      <Label fx:id="walletLabel" layoutX="270.0" layoutY="310.0" prefHeight="30.0" prefWidth="250.0">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></Label>

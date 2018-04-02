@@ -10,6 +10,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
@@ -43,23 +44,6 @@
          </BorderPane.margin>
       </HBox>
    </bottom>
-   <top>
-      <Button mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="3.0" prefWidth="176.0" style="-fx-background-radius: 0px;" BorderPane.alignment="CENTER_LEFT">
-         <graphic>
-            <ImageView fitHeight="25.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@backIcon.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <padding>
-            <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-         </padding>
-         <BorderPane.margin>
-            <Insets top="10.0" />
-         </BorderPane.margin>
-      </Button>
-   </top>
    <center>
       <TableView fx:id="cartList" editable="true" prefHeight="478.0" prefWidth="1050.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
         <columns>
@@ -73,4 +57,27 @@
          </BorderPane.margin>
       </TableView>
    </center>
+   <top>
+      <Pane prefHeight="65.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" prefHeight="65.0" prefWidth="1500.0" style="-fx-background-color: #01cafe;" text="Checkout">
+               <font>
+                  <Font name="Consolas" size="36.0" />
+               </font>
+            </Label>
+            <Button layoutY="10.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="3.0" prefWidth="176.0" style="-fx-background-radius: 0px;">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@backIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+               </padding>
+            </Button>
+         </children>
+      </Pane>
+   </top>
 </BorderPane>

@@ -23,7 +23,7 @@ public class MyInfoController implements MyController, Initializable {
     @FXML private TextField firstNameText;
     @FXML private TextField lastNameText;
     @FXML private TextField passwordText;
-    @FXML private Label moneyLabel;
+    @FXML private Label walletLabel;
     @FXML private CheckBox sellerCheckbox;
     
     private UserTableGateway gateway;
@@ -91,7 +91,7 @@ public class MyInfoController implements MyController, Initializable {
     	firstNameText.setText(user.getFirstName());
     	lastNameText.setText(user.getLastName());
     	passwordText.setText(user.getPassword());
-    	moneyLabel.setText(String.format("$%.2f", user.getMoney()));
+    	walletLabel.setText(String.format("$%.2f", user.getMoney()));
     	if(user.getRole() == User.SELLER)
     		sellerCheckbox.setSelected(true);
 	}
