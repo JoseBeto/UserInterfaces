@@ -81,7 +81,17 @@ public class AddPaymentMethodController implements Initializable, MyController
 			}
 		});
 
-		//Prevents user from entering a non digit and more than one decimal point
+		//Prevents user from entering a space
+		paypalEmailText.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, 
+					String newValue) {
+				if (newValue.contains(" ")) {
+					paypalEmailText.setText(oldValue);
+				}
+			}
+		});
+
 		expDateText.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, 
