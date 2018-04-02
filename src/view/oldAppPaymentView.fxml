@@ -28,6 +28,60 @@
          <top>
             <ComboBox fx:id="paymentMethodBox" onAction="#paymentMethodSelected" prefHeight="25.0" prefWidth="182.0" promptText="Select a Payment Method" BorderPane.alignment="CENTER" />
          </top>
+         <right>
+            <GridPane fx:id="bankGrid" BorderPane.alignment="CENTER">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label text="SomeLabel:" />
+                  <Label text="SomeLabel:" GridPane.rowIndex="2" />
+                  <Label text="SomeLabel:" GridPane.rowIndex="4" />
+                  <Label text="SomeLabel:" GridPane.rowIndex="6" />
+                  <TextField GridPane.rowIndex="1" />
+                  <TextField GridPane.rowIndex="3" />
+                  <TextField GridPane.rowIndex="5" />
+                  <TextField GridPane.rowIndex="7" />
+               </children>
+            </GridPane>
+         </right>
+         <bottom>
+            <GridPane fx:id="coinGrid" BorderPane.alignment="CENTER">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label text="SomeLabel:" />
+                  <Label text="SomeLabel:" GridPane.rowIndex="2" />
+                  <Label text="SomeLabel:" GridPane.rowIndex="4" />
+                  <Label text="SomeLabel:" GridPane.rowIndex="6" />
+                  <TextField GridPane.rowIndex="1" />
+                  <TextField GridPane.rowIndex="3" />
+                  <TextField GridPane.rowIndex="5" />
+                  <TextField GridPane.rowIndex="7" />
+               </children>
+            </GridPane>
+         </bottom>
          <left>
             <GridPane fx:id="paypalGrid" BorderPane.alignment="CENTER">
                <columnConstraints>
@@ -82,16 +136,6 @@
          <GridPane.margin>
             <Insets left="50.0" right="50.0" />
          </GridPane.margin>
-         <bottom>
-            <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="submitButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#submitPressed" text="Submit" />
-               </children>
-               <BorderPane.margin>
-                  <Insets left="170.0" />
-               </BorderPane.margin>
-            </Pane>
-         </bottom>
       </BorderPane>
       <GridPane GridPane.columnIndex="2">
         <columnConstraints>
@@ -109,6 +153,9 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
+         <children>
+            <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitPressed" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+         </children>
       </GridPane>
       <Pane prefHeight="200.0" prefWidth="200.0">
          <children>
