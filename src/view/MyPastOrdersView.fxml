@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.Pane?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="836.0" prefWidth="1142.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ListView fx:id="pastOrdersList" prefHeight="836.0" prefWidth="1142.0" />
+      <ListView fx:id="pastOrdersList" layoutX="5.0" layoutY="5.0" prefHeight="795.0" prefWidth="1131.0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></ListView>
    </children>
 </Pane>

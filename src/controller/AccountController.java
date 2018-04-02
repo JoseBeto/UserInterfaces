@@ -5,6 +5,8 @@ import java.net.URL;
 import java.sql.Connection;
 import java.util.ResourceBundle;
 import database.AppException;
+import database.ItemTableGateway;
+import database.PastOrdersGateway;
 import database.PaymentMethodsGateway;
 import database.UserTableGateway;
 import javafx.fxml.FXML;
@@ -64,7 +66,7 @@ public class AccountController implements MyController, Initializable{
 					break;
 				case ORDERS:
 					fxmlFile = this.getClass().getResource("/view/MyPastOrdersView.fxml");
-					controller = new MyPastOrdersController();
+					controller = new MyPastOrdersController(new PastOrdersGateway(conn), new ItemTableGateway(conn));
 					break;
 			}
 		
