@@ -50,7 +50,7 @@ public class ItemListController implements Initializable, MyController {
     				setText(null);
     				setGraphic(null);
     				return;
-    			} else {;
+    			} else {
     				image.setImage(item.getImage());
     				image.setFitHeight(120);
     				image.setFitWidth(120);

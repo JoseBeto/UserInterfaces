@@ -10,7 +10,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import model.PaymentMethod;
 import model.User;
 import userInterfaces.AlertHelper;
@@ -59,5 +62,28 @@ public class MyPaymentMethodsController implements MyController, Initializable {
 		paymentMethods = payGateway.getPaymentMethods(payMethods);
 
 		paymentMethodsList.setItems(paymentMethods);
+		
+		paymentMethodsList.setCellFactory(param -> new ListCell<Object>() {
+    		ImageView image = new ImageView();
+    		@Override
+    		public void updateItem(Object object, boolean empty) {
+    			super.updateItem(object, empty);
+
+    			if (empty) {
+    				setText(null);
+    				setGraphic(null);
+    				return;
+    			} else {
+    				if(((PaymentMethod) object).getTypeMethod() == PaymentMethod.PAYPAL)
+    					image.setImage(new Image("/view/paypal.png"));
+    				else if(((PaymentMethod) object).getTypeMethod() == PaymentMethod.CREDIT_CARD)
+    					image.setImage(new Image("/view/creditCard.png"));
+    				image.setFitHeight(25);
+    				image.setFitWidth(25);
+    			}
+    			setText(object.toString());
+    			setGraphic(image);
+    		}
+    	});
 	}
 }
