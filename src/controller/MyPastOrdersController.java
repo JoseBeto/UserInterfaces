@@ -9,6 +9,7 @@ import database.PastOrdersGateway;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -71,9 +72,10 @@ public class MyPastOrdersController implements MyController, Initializable {
 								Label label = new Label(s);
 								label.setStyle("-fx-font: 14 consolas;");
 								HBox hBox = new HBox(image, label);
+								hBox.setAlignment(Pos.CENTER_LEFT);
 								hBoxes.add(hBox);
 							}
-							String footer = String.format("%-21sTotal: %-29.2f Payment Method: %-30s"
+							String footer = String.format("%-30sTotal: %-36.2f Payment Method: %-30s"
 									, " ", pastOrder.getTotal(), pastOrder.getPaymentMethod());
 							Label footerLabel = new Label(footer);
 							footerLabel.setStyle("-fx-font: 14 consolas;");
