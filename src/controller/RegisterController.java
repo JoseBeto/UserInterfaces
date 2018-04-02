@@ -1,15 +1,21 @@
 package controller;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import database.UserTableGateway;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import model.User;
 import javafx.scene.control.Alert.AlertType;
 import userInterfaces.AlertHelper;
 
-public class RegisterController implements MyController{
+public class RegisterController implements Initializable, MyController {
 
 	@FXML private TextField emailText;
     @FXML private TextField firstNameText;
@@ -50,15 +56,29 @@ public class RegisterController implements MyController{
     	User.changeInstance(user);
     	
     	gateway.registerUser(user);
-    	
+
     	AlertHelper.showWarningMessage("Success!", "Account created!", AlertType.INFORMATION);
-    	
+
     	AppController.getInstance().changeView(AppController.LIST, null);
     	AppController.getInstance().updateAccountBox();
     }
-    
+
     @FXML
     void backButtonClicked(MouseEvent event) {
     	AppController.getInstance().changeView(AppController.LIST, null);
+    }
+
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+    	//Prevents user from entering a space
+    	emailText.textProperty().addListener(new ChangeListener<String>() {
+    		@Override
+    		public void changed(ObservableValue<? extends String> observable, String oldValue, 
+    				String newValue) {
+    			if (newValue.contains(" ")) {
+    				emailText.setText(oldValue);
+    			}
+    		}
+    	});
     }
 }
