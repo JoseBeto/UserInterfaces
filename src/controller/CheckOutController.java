@@ -3,11 +3,13 @@ package controller;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URL;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Map.Entry;
 import database.ItemTableGateway;
+import database.PastOrdersGateway;
 import database.PaymentMethodsGateway;
 import database.UserTableGateway;
 import javafx.collections.FXCollections;
@@ -24,6 +26,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import model.Item;
+import model.PastOrder;
 import model.User;
 import userInterfaces.AlertHelper;
 
@@ -44,11 +47,14 @@ public class CheckOutController implements Initializable, MyController {
 	private UserTableGateway gateway;
 	private ItemTableGateway itemGateway;
 	private PaymentMethodsGateway payGateway;
+	private PastOrdersGateway pOrderGateway;
 	
-	public CheckOutController(UserTableGateway gateway, ItemTableGateway itemGateway, PaymentMethodsGateway payGateway) {
+	public CheckOutController(UserTableGateway gateway, ItemTableGateway itemGateway
+			, PaymentMethodsGateway payGateway, PastOrdersGateway pOrderGateway) {
     	this.gateway = gateway;
     	this.itemGateway = itemGateway;
     	this.payGateway = payGateway;
+    	this.pOrderGateway = pOrderGateway;
 	}
 
 	@FXML
@@ -59,6 +65,11 @@ public class CheckOutController implements Initializable, MyController {
 			AlertHelper.showWarningMessage("Error!", "No payment method selected!", AlertType.ERROR);
     		return;
 		}
+		if(!AlertHelper.showDecisionMessage("Warning", "Are you sure you want to submit this transaction?")) {
+			return;
+		}
+		
+		String paymentMethod = paymentMethodsBox.getSelectionModel().getSelectedItem().toString();
 
 		if(selectedIndex == walletIndex) {
 			if(user.getWallet() < total) {	//Insufficient Funds
@@ -66,12 +77,15 @@ public class CheckOutController implements Initializable, MyController {
 				return;
 			}
 			user.setWallet(user.getWallet() - total);
-		}
-		
-		if(!AlertHelper.showDecisionMessage("Warning", "Are you sure you want to submit this transaction?")) {
-			return;
+			paymentMethod = "Wallet";
 		}
 
+		PastOrder pastOrder = new PastOrder(user.getCart().getCart()
+				, paymentMethod, total, new Date().toString());
+		int i = pOrderGateway.addPastOrder(pastOrder);
+		user.addPastOrder(i);
+		gateway.updatePastOrders(user);
+		
 		user.getCart().emptyCart();
 		gateway.updateCart(user);
 		AlertHelper.showWarningMessage("Success!", "Your transaction was successful!", AlertType.INFORMATION);

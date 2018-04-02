@@ -21,7 +21,7 @@ public class UserTableGateway {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("insert into user (first_name, last_name, email, "
-					+ "password, wallet, cart, paymentMethod) values (?, ?, ?, ?, ?, ?, ?)");
+					+ "password, wallet, cart, paymentMethod, pastOrders) values (?, ?, ?, ?, ?, ?, ?, ?)");
 			st.setString(1, user.getFirstName());
 			st.setString(2, user.getLastName());
 			st.setString(3, user.getEmail());
@@ -29,6 +29,7 @@ public class UserTableGateway {
 			st.setDouble(5, user.getWallet());
 			st.setString(6, user.getCart().getCart().toString());
 			st.setString(7, user.getPaymentMethods().toString());
+			st.setString(8, user.getPastOrders().toString());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -58,8 +59,10 @@ public class UserTableGateway {
 					AlertHelper.showWarningMessage("Error!", "Incorrect password!", AlertType.ERROR);
 					return false;
 				}
-				user = new User(rs.getString("first_name"), rs.getString("last_name"), rs.getString("email"), rs.getString("password")
-						, rs.getDouble("wallet"), rs.getString("cart"), rs.getString("lists"), rs.getString("paymentMethod") , rs.getInt("role"));
+				user = new User(rs.getString("first_name"), rs.getString("last_name"), rs.getString("email")
+						, rs.getString("password"), rs.getDouble("wallet"), rs.getString("cart")
+						, rs.getString("lists"), rs.getString("paymentMethod")
+						, rs.getString("pastOrders"), rs.getInt("role"));
 				User.changeInstance(user);
 			} else {
 				AlertHelper.showWarningMessage("Error!", "No account exists with that email!", AlertType.ERROR);
@@ -88,8 +91,10 @@ public class UserTableGateway {
 			st = conn.prepareStatement("select * from user");
 			ResultSet rs = st.executeQuery();
 			while(rs.next()) {
-				User user = new User(rs.getString("first_name"), rs.getString("last_name"), rs.getString("email"), rs.getString("password")
-						, rs.getDouble("wallet"), rs.getString("cart"), rs.getString("lists"), rs.getString("paymentMethod") , rs.getInt("role"));
+				User user = new User(rs.getString("first_name"), rs.getString("last_name"), rs.getString("email")
+						, rs.getString("password"), rs.getDouble("wallet"), rs.getString("cart")
+						, rs.getString("lists"), rs.getString("paymentMethod")
+						, rs.getString("pastOrders"), rs.getInt("role"));
 				users.add(user);
 			}
 		} catch (SQLException e) {
@@ -181,6 +186,27 @@ public class UserTableGateway {
 		try {
 			st = conn.prepareStatement("update user set paymentMethod = ? where email = ?");
 			st.setString(1, user.getPaymentMethods().toString());
+			st.setString(2, user.getEmail());
+			st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException(e);
+		} finally {
+			try {
+				if(st != null)
+					st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new AppException(e);
+			}
+		}
+	}
+	
+	public void updatePastOrders(User user) throws AppException {
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("update user set pastOrders = ? where email = ?");
+			st.setString(1, user.getPastOrders().toString());
 			st.setString(2, user.getEmail());
 			st.executeUpdate();
 		} catch (SQLException e) {

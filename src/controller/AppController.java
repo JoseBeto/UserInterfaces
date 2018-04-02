@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.util.ResourceBundle;
 import database.AppException;
 import database.ItemTableGateway;
+import database.PastOrdersGateway;
 import database.PaymentMethodsGateway;
 import database.UserTableGateway;
 import javafx.application.Platform;
@@ -91,7 +92,7 @@ public class AppController implements Initializable {
 				case CHECK_OUT:
 					fxmlFile = this.getClass().getResource("/view/CheckOutView.fxml");
 					controller = new CheckOutController(new UserTableGateway(conn), new ItemTableGateway(conn)
-							, new PaymentMethodsGateway(conn));
+							, new PaymentMethodsGateway(conn), new PastOrdersGateway(conn));
 					break;
 				case ADD_FUNDS:
 					fxmlFile = this.getClass().getResource("/view/AddPaymentMethodView.fxml");

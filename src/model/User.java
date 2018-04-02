@@ -2,7 +2,10 @@ package model;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 import java.util.Map.Entry;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -21,6 +24,7 @@ public class User {
 	private Cart cart;
 	private Lists lists;
 	private HashMap<String, Integer> paymentMethods = new HashMap<String, Integer>();
+	private ArrayList<Integer> pastOrders = new ArrayList<Integer>();
 	
 	public final static int CUSTOMER = 2;
 	public final static int SELLER = 1;
@@ -40,8 +44,8 @@ public class User {
 		setRole(CUSTOMER);
 	}
 	
-	public User(String fName, String lName, String email, String password
-			, Double wallet, String cart, String lists, String paymentMethodString , int role) {
+	public User(String fName, String lName, String email, String password, Double wallet
+			, String cart, String lists, String paymentMethods, String pastOrders, int role) {
 		this.firstName = new SimpleStringProperty();
 		this.lastName = new SimpleStringProperty();
 		this.email = new SimpleStringProperty();
@@ -56,7 +60,8 @@ public class User {
 		setPassword(password);
 		setWallet(wallet);
 		setRole(role);
-		setPaymentMethods(paymentMethodString);
+		setPaymentMethods(paymentMethods);
+		setPastOrders(pastOrders);
 	}
 	
 	public String getFirstName() {
@@ -139,6 +144,24 @@ public class User {
 		}
 		for(Entry<Object, Object> e : props.entrySet()) {
 		    this.paymentMethods.put((String) e.getKey(), Integer.valueOf((String) e.getValue()));
+		}
+	}
+	
+	public void addPastOrder(Integer i) {
+		pastOrders.add(i);
+	}
+	
+	public ArrayList<Integer> getPastOrders() {
+		return pastOrders;
+	}
+	
+	public void setPastOrders(String pastOrders) {
+		if(pastOrders.equals("[]"))
+			return;
+		
+		List<String> list = Arrays.asList(pastOrders.substring(1, pastOrders.length() - 1).split(", "));
+		for(String s : list) {
+			this.pastOrders.add(Integer.valueOf(s));
 		}
 	}
 

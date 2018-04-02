@@ -14,8 +14,8 @@ import model.PaypalMethod;
 
 public class PaymentMethodsGateway {
 
-private Connection conn;
-	
+	private Connection conn;
+
 	public PaymentMethodsGateway(Connection conn) {
 		this.conn = conn;
 	}

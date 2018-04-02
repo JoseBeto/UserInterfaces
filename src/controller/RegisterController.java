@@ -51,8 +51,8 @@ public class RegisterController implements Initializable, MyController {
     		}
     	}
     	
-    	User user = new User(firstNameText.getText(), lastNameText.getText(), 
-    			emailText.getText(), passwordText.getText(), 0.0, "", "{Wish_List={}}", "", User.CUSTOMER);
+    	User user = new User(firstNameText.getText(), lastNameText.getText(), emailText.getText()
+    			, passwordText.getText(), 0.0, "", "{Wish_List={}}", "", "[]", User.CUSTOMER);
     	User.changeInstance(user);
     	
     	gateway.registerUser(user);
