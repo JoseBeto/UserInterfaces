@@ -73,7 +73,7 @@ public class MyPastOrdersController implements MyController, Initializable {
 								HBox hBox = new HBox(image, label);
 								hBoxes.add(hBox);
 							}
-							String footer = String.format("%-21sTotal: %-29s Payment Method: %-30s"
+							String footer = String.format("%-21sTotal: %-29.2f Payment Method: %-30s"
 									, " ", pastOrder.getTotal(), pastOrder.getPaymentMethod());
 							Label footerLabel = new Label(footer);
 							footerLabel.setStyle("-fx-font: 14 consolas;");
