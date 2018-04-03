@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -18,16 +12,25 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <bottom>
       <HBox prefHeight="50.0" prefWidth="650.0" BorderPane.alignment="CENTER">
          <children>
             <Pane prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: D5D5D5;">
                <children>
-                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="43.0" layoutY="9.0" maxWidth="116.0" mnemonicParsing="false" onAction="#removeListClicked" prefHeight="30.0" prefWidth="116.0" style="-fx-background-radius: 0px;" text="Remove List" textAlignment="CENTER">
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="73.0" layoutY="9.0" maxWidth="116.0" mnemonicParsing="false" onAction="#removeListClicked" prefHeight="30.0" prefWidth="116.0" style="-fx-background-radius: 0px;" text="Remove List" textAlignment="CENTER">
                      <font>
                         <Font name="Consolas" size="14.0" />
                      </font>
+                  </Button>
+                  <Button layoutX="10.0" layoutY="9.0" mnemonicParsing="false" onAction="#addListClicked" prefHeight="30.0" prefWidth="30.0">
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@add.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
                </children>
                <HBox.margin>

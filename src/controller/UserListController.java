@@ -44,6 +44,20 @@ public class UserListController implements MyController, Initializable {
 	}
 	
 	@FXML
+    void addListClicked(ActionEvent event) {
+		String newList = AlertHelper.showInputMessage("Create list", "Create new list");
+		
+		if(newList != null && !newList.equals("")) {
+			user.getLists().createList(newList);
+			listNames.add(newList);
+			userGateway.updateLists(user);
+	    	
+	    	AlertHelper.showWarningMessage("Success!", "List: " + newList + " created!", AlertType.INFORMATION);
+		}
+		return;
+    }
+	
+	@FXML
 	void removeListClicked(ActionEvent event) {
 		String listName = userLists.getSelectionModel().getSelectedItem();
 		if(listName == null)
@@ -213,6 +227,8 @@ public class UserListController implements MyController, Initializable {
 				user.getLists().renameList(newName, oldName);
 				listNames.setAll(user.getLists().getListNames());
 				userGateway.updateLists(user);
+				
+				userLists.getSelectionModel().select(listNames.indexOf(newName));
 			}
 		});
 	}
