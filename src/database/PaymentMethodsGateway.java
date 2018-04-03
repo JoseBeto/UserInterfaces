@@ -15,12 +15,13 @@ import model.PaypalMethod;
 public class PaymentMethodsGateway {
 
 	private Connection conn;
+    public static final int ER_UNIQUE = 19;
 
 	public PaymentMethodsGateway(Connection conn) {
 		this.conn = conn;
 	}
 
-	public void addPaymentMethod(PaymentMethod paymentMethod) throws AppException {
+	public Boolean addPaymentMethod(PaymentMethod paymentMethod) throws AppException {
 		PreparedStatement st = null;
 		try {
 			if(paymentMethod.getTypeMethod() == PaymentMethod.PAYPAL) {
@@ -35,7 +36,10 @@ public class PaymentMethodsGateway {
 				st.setString(3, ((CardPayment) paymentMethod).getName());
 				st.executeUpdate();
 			}
+			return true;
 		} catch (SQLException e) {
+			if(e.getErrorCode() == ER_UNIQUE)
+				return false;
 			e.printStackTrace();
 			throw new AppException(e);
 		} finally {

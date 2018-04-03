@@ -106,9 +106,14 @@ public class AddPaymentMethodController implements Initializable, MyController
 			if(!payMethod.validateMethod()) //Validation failed
 				return;
 
+			if(!payGateway.addPaymentMethod(payMethod)) {
+				AlertHelper.showWarningMessage("Error!", "Payment method belongs "
+						+ "to someone else!", AlertType.ERROR);
+	    		return;
+			}
+			
 			AlertHelper.showWarningMessage("Success!", "Payment method added!", AlertType.INFORMATION);
-
-			payGateway.addPaymentMethod(payMethod);
+			
 			user.addPaymentMethod(payMethod);
 			userGateway.updatePaymentMethods(user);
 

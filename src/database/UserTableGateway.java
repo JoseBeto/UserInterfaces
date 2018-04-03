@@ -12,12 +12,13 @@ import userInterfaces.AlertHelper;
 
 public class UserTableGateway {
 	private Connection conn;
+	public static final int ER_UNIQUE = 19;
 	
 	public UserTableGateway(Connection conn) {
 		this.conn = conn;
 	}
 
-	public void registerUser(User user) throws AppException {
+	public Boolean registerUser(User user) throws AppException {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("insert into user (first_name, last_name, email, "
@@ -31,7 +32,11 @@ public class UserTableGateway {
 			st.setString(7, user.getPaymentMethods().toString());
 			st.setString(8, user.getPastOrders().toString());
 			st.executeUpdate();
+			
+			return true;
 		} catch (SQLException e) {
+			if(e.getErrorCode() == ER_UNIQUE)
+				return false;
 			e.printStackTrace();
 			throw new AppException(e);
 		} finally {

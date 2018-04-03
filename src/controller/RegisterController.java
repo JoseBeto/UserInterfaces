@@ -44,18 +44,15 @@ public class RegisterController implements Initializable, MyController {
     		return;
     	}
     	
-    	for(User user : gateway.getUsers()) {
-    		if(user.getEmail().equals(emailText.getText())) {
-    			AlertHelper.showWarningMessage("Error!", "Email already taken!", AlertType.ERROR);
-        		return;
-    		}
-    	}
-    	
     	User user = new User(firstNameText.getText(), lastNameText.getText(), emailText.getText()
     			, passwordText.getText(), 0.0, "", "{Wish_List={}}", "", "[]", User.CUSTOMER);
-    	User.changeInstance(user);
     	
-    	gateway.registerUser(user);
+    	if(!gateway.registerUser(user)) {
+    		AlertHelper.showWarningMessage("Error!", "Email already taken!", AlertType.ERROR);
+    		return;
+    	}
+    	
+    	User.changeInstance(user);
 
     	AlertHelper.showWarningMessage("Success!", "Account created!", AlertType.INFORMATION);
 
