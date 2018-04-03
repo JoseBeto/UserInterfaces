@@ -8,11 +8,13 @@ import database.UserTableGateway;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -177,7 +179,7 @@ public class UserListController implements MyController, Initializable {
     			setGraphic(image);
     		}
     	});
-    }
+	}
 
 	@FXML
 	void backButtonClicked(MouseEvent event) {
@@ -193,5 +195,25 @@ public class UserListController implements MyController, Initializable {
 		else
 			userLists.getSelectionModel().select(startingList);
 		userListClicked(null);
+
+		userLists.setCellFactory(TextFieldListCell.forListView());	
+		
+		userLists.setOnEditCommit(new EventHandler<ListView.EditEvent<String>>() {
+			@Override
+			public void handle(ListView.EditEvent<String> t) {
+				String oldName = listNames.get(userLists.getEditingIndex());
+				String newName = t.getNewValue();
+				
+				String message = "Are you sure you want to rename list: " + oldName
+						+ " to: " + newName + "?";
+				String title = "Warning";
+				if(!AlertHelper.showDecisionMessage(title, message))
+					return;
+				
+				user.getLists().renameList(newName, oldName);
+				listNames.setAll(user.getLists().getListNames());
+				userGateway.updateLists(user);
+			}
+		});
 	}
 }

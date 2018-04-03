@@ -69,6 +69,7 @@ public class Lists {
 		map.remove(itemId);
 	}
 	
+	
 	public void addItemToList(String listName, int itemId) {
 		listName = listName.replaceAll(" ", "_");
 		
@@ -86,5 +87,13 @@ public class Lists {
 		listName = listName.replaceAll(" ", "_");
 		
 		lists.put(listName, new HashMap<Integer, Integer>());
+	}
+	
+	public void renameList(String newName, String oldName) {
+		oldName = oldName.replaceAll(" ", "_");
+		newName = newName.replaceAll(" ", "_");
+		
+		HashMap<Integer, Integer> obj = lists.remove(oldName);
+		lists.put(newName, obj);
 	}
 }
