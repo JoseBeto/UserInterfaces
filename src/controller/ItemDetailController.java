@@ -70,9 +70,11 @@ public class ItemDetailController implements Initializable, MyController {
 			
 			if(newList != null && !newList.equals("")) {
 				user.getLists().createList(newList);
-		    	gateway.updateLists(user);
-		    	
-		    	AlertHelper.showWarningMessage("Success!", "List: " + newList + " created!", AlertType.INFORMATION);
+		    	user.getLists().addItemToList(newList, item.getId());
+				gateway.updateLists(user);
+
+				AlertHelper.showWarningMessage("Success!", "List: " + newList + " created and item: " + item.getName()
+					+ " added to list!", AlertType.INFORMATION);
 		    	AppController.getInstance().changeView(AppController.ITEM_DETAIL, item);
 			}
 			return;
