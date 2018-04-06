@@ -13,21 +13,24 @@ public class Item {
 	private SimpleDoubleProperty price;
 	private SimpleStringProperty image;
 	private SimpleStringProperty desc;
+	private SimpleStringProperty sellerId;
 	private int qty;
 	
 	private ItemTableGateway gateway;
 	
-	public Item(String name, Double price, String desc, String image, int qty) {
+	public Item(String name, Double price, String desc, String image, int qty, String sellerId) {
 		this.name = new SimpleStringProperty();
 		this.price = new SimpleDoubleProperty();
 		this.image = new SimpleStringProperty();
 		this.desc = new SimpleStringProperty();
+		this.sellerId = new SimpleStringProperty();
 		
 		setName(name);
 		setPrice(price);
 		setImage(image);
 		setDesc(desc);
 		setQty(qty);
+		setSellerId(sellerId);
 	}
 
 	public String getName() {
@@ -86,6 +89,14 @@ public class Item {
 		this.qty = qty;
 	}
 	
+	public String getSellerId() {
+		return sellerId.get();
+	}
+
+	public void setSellerId(String sellerId) {
+		this.sellerId.set(sellerId);
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -111,6 +122,6 @@ public class Item {
 
 	@Override
 	public String toString() {
-		return name.get();
+		return getName();
 	}
 }

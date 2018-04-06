@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 import database.ItemTableGateway;
 import database.PastOrdersGateway;
 import database.PaymentMethodsGateway;
+import database.TransactionTableGateway;
 import database.UserTableGateway;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,6 +28,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import model.Item;
 import model.PastOrder;
+import model.Transaction;
 import model.User;
 import userInterfaces.AlertHelper;
 
@@ -48,13 +50,15 @@ public class CheckOutController implements Initializable, MyController {
 	private ItemTableGateway itemGateway;
 	private PaymentMethodsGateway payGateway;
 	private PastOrdersGateway pOrderGateway;
+	private TransactionTableGateway tGateway;
 	
 	public CheckOutController(UserTableGateway gateway, ItemTableGateway itemGateway
-			, PaymentMethodsGateway payGateway, PastOrdersGateway pOrderGateway) {
+			, PaymentMethodsGateway payGateway, PastOrdersGateway pOrderGateway, TransactionTableGateway tGateway) {
     	this.gateway = gateway;
     	this.itemGateway = itemGateway;
     	this.payGateway = payGateway;
     	this.pOrderGateway = pOrderGateway;
+    	this.tGateway = tGateway;
 	}
 
 	@FXML
@@ -80,14 +84,39 @@ public class CheckOutController implements Initializable, MyController {
 			paymentMethod = "Wallet";
 		}
 
+		/**********************
+		 * Add item/s to past orders
+		 */
 		PastOrder pastOrder = new PastOrder(user.getCart().getCart()
 				, paymentMethod, total, new Date().toString());
 		int i = pOrderGateway.addPastOrder(pastOrder);
 		user.addPastOrder(i);
 		gateway.updatePastOrders(user);
 		
+		/**********************
+		 * If items are associated with a seller, add
+		 * 		funds to seller
+		 */
+		for(Entry<Integer, Integer> e : user.getCart().getCart().entrySet()) {
+			Item item = itemGateway.getItemById(e.getKey());
+			if(item.getSellerId() != null) {
+				//Calculate total
+				Double total = item.getPrice() * e.getValue();
+				//Create transaction
+				Transaction transaction = new Transaction(item.getId(), e.getValue(), item.getSellerId()
+						, total, new Date().toString());
+				tGateway.addTransaction(transaction);
+				//Fund seller
+				gateway.addFundsToUser(item.getSellerId(), total);
+			}
+		}
+		
+		/**********************
+		 * Empty user cart
+		 */
 		user.getCart().emptyCart();
 		gateway.updateCart(user);
+		
 		AlertHelper.showWarningMessage("Success!", "Your transaction was successful!", AlertType.INFORMATION);
 		AppController.getInstance().changeView(AppController.MY_CART, null);
 	}

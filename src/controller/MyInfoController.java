@@ -53,8 +53,10 @@ public class MyInfoController implements MyController, Initializable {
     	user.setFirstName(firstNameText.getText());
     	user.setLastName(lastNameText.getText());
     	user.setPassword(passwordText.getText());
-    	if(sellerCheckbox.isSelected())
+    	if(sellerCheckbox.isSelected()) {
     		user.setRole(User.SELLER);
+    		gateway.updateItemsSelling(user);
+    	}
     	else
     		user.setRole(User.CUSTOMER);
 

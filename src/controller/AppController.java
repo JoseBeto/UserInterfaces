@@ -8,6 +8,7 @@ import database.AppException;
 import database.ItemTableGateway;
 import database.PastOrdersGateway;
 import database.PaymentMethodsGateway;
+import database.TransactionTableGateway;
 import database.UserTableGateway;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -78,7 +79,7 @@ public class AppController implements Initializable {
 					break;
 				case SELL_ITEM:
 					fxmlFile = this.getClass().getResource("/view/SellItemView.fxml");
-					controller = new SellItemController(new ItemTableGateway(conn));
+					controller = new SellItemController(new ItemTableGateway(conn), new UserTableGateway(conn));
 					break;
 				case MY_CART:
 					fxmlFile = this.getClass().getResource("/view/CartView.fxml");
@@ -92,7 +93,7 @@ public class AppController implements Initializable {
 				case CHECK_OUT:
 					fxmlFile = this.getClass().getResource("/view/CheckOutView.fxml");
 					controller = new CheckOutController(new UserTableGateway(conn), new ItemTableGateway(conn)
-							, new PaymentMethodsGateway(conn), new PastOrdersGateway(conn));
+							, new PaymentMethodsGateway(conn), new PastOrdersGateway(conn), new TransactionTableGateway(conn));
 					break;
 				case ADD_FUNDS:
 					fxmlFile = this.getClass().getResource("/view/AddPaymentMethodView.fxml");

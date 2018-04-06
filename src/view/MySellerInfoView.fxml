@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="836.0" prefWidth="1142.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ListView fx:id="itemsSellingList" layoutX="5.0" layoutY="76.0" onMouseClicked="#ItemsSellingClicked" prefHeight="724.0" prefWidth="560.0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></ListView>
+      <ListView fx:id="transactonsList" layoutX="576.0" layoutY="76.0" prefHeight="724.0" prefWidth="560.0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </ListView>
+      <Label alignment="CENTER" layoutX="5.0" layoutY="43.0" prefHeight="17.0" prefWidth="560.0" text="Items Selling">
+         <font>
+            <Font name="Consolas" size="18.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="576.0" layoutY="43.0" prefHeight="17.0" prefWidth="560.0" text="Transactions">
+         <font>
+            <Font name="Consolas" size="18.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

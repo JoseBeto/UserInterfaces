@@ -7,61 +7,61 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="836.0" prefWidth="1142.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label alignment="CENTER_RIGHT" layoutX="160.0" layoutY="110.0" prefHeight="30.0" prefWidth="100.0" text="Email">
+      <Label alignment="CENTER_RIGHT" layoutX="390.0" layoutY="110.0" prefHeight="30.0" prefWidth="100.0" text="Email">
          <font>
             <Font name="Consolas" size="14.0" />
          </font>
       </Label>
-      <Label alignment="CENTER_RIGHT" layoutX="160.0" layoutY="160.0" prefHeight="30.0" prefWidth="100.0" text="First Name">
+      <Label alignment="CENTER_RIGHT" layoutX="390.0" layoutY="160.0" prefHeight="30.0" prefWidth="100.0" text="First Name">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></Label>
-      <TextField fx:id="emailText" layoutX="270.0" layoutY="110.0" prefHeight="30.0" prefWidth="250.0" promptText="email">
+      <TextField fx:id="emailText" layoutX="500.0" layoutY="110.0" prefHeight="30.0" prefWidth="250.0" promptText="email">
          <font>
             <Font name="Consolas" size="14.0" />
          </font>
       </TextField>
-      <TextField fx:id="firstNameText" layoutX="270.0" layoutY="160.0" prefHeight="30.0" prefWidth="250.0" promptText="first name">
+      <TextField fx:id="firstNameText" layoutX="500.0" layoutY="160.0" prefHeight="30.0" prefWidth="250.0" promptText="first name">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></TextField>
-      <Label alignment="CENTER_RIGHT" layoutX="160.0" layoutY="210.0" prefHeight="30.0" prefWidth="100.0" text="Last Name">
+      <Label alignment="CENTER_RIGHT" layoutX="390.0" layoutY="210.0" prefHeight="30.0" prefWidth="100.0" text="Last Name">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></Label>
-      <TextField fx:id="lastNameText" layoutX="270.0" layoutY="210.0" prefHeight="30.0" prefWidth="250.0" promptText="last name">
+      <TextField fx:id="lastNameText" layoutX="500.0" layoutY="210.0" prefHeight="30.0" prefWidth="250.0" promptText="last name">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></TextField>
-      <Label alignment="CENTER_RIGHT" layoutX="160.0" layoutY="260.0" prefHeight="30.0" prefWidth="100.0" text="Password">
+      <Label alignment="CENTER_RIGHT" layoutX="390.0" layoutY="260.0" prefHeight="30.0" prefWidth="100.0" text="Password">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></Label>
-      <TextField fx:id="passwordText" layoutX="270.0" layoutY="260.0" prefHeight="30.0" prefWidth="250.0" promptText="password">
+      <TextField fx:id="passwordText" layoutX="500.0" layoutY="260.0" prefHeight="30.0" prefWidth="250.0" promptText="password">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></TextField>
-      <Label alignment="CENTER_RIGHT" layoutX="160.0" layoutY="310.0" prefHeight="30.0" prefWidth="100.0" text="Wallet">
+      <Label alignment="CENTER_RIGHT" layoutX="390.0" layoutY="310.0" prefHeight="30.0" prefWidth="100.0" text="Wallet">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></Label>
-      <Label fx:id="walletLabel" layoutX="270.0" layoutY="310.0" prefHeight="30.0" prefWidth="250.0">
+      <Label fx:id="walletLabel" layoutX="500.0" layoutY="310.0" prefHeight="30.0" prefWidth="250.0">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></Label>
-      <Label alignment="CENTER_RIGHT" layoutX="160.0" layoutY="360.0" prefHeight="30.0" prefWidth="100.0" text="Seller">
+      <Label alignment="CENTER_RIGHT" layoutX="390.0" layoutY="360.0" prefHeight="30.0" prefWidth="100.0" text="Seller">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></Label>
-      <Button layoutX="520.0" layoutY="310.0" mnemonicParsing="false" onAction="#addFundsClicked" prefHeight="30.0" prefWidth="150.0" style="-fx-background-radius: 0px;" text="Add funds">
+      <Button layoutX="750.0" layoutY="310.0" mnemonicParsing="false" onAction="#addFundsClicked" prefHeight="30.0" prefWidth="150.0" style="-fx-background-radius: 0px;" text="Add funds">
          <font>
             <Font name="Consolas" size="14.0" />
          </font>
       </Button>
-      <CheckBox fx:id="sellerCheckbox" layoutX="270.0" layoutY="366.0" mnemonicParsing="false" />
-      <Button layoutX="320.0" layoutY="650.0" mnemonicParsing="false" onAction="#saveButtonClicked" prefHeight="30.0" prefWidth="60.0" style="-fx-background-radius: 0px;" text="Save">
+      <CheckBox fx:id="sellerCheckbox" layoutX="500.0" layoutY="366.0" mnemonicParsing="false" />
+      <Button layoutX="541.0" layoutY="658.0" mnemonicParsing="false" onAction="#saveButtonClicked" prefHeight="30.0" prefWidth="60.0" style="-fx-background-radius: 0px;" text="Save">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></Button>

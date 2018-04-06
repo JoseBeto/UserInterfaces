@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Item;
@@ -20,12 +21,13 @@ public class ItemTableGateway {
 		PreparedStatement st = null;
 		try {
 			String statement = "insert into item (name, price, image, "
-					+ "description) values (?, ?, ?, ?)";
+					+ "description, sellerId) values (?, ?, ?, ?, ?)";
 			st = conn.prepareStatement(statement, Statement.RETURN_GENERATED_KEYS);
 			st.setString(1, item.getName());
 			st.setDouble(2, item.getPrice());
 			st.setString(3, item.getImageString());
 			st.setString(4, item.getDesc());
+			st.setString(5, item.getSellerId());
 			st.executeUpdate();
 
 			ResultSet rs = st.getGeneratedKeys();
@@ -53,10 +55,43 @@ public class ItemTableGateway {
 			st = conn.prepareStatement("select * from item");
 			ResultSet rs = st.executeQuery();
 			while(rs.next()) {
-				Item item = new Item(rs.getString("name"), rs.getDouble("price"), rs.getString("description"), rs.getString("image"), 0);
+				Item item = new Item(rs.getString("name"), rs.getDouble("price"), rs.getString("description")
+						, rs.getString("image"), 0, rs.getString("sellerId"));
 				item.setGateway(this);
 				item.setId(rs.getInt("id"));
 				items.add(item);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException(e);
+		} finally {
+			try {
+				if(st != null)
+					st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new AppException(e);
+			}
+		}
+		return items;
+	}
+	
+	public ObservableList<Item> getItemsSelling(ArrayList<Integer> itemsSellingIds) throws AppException {
+		ObservableList<Item> items = FXCollections.observableArrayList();
+		
+		PreparedStatement st = null;
+		try {
+			for(Integer i : itemsSellingIds) {
+				st = conn.prepareStatement("select * from item where id = ?");
+				st.setInt(1, i);
+
+				ResultSet rs = st.executeQuery();
+				if(rs.next()) {
+					Item item = new Item(rs.getString("name"), rs.getDouble("price"), rs.getString("description")
+							, rs.getString("image"), 0, rs.getString("sellerId"));
+					items.add(item);
+				}
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -82,7 +117,8 @@ public class ItemTableGateway {
 			
 			ResultSet rs = st.executeQuery();
 			while(rs.next()) {
-				item = new Item(rs.getString("name"), rs.getDouble("price"), rs.getString("description"), rs.getString("image"), 0);
+				item = new Item(rs.getString("name"), rs.getDouble("price"), rs.getString("description")
+						, rs.getString("image"), 0, rs.getString("sellerId"));
 				item.setGateway(this);
 				item.setId(rs.getInt("id"));
 			}

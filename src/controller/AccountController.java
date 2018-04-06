@@ -8,6 +8,7 @@ import database.AppException;
 import database.ItemTableGateway;
 import database.PastOrdersGateway;
 import database.PaymentMethodsGateway;
+import database.TransactionTableGateway;
 import database.UserTableGateway;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,16 +16,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import model.User;
 
-public class AccountController implements MyController, Initializable{
+public class AccountController implements MyController, Initializable {
     
 	@FXML private BorderPane contentPane;
+	@FXML private HBox mySellerInfoBox;
 	private Connection conn;
 	private Object arg;
 	
 	public final static int INFO = 1;
 	public final static int PAYMETHODS = 2;
 	public final static int ORDERS = 3;
+	public final static int SELLERINFO = 4;
 	
 	public AccountController(Connection conn, Object arg) {
 		this.arg = arg;
@@ -50,6 +55,11 @@ public class AccountController implements MyController, Initializable{
     void myPaymentMethodsClicked(MouseEvent event) {
     	changeView(PAYMETHODS, null);
     }
+    
+    @FXML
+    void mySellerInfoClicked(MouseEvent event) {
+    	changeView(SELLERINFO, null);
+    }
 
 	public void changeView(int viewType, Object arg) throws AppException {
 		try {
@@ -62,11 +72,18 @@ public class AccountController implements MyController, Initializable{
 					break;
 				case PAYMETHODS:
 					fxmlFile = this.getClass().getResource("/view/MyPaymentMethodsView.fxml");
-					controller = new MyPaymentMethodsController(new UserTableGateway(conn), new PaymentMethodsGateway(conn));
+					controller = new MyPaymentMethodsController(new UserTableGateway(conn)
+							, new PaymentMethodsGateway(conn));
 					break;
 				case ORDERS:
 					fxmlFile = this.getClass().getResource("/view/MyPastOrdersView.fxml");
-					controller = new MyPastOrdersController(new PastOrdersGateway(conn), new ItemTableGateway(conn));
+					controller = new MyPastOrdersController(new PastOrdersGateway(conn)
+							, new ItemTableGateway(conn));
+					break;
+				case SELLERINFO:
+					fxmlFile = this.getClass().getResource("/view/MySellerInfoView.fxml");
+					controller = new MySellerInfoController(new ItemTableGateway(conn)
+							, new TransactionTableGateway(conn));
 					break;
 			}
 		
@@ -82,6 +99,9 @@ public class AccountController implements MyController, Initializable{
 	
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+    	if(User.getInstance().getRole() == User.SELLER)
+    		mySellerInfoBox.setVisible(true);
+    	
     	if(arg == null)
     		changeView(INFO, null);
     	else

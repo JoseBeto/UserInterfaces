@@ -25,6 +25,7 @@ public class User {
 	private Lists lists;
 	private HashMap<String, Integer> paymentMethods = new HashMap<String, Integer>();
 	private ArrayList<Integer> pastOrders = new ArrayList<Integer>();
+	private ArrayList<Integer> itemsSelling = new ArrayList<Integer>();
 	
 	public final static int CUSTOMER = 2;
 	public final static int SELLER = 1;
@@ -162,6 +163,24 @@ public class User {
 		List<String> list = Arrays.asList(pastOrders.substring(1, pastOrders.length() - 1).split(", "));
 		for(String s : list) {
 			this.pastOrders.add(Integer.valueOf(s));
+		}
+	}
+	
+	public void addItemSelling(Integer i) {
+		itemsSelling.add(i);
+	}
+	
+	public ArrayList<Integer> getItemsSelling() {
+		return itemsSelling;
+	}
+	
+	public void setItemsSelling(String itemsSelling) {
+		if(itemsSelling.equals("[]"))
+			return;
+		
+		List<String> list = Arrays.asList(itemsSelling.substring(1, itemsSelling.length() - 1).split(", "));
+		for(String s : list) {
+			this.itemsSelling.add(Integer.valueOf(s));
 		}
 	}
 

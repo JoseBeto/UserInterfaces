@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Alert.AlertType;
 import model.User;
 import userInterfaces.AlertHelper;
@@ -69,6 +67,9 @@ public class UserTableGateway {
 						, rs.getString("lists"), rs.getString("paymentMethod")
 						, rs.getString("pastOrders"), rs.getInt("role"));
 				User.changeInstance(user);
+				
+				if(user.getRole() == User.SELLER)
+					user.setItemsSelling(rs.getString("itemsSelling"));
 			} else {
 				AlertHelper.showWarningMessage("Error!", "No account exists with that email!", AlertType.ERROR);
 				return false;
@@ -86,35 +87,6 @@ public class UserTableGateway {
 			}
 		}
 		return true;
-	}
-	
-	public ObservableList<User> getUsers() throws AppException {
-		ObservableList<User> users = FXCollections.observableArrayList();
-		
-		PreparedStatement st = null;
-		try {
-			st = conn.prepareStatement("select * from user");
-			ResultSet rs = st.executeQuery();
-			while(rs.next()) {
-				User user = new User(rs.getString("first_name"), rs.getString("last_name"), rs.getString("email")
-						, rs.getString("password"), rs.getDouble("wallet"), rs.getString("cart")
-						, rs.getString("lists"), rs.getString("paymentMethod")
-						, rs.getString("pastOrders"), rs.getInt("role"));
-				users.add(user);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new AppException(e);
-		} finally {
-			try {
-				if(st != null)
-					st.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new AppException(e);
-			}
-		}
-		return users;
 	}
 	
 	public void updateUser(User user) throws AppException {
@@ -141,6 +113,52 @@ public class UserTableGateway {
 				throw new AppException(e);
 			}
 		}
+	}
+	
+	public void addFundsToUser(String sellerId, Double money) throws AppException {
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("update user set wallet = ? where email = ?");
+			st.setDouble(1, getUserWalletAmount(sellerId) + money);
+			st.setString(2, sellerId);
+			st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException(e);
+		} finally {
+			try {
+				if(st != null)
+					st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new AppException(e);
+			}
+		}
+	}
+	
+	public Double getUserWalletAmount(String id) throws AppException {
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("select * from user where email = ?");
+			st.setString(1, id);
+			
+			ResultSet rs = st.executeQuery();
+			if(rs.next()) {
+				return rs.getDouble("wallet");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException(e);
+		} finally {
+			try {
+				if(st != null)
+					st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new AppException(e);
+			}
+		}
+		return null;
 	}
 	
 	public void updateCart(User user) throws AppException {
@@ -212,6 +230,27 @@ public class UserTableGateway {
 		try {
 			st = conn.prepareStatement("update user set pastOrders = ? where email = ?");
 			st.setString(1, user.getPastOrders().toString());
+			st.setString(2, user.getEmail());
+			st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException(e);
+		} finally {
+			try {
+				if(st != null)
+					st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new AppException(e);
+			}
+		}
+	}
+	
+	public void updateItemsSelling(User user) throws AppException {
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("update user set itemsSelling = ? where email = ?");
+			st.setString(1, user.getItemsSelling().toString());
 			st.setString(2, user.getEmail());
 			st.executeUpdate();
 		} catch (SQLException e) {

@@ -11,6 +11,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import database.ItemTableGateway;
+import database.UserTableGateway;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -22,6 +23,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
 import model.Item;
+import model.User;
 import userInterfaces.AlertHelper;
 
 public class SellItemController implements Initializable, MyController{
@@ -34,9 +36,11 @@ public class SellItemController implements Initializable, MyController{
     private File file;
     private Boolean imageAdded = false;
     private ItemTableGateway gateway;
+    private UserTableGateway userGateway;
 	
-	public SellItemController(ItemTableGateway gateway) {
+	public SellItemController(ItemTableGateway gateway, UserTableGateway userGateway) {
 		this.gateway = gateway;
+		this.userGateway = userGateway;
 	}
 	
 	@FXML
@@ -62,12 +66,14 @@ public class SellItemController implements Initializable, MyController{
         	AlertHelper.showWarningMessage("Error!", "Image Error!", AlertType.ERROR);
     		return;
         }
-		
+		User user = User.getInstance();
     	Item item;
     	item = new Item(nameText.getText(), Double.valueOf(priceText.getText()), 
-    			description.getText(), image, 0);
+    			description.getText(), image, 0, user.getEmail());
     	
     	gateway.AddItem(item);
+    	user.addItemSelling(item.getId());
+    	userGateway.updateItemsSelling(user);
     	
     	try { //Giving time for project to refresh itself
 			Thread.sleep(1700);

@@ -14,7 +14,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label alignment="CENTER" prefHeight="65.0" prefWidth="1500.0" style="-fx-background-color: #01cafe;" text="My Account">
+      <Label alignment="CENTER" layoutX="358.0" prefHeight="65.0" prefWidth="1142.0" style="-fx-background-color: #01cafe;" text="My Account">
          <font>
             <Font name="Consolas" size="36.0" />
          </font>
@@ -93,9 +93,38 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </HBox>
+            <HBox fx:id="mySellerInfoBox" alignment="CENTER_LEFT" onMouseClicked="#mySellerInfoClicked" prefHeight="85.0" prefWidth="360.0" style="-fx-background-color: #01b3e3;" visible="false">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="98.0" prefWidth="18.0" style="-fx-background-color: #00add2; -fx-text-fill: white;">
+                     <graphic>
+                        <ImageView fitHeight="85.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@sellerInfo.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="My Seller Info" wrappingWidth="230.0">
+                     <font>
+                        <Font name="Consolas Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Text>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </HBox>
          </children>
       </VBox>
       <BorderPane fx:id="contentPane" layoutX="358.0" layoutY="65.0" prefHeight="836.0" prefWidth="1142.0" />
+      <Label alignment="CENTER" prefHeight="65.0" prefWidth="360.0" style="-fx-background-color: #01cafe;">
+         <font>
+            <Font name="Consolas" size="36.0" />
+         </font>
+      </Label>
       <Button layoutY="10.0" mnemonicParsing="false" onMouseClicked="#backButtonClicked" prefHeight="3.0" prefWidth="176.0" style="-fx-background-radius: 0px;">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
