@@ -6,12 +6,15 @@ import java.util.ResourceBundle;
 
 import database.PaymentMethodsGateway;
 import database.UserTableGateway;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.util.Pair;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.User;
@@ -25,6 +28,8 @@ public class MyInfoController implements MyController, Initializable {
     @FXML private TextField passwordText;
     @FXML private Label walletLabel;
     @FXML private CheckBox sellerCheckbox;
+    @FXML private ComboBox<String> securityQuestionBox;
+    @FXML private TextField securityAnswer;
     
     private UserTableGateway gateway;
 	private User user = User.getInstance();
@@ -47,7 +52,11 @@ public class MyInfoController implements MyController, Initializable {
     	} else if(passwordText.getText().equals("")) {
     		AlertHelper.showWarningMessage("Error!", "Password field is empty!", AlertType.ERROR);
     		return;
+    	} else if(securityAnswer.getText().equals("")) {
+    		AlertHelper.showWarningMessage("Error!", "Security answer field is empty!", AlertType.ERROR);
+    		return;
     	}
+    	String securityQA = securityQuestionBox.getValue() + "," + securityAnswer.getText();
     	
     	user.setEmail(emailText.getText());
     	user.setFirstName(firstNameText.getText());
@@ -59,6 +68,7 @@ public class MyInfoController implements MyController, Initializable {
     	}
     	else
     		user.setRole(User.CUSTOMER);
+    	user.setSecurityQA(securityQA);
 
     	gateway.updateUser(user);
 
@@ -90,11 +100,21 @@ public class MyInfoController implements MyController, Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		emailText.setText(user.getEmail());
-    	firstNameText.setText(user.getFirstName());
-    	lastNameText.setText(user.getLastName());
-    	passwordText.setText(user.getPassword());
-    	walletLabel.setText(String.format("$%.2f", user.getWallet()));
-    	if(user.getRole() == User.SELLER)
-    		sellerCheckbox.setSelected(true);
+		firstNameText.setText(user.getFirstName());
+		lastNameText.setText(user.getLastName());
+		passwordText.setText(user.getPassword());
+		walletLabel.setText(String.format("$%.2f", user.getWallet()));
+		if(user.getRole() == User.SELLER)
+			sellerCheckbox.setSelected(true);
+
+		ObservableList<String> data = FXCollections.observableArrayList("What is your favorite movie?", "What is your favorite video game?"
+				, "What is your favorite movie genre?", "What is your favorite video game genre?");
+		securityQuestionBox.getItems().setAll(data);
+
+		String securityQA = gateway.getUserSecurityQA(user.getEmail());
+		String secQA[] = securityQA.split(",");
+		
+		securityQuestionBox.getSelectionModel().select(secQA[0]);
+		securityAnswer.setText(secQA[1]);
 	}
 }

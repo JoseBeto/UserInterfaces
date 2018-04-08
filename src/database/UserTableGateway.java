@@ -20,15 +20,16 @@ public class UserTableGateway {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("insert into user (first_name, last_name, email, "
-					+ "password, wallet, cart, paymentMethod, pastOrders) values (?, ?, ?, ?, ?, ?, ?, ?)");
+					+ "password, securityQA, wallet, cart, paymentMethod, pastOrders) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			st.setString(1, user.getFirstName());
 			st.setString(2, user.getLastName());
 			st.setString(3, user.getEmail());
 			st.setString(4, user.getPassword());
-			st.setDouble(5, user.getWallet());
-			st.setString(6, user.getCart().getCart().toString());
-			st.setString(7, user.getPaymentMethods().toString());
-			st.setString(8, user.getPastOrders().toString());
+			st.setString(5, user.getSecurityQA());
+			st.setDouble(6, user.getWallet());
+			st.setString(7, user.getCart().getCart().toString());
+			st.setString(8, user.getPaymentMethods().toString());
+			st.setString(9, user.getPastOrders().toString());
 			st.executeUpdate();
 			
 			return true;
@@ -63,7 +64,7 @@ public class UserTableGateway {
 					return false;
 				}
 				user = new User(rs.getString("first_name"), rs.getString("last_name"), rs.getString("email")
-						, rs.getString("password"), rs.getDouble("wallet"), rs.getString("cart")
+						, rs.getString("password"), rs.getString("securityQA"), rs.getDouble("wallet"), rs.getString("cart")
 						, rs.getString("lists"), rs.getString("paymentMethod")
 						, rs.getString("pastOrders"), rs.getInt("role"));
 				User.changeInstance(user);
@@ -93,13 +94,14 @@ public class UserTableGateway {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("update user set first_name = ?, last_name = ?, "
-					+ "password = ?, wallet = ?, role = ? where email = ?");
+					+ "password = ?, securityQA = ?, wallet = ?, role = ? where email = ?");
 			st.setString(1, user.getFirstName());
 			st.setString(2, user.getLastName());
 			st.setString(3, user.getPassword());
-			st.setDouble(4, user.getWallet());
-			st.setInt(5, user.getRole());
-			st.setString(6, user.getEmail());
+			st.setString(4, user.getSecurityQA());
+			st.setDouble(5, user.getWallet());
+			st.setInt(6, user.getRole());
+			st.setString(7, user.getEmail());
 			st.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -159,6 +161,53 @@ public class UserTableGateway {
 			}
 		}
 		return null;
+	}
+	
+	public String getUserSecurityQA(String id) throws AppException {
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("select * from user where email = ?");
+			st.setString(1, id);
+			
+			ResultSet rs = st.executeQuery();
+			if(rs.next()) {
+				return rs.getString("securityQA");
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getErrorCode());
+			e.printStackTrace();
+			throw new AppException(e);
+		} finally {
+			try {
+				if(st != null)
+					st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new AppException(e);
+			}
+		}
+		return null;
+	}
+	
+	public void updatePassword(String newPassword, String id) throws AppException {
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("update user set password = ? where email = ?");
+			st.setString(1, newPassword);
+			st.setString(2, id);
+			st.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException(e);
+		} finally {
+			try {
+				if(st != null)
+					st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new AppException(e);
+			}
+		}
 	}
 	
 	public void updateCart(User user) throws AppException {

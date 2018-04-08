@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -17,39 +18,45 @@
             <Font name="Consolas" size="36.0" />
          </font>
       </Label>
-      <Label layoutX="625.0" layoutY="225.0" prefHeight="30.0" prefWidth="250.0" text="Email">
+      <Label layoutX="625.0" layoutY="175.0" prefHeight="30.0" prefWidth="250.0" text="Email">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></Label>
-      <Label layoutX="625.0" layoutY="315.0" prefHeight="30.0" prefWidth="250.0" text="First Name">
+      <Label layoutX="625.0" layoutY="265.0" prefHeight="30.0" prefWidth="250.0" text="First Name">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></Label>
-      <TextField fx:id="emailText" layoutX="625.0" layoutY="265.0" onAction="#registerButtonClicked" prefHeight="30.0" prefWidth="250.0" promptText="email">
+      <TextField fx:id="emailText" layoutX="625.0" layoutY="215.0" onAction="#registerButtonClicked" prefHeight="30.0" prefWidth="250.0" promptText="email">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></TextField>
-      <TextField fx:id="firstNameText" layoutX="625.0" layoutY="345.0" onAction="#registerButtonClicked" prefHeight="30.0" prefWidth="250.0" promptText="first name">
+      <TextField fx:id="firstNameText" layoutX="625.0" layoutY="305.0" onAction="#registerButtonClicked" prefHeight="30.0" prefWidth="250.0" promptText="first name">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></TextField>
-      <Label layoutX="625.0" layoutY="395.0" prefHeight="30.0" prefWidth="250.0" text="Last Name">
+      <Label layoutX="625.0" layoutY="355.0" prefHeight="30.0" prefWidth="250.0" text="Last Name">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></Label>
-      <TextField fx:id="lastNameText" layoutX="625.0" layoutY="435.0" onAction="#registerButtonClicked" prefHeight="30.0" prefWidth="250.0" promptText="last name">
+      <TextField fx:id="lastNameText" layoutX="625.0" layoutY="395.0" onAction="#registerButtonClicked" prefHeight="30.0" prefWidth="250.0" promptText="last name">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></TextField>
-      <Label layoutX="625.0" layoutY="485.0" prefHeight="30.0" prefWidth="250.0" text="Password">
+      <Label layoutX="625.0" layoutY="445.0" prefHeight="30.0" prefWidth="250.0" text="Password">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></Label>
-      <PasswordField fx:id="passwordText" layoutX="625.0" layoutY="525.0" onAction="#registerButtonClicked" prefHeight="30.0" prefWidth="250.0" promptText="password">
+      <PasswordField fx:id="passwordText" layoutX="625.0" layoutY="485.0" onAction="#registerButtonClicked" prefHeight="30.0" prefWidth="250.0" promptText="password">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></PasswordField>
-      <Button layoutX="700.0" layoutY="718.0" mnemonicParsing="false" onAction="#registerButtonClicked" prefHeight="30.0" prefWidth="100.0" style="-fx-background-radius: 0px;" text="Register">
+      <ComboBox fx:id="securityQuestionBox" layoutX="575.0" layoutY="565.0" prefHeight="30.0" prefWidth="350.0" promptText="Select a security question" style="-fx-background-radius: 0px; -fx-font-family: consolas; -fx-font-size: 12;" />
+      <TextField fx:id="securityQuestionAnswer" layoutX="625.0" layoutY="605.0" prefHeight="30.0" prefWidth="250.0" promptText="security question answer">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font>
+      </TextField>
+      <Button layoutX="700.0" layoutY="732.0" mnemonicParsing="false" onAction="#registerButtonClicked" prefHeight="30.0" prefWidth="100.0" style="-fx-background-radius: 0px;" text="Register">
          <font>
             <Font name="Consolas" size="14.0" />
          </font></Button>

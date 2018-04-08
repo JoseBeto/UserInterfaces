@@ -20,6 +20,7 @@ public class User {
 	private SimpleStringProperty lastName;
 	private SimpleStringProperty email;
 	private SimpleStringProperty password;
+	private SimpleStringProperty securityQA;
 	private SimpleDoubleProperty wallet;
 	private Cart cart;
 	private Lists lists;
@@ -35,6 +36,7 @@ public class User {
 		this.lastName = new SimpleStringProperty();
 		this.email = new SimpleStringProperty();
 		this.password = new SimpleStringProperty();
+		this.securityQA = new SimpleStringProperty();
 		this.wallet = new SimpleDoubleProperty();
 		
 		setFirstName("guest");
@@ -45,12 +47,13 @@ public class User {
 		setRole(CUSTOMER);
 	}
 	
-	public User(String fName, String lName, String email, String password, Double wallet
+	public User(String fName, String lName, String email, String password, String securityQA, Double wallet
 			, String cart, String lists, String paymentMethods, String pastOrders, int role) {
 		this.firstName = new SimpleStringProperty();
 		this.lastName = new SimpleStringProperty();
 		this.email = new SimpleStringProperty();
 		this.password = new SimpleStringProperty();
+		this.securityQA = new SimpleStringProperty();
 		this.wallet = new SimpleDoubleProperty();
 		this.cart = new Cart(cart);
 		this.lists = new Lists(lists);
@@ -59,6 +62,7 @@ public class User {
 		setLastName(lName);
 		setEmail(email);
 		setPassword(password);
+		setSecurityQA(securityQA);
 		setWallet(wallet);
 		setRole(role);
 		setPaymentMethods(paymentMethods);
@@ -95,6 +99,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password.set(password);
+	}
+	
+	public String getSecurityQA() {
+		return securityQA.get();
+	}
+
+	public void setSecurityQA(String securityQA) {
+		this.securityQA.set(securityQA);
 	}
 	
 	public Double getWallet() {

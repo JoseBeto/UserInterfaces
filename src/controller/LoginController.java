@@ -38,6 +38,16 @@ public class LoginController implements MyController{
     }
 	
 	@FXML
+    void createAnAccountClicked(ActionEvent event) {
+		AppController.getInstance().changeView(AppController.REGISTER, null);
+    }
+
+    @FXML
+    void forgotPasswordClicked(ActionEvent event) {
+    	AppController.getInstance().changeView(AppController.FORGOT_PASSWORD, null);
+    }
+	
+	@FXML
     void backButtonClicked(MouseEvent event) {
 		AppController.getInstance().changeView(AppController.LIST, null);
     }

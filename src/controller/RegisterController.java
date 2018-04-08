@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 import database.UserTableGateway;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import model.User;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ComboBox;
 import userInterfaces.AlertHelper;
 
 public class RegisterController implements Initializable, MyController {
@@ -21,6 +24,8 @@ public class RegisterController implements Initializable, MyController {
     @FXML private TextField firstNameText;
     @FXML private TextField lastNameText;
     @FXML private TextField passwordText;
+    @FXML private ComboBox<String> securityQuestionBox;
+    @FXML private TextField securityQuestionAnswer;
     
     private UserTableGateway gateway;
     
@@ -42,10 +47,17 @@ public class RegisterController implements Initializable, MyController {
     	} else if(passwordText.getText().equals("")) {
     		AlertHelper.showWarningMessage("Error!", "Password field is empty!", AlertType.ERROR);
     		return;
+    	} else if(securityQuestionBox.getValue() == null) {
+    		AlertHelper.showWarningMessage("Error!", "Security question not selected!", AlertType.ERROR);
+    		return;
+    	} else if(securityQuestionAnswer.getText().equals("")) {
+    		AlertHelper.showWarningMessage("Error!", "Security answer field is empty!", AlertType.ERROR);
+    		return;
     	}
     	
+    	String securityQA = securityQuestionBox.getValue() + "," + securityQuestionAnswer.getText();
     	User user = new User(firstNameText.getText(), lastNameText.getText(), emailText.getText()
-    			, passwordText.getText(), 0.0, "", "{Wish_List={}}", "", "[]", User.CUSTOMER);
+    			, passwordText.getText(), securityQA, 0.0, "", "{Wish_List={}}", "", "[]", User.CUSTOMER);
     	
     	if(!gateway.registerUser(user)) {
     		AlertHelper.showWarningMessage("Error!", "Email already taken!", AlertType.ERROR);
@@ -77,5 +89,9 @@ public class RegisterController implements Initializable, MyController {
     			}
     		}
     	});
+    	
+    	ObservableList<String> data = FXCollections.observableArrayList("What is your favorite movie?", "What is your favorite video game?"
+    			, "What is your favorite movie genre?", "What is your favorite video game genre?");
+    	securityQuestionBox.getItems().setAll(data);
     }
 }

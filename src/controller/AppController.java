@@ -32,12 +32,13 @@ public class AppController implements Initializable {
 	public final static int ITEM_DETAIL = 2;
 	public final static int LOGIN = 3;
 	public final static int REGISTER = 4;
-	public final static int MY_ACCOUNT = 5;
-	public final static int SELL_ITEM = 6;
-	public final static int MY_CART = 7;
-	public final static int MY_LISTS = 8;
-	public final static int CHECK_OUT = 9;
-	public final static int ADD_FUNDS = 10;
+	public final static int FORGOT_PASSWORD = 5;
+	public final static int MY_ACCOUNT = 6;
+	public final static int SELL_ITEM = 7;
+	public final static int MY_CART = 8;
+	public final static int MY_LISTS = 9;
+	public final static int CHECK_OUT = 10;
+	public final static int ADD_FUNDS = 11;
 	
 	private static AppController myInstance = null;
 	private BorderPane rootPane = null;
@@ -72,6 +73,10 @@ public class AppController implements Initializable {
 				case REGISTER:
 					fxmlFile = this.getClass().getResource("/view/RegisterView.fxml");
 					controller = new RegisterController(new UserTableGateway(conn));
+					break;
+				case FORGOT_PASSWORD:
+					fxmlFile = this.getClass().getResource("/view/ForgotPasswordView.fxml");
+					controller = new ForgotPasswordController(new UserTableGateway(conn));
 					break;
 				case MY_ACCOUNT:
 					fxmlFile = this.getClass().getResource("/view/AccountView.fxml");
