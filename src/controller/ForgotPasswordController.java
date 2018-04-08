@@ -37,7 +37,12 @@ public class ForgotPasswordController implements Initializable, MyController {
 
 	@FXML
 	void backButtonClicked(MouseEvent event) {
-		AppController.getInstance().changeView(AppController.LOGIN, null);
+		if(pane.getCenter().equals(emailGrid))
+			AppController.getInstance().changeView(AppController.LOGIN, null);
+		else if(pane.getCenter().equals(securityGrid))
+			pane.setCenter(emailGrid);
+		else if(pane.getCenter().equals(resetGrid))
+			pane.setCenter(securityGrid);
 	}
 	
 	@FXML
