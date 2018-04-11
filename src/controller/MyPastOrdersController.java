@@ -66,7 +66,7 @@ public class MyPastOrdersController implements MyController, Initializable {
 								image.setFitHeight(100);
 								image.setFitWidth(100);
 
-								String s = String.format("\tName: %-30s Qty: %-10s Price: %-20s"
+								String s = String.format("\tName: %-30s Qty: %-10s Price: $%-20s"
 										, item.getName(), e.getValue(), item.getPrice() * e.getValue());
 
 								Label label = new Label(s);
@@ -75,7 +75,7 @@ public class MyPastOrdersController implements MyController, Initializable {
 								hBox.setAlignment(Pos.CENTER_LEFT);
 								hBoxes.add(hBox);
 							}
-							String footer = String.format("%-30sTotal: %-36.2f Payment Method: %-30s"
+							String footer = String.format("%-30sTotal: $%-36.2f Payment Method: %-30s"
 									, " ", pastOrder.getTotal(), pastOrder.getPaymentMethod());
 							Label footerLabel = new Label(footer);
 							footerLabel.setStyle("-fx-font: 14 consolas;");
