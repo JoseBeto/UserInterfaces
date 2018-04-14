@@ -23,6 +23,7 @@ import model.User;
 import userInterfaces.AlertHelper;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class CartController implements MyController, Initializable {
@@ -51,6 +52,10 @@ public class CartController implements MyController, Initializable {
 	
 	@FXML
     void checkOutButtonClicked(ActionEvent event) {
+		if(cartList.getItems().size() == 0) {
+			AlertHelper.showWarningMessage("Error!", "No items in cart!", AlertType.ERROR);
+    		return;
+		}
 		AppController.getInstance().changeView(AppController.CHECK_OUT, null);
 	}
 
@@ -111,6 +116,8 @@ public class CartController implements MyController, Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+    	cartList.setPlaceholder(new Label("No items in cart"));
+    	
     	updateCart();
     	updateTotalLabel();
 
