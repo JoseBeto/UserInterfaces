@@ -35,7 +35,10 @@ public class RegisterController implements Initializable, MyController {
 
     @FXML
     void registerButtonClicked(ActionEvent event) {
-    	if(emailText.getText().equals("")) {
+    	if(!emailText.getText().matches("[a-zA-Z.]+[@][a-zA-z]+[.][a-zA-Z]{2,3}$")) {
+    		AlertHelper.showWarningMessage("Error!", "Invalid email!", AlertType.ERROR);
+    		return;
+    	} else if(emailText.getText().equals("")) {
     		AlertHelper.showWarningMessage("Error!", "Email field is empty!", AlertType.ERROR);
     		return;
     	} else if(firstNameText.getText().equals("")) {
@@ -84,9 +87,9 @@ public class RegisterController implements Initializable, MyController {
     		@Override
     		public void changed(ObservableValue<? extends String> observable, String oldValue, 
     				String newValue) {
-    			if (newValue.contains(" ")) {
+    			if (!newValue.matches("[a-zA-Z.]*[@]?[a-zA-z]*[.]?[a-zA-Z]*$")) {
     				emailText.setText(oldValue);
-    			}
+				}
     		}
     	});
     	

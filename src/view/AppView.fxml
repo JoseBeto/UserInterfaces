@@ -19,7 +19,7 @@
                <font>
                   <Font name="Consolas" size="14.0" />
                </font></TextField>
-            <Button maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onMouseClicked="#searchButtonClicked" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 0px;">
+            <Button maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#searchEntered" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 0px;">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
