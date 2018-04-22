@@ -166,6 +166,9 @@ public class AppController implements Initializable {
     @FXML
     void categoryBoxChanged(ActionEvent event) {
     	switch(categoryBox.getValue()) {
+    		case "All Items":
+    			changeView(this.LIST, null);
+    			break;
 	    	case "Consoles":
 	    		changeView(this.LIST_BY_CATEGORY, new String[]{"description", "console"});
 	    		break;
@@ -181,7 +184,7 @@ public class AppController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	ObservableList<String> data = FXCollections.observableArrayList("Login", "Register");
-    	ObservableList<String> categoriesData = FXCollections.observableArrayList("Consoles", "Games", "Accessories");    	
+    	ObservableList<String> categoriesData = FXCollections.observableArrayList("All Items", "Consoles", "Games", "Accessories");    	
     	accountBox.getItems().setAll(data);
     	categoryBox.getItems().setAll(categoriesData);
     }
