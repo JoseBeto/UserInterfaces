@@ -38,6 +38,7 @@ public class AppController implements Initializable {
 	public final static int MY_LISTS = 9;
 	public final static int CHECK_OUT = 10;
 	public final static int ADD_FUNDS = 11;
+	public final static int LIST_BY_CATEGORY = 12;
 	
 	private static AppController myInstance = null;
 	private BorderPane rootPane = null;
@@ -104,6 +105,18 @@ public class AppController implements Initializable {
 					controller = new AddPaymentMethodController(new UserTableGateway(conn), new PaymentMethodsGateway(conn)
 							, (Integer) arg);
 					break;
+				case LIST_BY_CATEGORY:
+					String table_column_name = null;
+					String search_term = null;
+					if( arg != null )
+					{
+						String[] arr = (String[])arg;
+						table_column_name = arr[0];
+						search_term = arr[1];
+					}
+					fxmlFile = this.getClass().getResource("/view/ItemListView.fxml");
+					controller = new ItemListController(new ItemTableGateway(conn), table_column_name, search_term);
+					break;
 			}
 		
 			FXMLLoader loader = new FXMLLoader(fxmlFile);
@@ -150,10 +163,27 @@ public class AppController implements Initializable {
     	}
     }
 
+    @FXML
+    void categoryBoxChanged(ActionEvent event) {
+    	switch(categoryBox.getValue()) {
+	    	case "Consoles":
+	    		changeView(this.LIST_BY_CATEGORY, new String[]{"description", "console"});
+	    		break;
+	    	case "Games":
+	    		changeView(this.LIST_BY_CATEGORY, new String[]{"description", "game"});
+	    		break;
+	    	case "Accessories":
+	    		changeView(this.LIST_BY_CATEGORY, new String[]{"description", "Accessory"});
+	    		break;
+    	}
+    }
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	ObservableList<String> data = FXCollections.observableArrayList("Login", "Register");
+    	ObservableList<String> categoriesData = FXCollections.observableArrayList("Consoles", "Games", "Accessories");    	
     	accountBox.getItems().setAll(data);
+    	categoryBox.getItems().setAll(categoriesData);
     }
 
     public void updateAccountBox() {
