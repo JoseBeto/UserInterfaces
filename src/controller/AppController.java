@@ -167,16 +167,16 @@ public class AppController implements Initializable {
     void categoryBoxChanged(ActionEvent event) {
     	switch(categoryBox.getValue()) {
     		case "All Items":
-    			changeView(this.LIST, null);
+    			changeView(LIST, null);
     			break;
 	    	case "Consoles":
-	    		changeView(this.LIST_BY_CATEGORY, new String[]{"description", "console"});
+	    		changeView(LIST_BY_CATEGORY, new String[]{"description", "console"});
 	    		break;
 	    	case "Games":
-	    		changeView(this.LIST_BY_CATEGORY, new String[]{"description", "game"});
+	    		changeView(LIST_BY_CATEGORY, new String[]{"description", "game"});
 	    		break;
 	    	case "Accessories":
-	    		changeView(this.LIST_BY_CATEGORY, new String[]{"description", "Accessory"});
+	    		changeView(LIST_BY_CATEGORY, new String[]{"description", "Accessory"});
 	    		break;
     	}
     }

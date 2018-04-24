@@ -53,6 +53,7 @@ public class UserListController implements MyController, Initializable {
 			userGateway.updateLists(user);
 	    	
 	    	AlertHelper.showWarningMessage("Success!", "List: " + newList + " created!", AlertType.INFORMATION);
+	    	userListClicked(null);
 		}
 		return;
     }
@@ -86,11 +87,12 @@ public class UserListController implements MyController, Initializable {
 	void moveListClicked(ActionEvent event) {
 		Item item = itemList.getSelectionModel().getSelectedItem();
 		String toListName = moveListBox.getSelectionModel().getSelectedItem();
-
-		if(item == null || toListName == null)
-			return;
-
 		String fromListName = userLists.getSelectionModel().getSelectedItem();
+
+		if(item == null || toListName == null) {
+			AppController.getInstance().changeView(AppController.MY_LISTS, fromListName);
+			return;
+		}
 
 		items.remove(item);
 
