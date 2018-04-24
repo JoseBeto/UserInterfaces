@@ -23,6 +23,11 @@ public class ItemListController implements Initializable, MyController {
     	items = this.gateway.getItems();
     }
 	
+	public ItemListController(ItemTableGateway gateway, String[] terms) {
+		this.gateway = gateway;
+		items = this.gateway.getSearchedItems(terms);
+	}
+	
 	public ItemListController(ItemTableGateway gateway, String ctn, String term) {
     	this.gateway = gateway;
     	items = this.gateway.getCategoriedItems(ctn, term);

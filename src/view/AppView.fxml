@@ -20,7 +20,7 @@
    <top>
       <HBox prefHeight="30.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <ComboBox fx:id="categoryBox" onAction="#categoryBoxChanged" prefHeight="30.0" prefWidth="180.0" promptText="Categories" style="-fx-background-radius: 0px; -fx-font-size: 14; -fx-font-family: consolas;" />
+            <ComboBox fx:id="categoryBox" value="All Items" onAction="#categoryBoxChanged" prefHeight="30.0" prefWidth="180.0" promptText="Categories" style="-fx-background-radius: 0px; -fx-font-size: 14; -fx-font-family: consolas;" />
             <TextField fx:id="searchBox" onAction="#searchEntered" prefHeight="30.0" prefWidth="1120.0" promptText="Search item.." style="-fx-background-color: transparent; -fx-background-radius: 0px;">
                <font>
                   <Font name="Consolas" size="14.0" />

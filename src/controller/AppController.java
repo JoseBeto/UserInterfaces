@@ -39,6 +39,7 @@ public class AppController implements Initializable {
 	public final static int CHECK_OUT = 10;
 	public final static int ADD_FUNDS = 11;
 	public final static int LIST_BY_CATEGORY = 12;
+	public final static int SEARCH = 13;
 	
 	private static AppController myInstance = null;
 	private BorderPane rootPane = null;
@@ -117,6 +118,16 @@ public class AppController implements Initializable {
 					fxmlFile = this.getClass().getResource("/view/ItemListView.fxml");
 					controller = new ItemListController(new ItemTableGateway(conn), table_column_name, search_term);
 					break;
+				case SEARCH:
+					String[] search_terms = {null, null};
+					if(arg != null) {
+						String[] arr = (String[])arg;
+						search_terms[0] = arr[0];
+						search_terms[1] = arr[1];
+					}
+					fxmlFile = this.getClass().getResource("/view/ItemListView.fxml");
+					controller = new ItemListController(new ItemTableGateway(conn), search_terms);
+					break;
 			}
 		
 			FXMLLoader loader = new FXMLLoader(fxmlFile);
@@ -131,7 +142,20 @@ public class AppController implements Initializable {
 
     @FXML
     void searchEntered(ActionEvent event) {
-    	System.out.println("Search entered: " + searchBox.getText());
+    	switch(categoryBox.getValue()) {
+			case "All Items":
+				changeView(SEARCH, new String[] {searchBox.getText(), ""});
+				break;
+			case "Consoles":
+				changeView(SEARCH, new String[]{searchBox.getText(), "console"});
+				break;
+			case "Games":
+				changeView(SEARCH, new String[]{searchBox.getText(), "game"});
+				break;
+			case "Accessories":
+				changeView(SEARCH, new String[]{searchBox.getText(), "Accessory"});
+				break;
+    	}
     }
 
     @FXML
@@ -165,19 +189,23 @@ public class AppController implements Initializable {
 
     @FXML
     void categoryBoxChanged(ActionEvent event) {
-    	switch(categoryBox.getValue()) {
+    	if(!searchBox.getText().equals(""))
+    		searchEntered(event);
+    	else {
+    		switch(categoryBox.getValue()) {
     		case "All Items":
     			changeView(LIST, null);
     			break;
-	    	case "Consoles":
-	    		changeView(LIST_BY_CATEGORY, new String[]{"description", "console"});
-	    		break;
-	    	case "Games":
-	    		changeView(LIST_BY_CATEGORY, new String[]{"description", "game"});
-	    		break;
-	    	case "Accessories":
-	    		changeView(LIST_BY_CATEGORY, new String[]{"description", "Accessory"});
-	    		break;
+    		case "Consoles":
+    			changeView(LIST_BY_CATEGORY, new String[]{"description", "console"});
+    			break;
+    		case "Games":
+    			changeView(LIST_BY_CATEGORY, new String[]{"description", "game"});
+    			break;
+    		case "Accessories":
+    			changeView(LIST_BY_CATEGORY, new String[]{"description", "Accessory"});
+    			break;
+    		}
     	}
     }
     
