@@ -16,15 +16,16 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <HBox prefHeight="30.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <ComboBox fx:id="categoryBox" value="All Items" onAction="#categoryBoxChanged" prefHeight="30.0" prefWidth="180.0" promptText="Categories" style="-fx-background-radius: 0px; -fx-font-size: 14; -fx-font-family: consolas;" />
+            <ComboBox fx:id="categoryBox" onAction="#categoryBoxChanged" prefHeight="30.0" prefWidth="180.0" promptText="Categories" style="-fx-background-radius: 0px; -fx-font-size: 14; -fx-font-family: consolas;" value="All Items" />
             <TextField fx:id="searchBox" onAction="#searchEntered" prefHeight="30.0" prefWidth="1120.0" promptText="Search item.." style="-fx-background-color: transparent; -fx-background-radius: 0px;">
                <font>
                   <Font name="Consolas" size="14.0" />
                </font></TextField>
+            <Button fx:id="clear" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#clearTextBox" prefHeight="30.0" prefWidth="30.0" text="X" />
             <Button maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#searchEntered" prefHeight="30.0" prefWidth="30.0" style="-fx-background-radius: 0px;">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">

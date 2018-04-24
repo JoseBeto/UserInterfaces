@@ -209,6 +209,12 @@ public class AppController implements Initializable {
     	}
     }
     
+    @FXML
+    void clearTextBox(ActionEvent event) {
+    	searchBox.setText("");
+    	categoryBoxChanged(event);
+    }
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	ObservableList<String> data = FXCollections.observableArrayList("Login", "Register");
