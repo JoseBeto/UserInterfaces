@@ -75,6 +75,35 @@ public class ItemTableGateway {
 		}
 		return items;
 	}
+	
+	public ObservableList<Item> getSearchedItems(String term) throws AppException {
+		ObservableList<Item> items = FXCollections.observableArrayList();
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("select * from item where description like '%"
+					+ term + "%' or name like '%" + term + "%'");
+			ResultSet rs = st.executeQuery();
+			while(rs.next()) {
+				Item item = new Item(rs.getString("name"), rs.getDouble("price"), rs.getString("description")
+						, rs.getString("image"), 0, rs.getString("sellerId"));
+				item.setGateway(this);
+				item.setId(rs.getInt("id"));
+				items.add(item);
+			}
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new AppException(e);
+		} finally {
+			try {
+				if(st != null)
+					st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new AppException(e);
+			}
+		}
+		return items;
+	}
 
 	public ObservableList<Item> getCategoriedItems(String table_column_name, String term) throws AppException {
 		ObservableList<Item> items = FXCollections.observableArrayList();

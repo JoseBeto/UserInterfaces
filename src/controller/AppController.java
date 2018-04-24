@@ -39,6 +39,7 @@ public class AppController implements Initializable {
 	public final static int CHECK_OUT = 10;
 	public final static int ADD_FUNDS = 11;
 	public final static int LIST_BY_CATEGORY = 12;
+	public final static int SEARCH = 13;
 	
 	private static AppController myInstance = null;
 	private BorderPane rootPane = null;
@@ -117,6 +118,16 @@ public class AppController implements Initializable {
 					fxmlFile = this.getClass().getResource("/view/ItemListView.fxml");
 					controller = new ItemListController(new ItemTableGateway(conn), table_column_name, search_term);
 					break;
+				case SEARCH:
+					table_column_name = null;
+					search_term = null;
+					if(arg != null) {
+						String[] arr = (String[])arg;
+						search_term = arr[0];
+					}
+					fxmlFile = this.getClass().getResource("/view/ItemListView.fxml");
+					controller = new ItemListController(new ItemTableGateway(conn), search_term);
+					break;
 			}
 		
 			FXMLLoader loader = new FXMLLoader(fxmlFile);
@@ -132,6 +143,7 @@ public class AppController implements Initializable {
     @FXML
     void searchEntered(ActionEvent event) {
     	System.out.println("Search entered: " + searchBox.getText());
+    	changeView(this.SEARCH, new String[] {searchBox.getText()});
     }
 
     @FXML
