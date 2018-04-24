@@ -36,7 +36,7 @@ public class ItemDetailController implements Initializable, MyController {
 	
 	@FXML
     void backButtonClicked(MouseEvent event) {
-		AppController.getInstance().changeView(AppController.LIST, null);
+		AppController.getInstance().categoryBoxChanged(new ActionEvent());
     }
 	
 	@FXML
