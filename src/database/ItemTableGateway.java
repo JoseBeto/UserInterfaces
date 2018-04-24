@@ -76,12 +76,13 @@ public class ItemTableGateway {
 		return items;
 	}
 	
-	public ObservableList<Item> getSearchedItems(String term) throws AppException {
+	public ObservableList<Item> getSearchedItems(String[] terms) throws AppException {
 		ObservableList<Item> items = FXCollections.observableArrayList();
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("select * from item where description like '%"
-					+ term + "%' or name like '%" + term + "%'");
+			st = conn.prepareStatement("select * from item where (description like '%"
+					+ terms[0] + "%' or name like '%" + terms[0] + "%') "
+					+ "and description like '%" + terms[1] + "%'");
 			ResultSet rs = st.executeQuery();
 			while(rs.next()) {
 				Item item = new Item(rs.getString("name"), rs.getDouble("price"), rs.getString("description")

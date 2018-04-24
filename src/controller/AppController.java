@@ -119,14 +119,14 @@ public class AppController implements Initializable {
 					controller = new ItemListController(new ItemTableGateway(conn), table_column_name, search_term);
 					break;
 				case SEARCH:
-					table_column_name = null;
-					search_term = null;
+					String[] search_terms = {null, null};
 					if(arg != null) {
 						String[] arr = (String[])arg;
-						search_term = arr[0];
+						search_terms[0] = arr[0];
+						search_terms[1] = arr[1];
 					}
 					fxmlFile = this.getClass().getResource("/view/ItemListView.fxml");
-					controller = new ItemListController(new ItemTableGateway(conn), search_term);
+					controller = new ItemListController(new ItemTableGateway(conn), search_terms);
 					break;
 			}
 		
@@ -142,8 +142,20 @@ public class AppController implements Initializable {
 
     @FXML
     void searchEntered(ActionEvent event) {
-    	System.out.println("Search entered: " + searchBox.getText());
-    	changeView(this.SEARCH, new String[] {searchBox.getText()});
+    	switch(categoryBox.getValue()) {
+			case "All Items":
+				changeView(this.SEARCH, new String[] {searchBox.getText(), ""});
+				break;
+			case "Consoles":
+				changeView(this.SEARCH, new String[]{searchBox.getText(), "console"});
+				break;
+			case "Games":
+				changeView(this.SEARCH, new String[]{searchBox.getText(), "game"});
+				break;
+			case "Accessories":
+				changeView(this.SEARCH, new String[]{searchBox.getText(), "Accessory"});
+				break;
+    	}
     }
 
     @FXML
@@ -177,19 +189,23 @@ public class AppController implements Initializable {
 
     @FXML
     void categoryBoxChanged(ActionEvent event) {
-    	switch(categoryBox.getValue()) {
+    	if(!searchBox.getText().equals(""))
+    		searchEntered(event);
+    	else {
+    		switch(categoryBox.getValue()) {
     		case "All Items":
     			changeView(this.LIST, null);
     			break;
-	    	case "Consoles":
-	    		changeView(this.LIST_BY_CATEGORY, new String[]{"description", "console"});
-	    		break;
-	    	case "Games":
-	    		changeView(this.LIST_BY_CATEGORY, new String[]{"description", "game"});
-	    		break;
-	    	case "Accessories":
-	    		changeView(this.LIST_BY_CATEGORY, new String[]{"description", "Accessory"});
-	    		break;
+    		case "Consoles":
+    			changeView(this.LIST_BY_CATEGORY, new String[]{"description", "console"});
+    			break;
+    		case "Games":
+    			changeView(this.LIST_BY_CATEGORY, new String[]{"description", "game"});
+    			break;
+    		case "Accessories":
+    			changeView(this.LIST_BY_CATEGORY, new String[]{"description", "Accessory"});
+    			break;
+    		}
     	}
     }
     
