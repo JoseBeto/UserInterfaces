@@ -87,7 +87,7 @@ public class RegisterController implements Initializable, MyController {
     		@Override
     		public void changed(ObservableValue<? extends String> observable, String oldValue, 
     				String newValue) {
-    			if (!newValue.matches("[a-zA-Z.]*[@]?[a-zA-z]*[.]?[a-zA-Z]*$")) {
+    			if (!newValue.matches("[a-zA-Z.0-9]*[@]?[a-zA-z]*[.]?[a-zA-Z]*$")) {
     				emailText.setText(oldValue);
 				}
     		}
